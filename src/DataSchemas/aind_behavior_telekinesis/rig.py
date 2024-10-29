@@ -39,7 +39,8 @@ class ZmqConnection(BaseModel):
 
 class Networking(BaseModel):
     zmq_publisher: ZmqConnection = Field(
-        default=ZmqConnection(connection_string="@tcp://localhost:5556", topic="telekinesis"), validate_default=True)
+        default=ZmqConnection(connection_string="@tcp://localhost:5556", topic="telekinesis"), validate_default=True
+    )
     zmq_subscriber: Literal[None] = Field(default=None)
 
 

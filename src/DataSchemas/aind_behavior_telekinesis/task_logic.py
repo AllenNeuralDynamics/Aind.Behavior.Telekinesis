@@ -1,17 +1,15 @@
 from __future__ import annotations
 
 from enum import Enum
-from functools import partial
 from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
+from aind_behavior_services.calibration.load_cells import LoadCellChannel
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
 
 __version__ = "0.1.0"
-
-MAX_LOAD_CELL_FORCE = 32768
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -104,17 +102,29 @@ ContinuousFeedback = TypeAliasType(
 class Action(BaseModel):
     """Defines an abstract class for an harvest action"""
 
-    reward_probability: distributions.Distribution = Field(default=scalar_value(1), description="Probability of reward", validate_default=True)
-    reward_amount: distributions.Distribution = Field(default=scalar_value(1), description="Amount of reward to be delivered", validate_default=True)
-    reward_delay: distributions.Distribution = Field(default=scalar_value(1), description="Delay between successful harvest and reward delivery", validate_default=True)
-    action_duration: distributions.Distribution = Field(default=0.5, description="Duration that the action much stay above threshold", validate_default=True)
+    reward_probability: distributions.Distribution = Field(
+        default=scalar_value(1), description="Probability of reward", validate_default=True
+    )
+    reward_amount: distributions.Distribution = Field(
+        default=scalar_value(1), description="Amount of reward to be delivered", validate_default=True
+    )
+    reward_delay: distributions.Distribution = Field(
+        default=scalar_value(1),
+        description="Delay between successful harvest and reward delivery",
+        validate_default=True,
+    )
+    action_duration: distributions.Distribution = Field(
+        default=0.5, description="Duration that the action much stay above threshold", validate_default=True
+    )
     upper_action_threshold: distributions.Distribution = Field(
         default=scalar_value(20000),
-        description="Upper bound of the cached action required to get reward.", validate_default=True,
+        description="Upper bound of the cached action required to get reward.",
+        validate_default=True,
     )
     lower_action_threshold: distributions.Distribution = Field(
         default=scalar_value(0),
-        description="Lower bound of the cached action required to get reward. This determines from which value the action is accumulated from.", validate_default=True
+        description="Lower bound of the cached action required to get reward. This determines from which value the action is accumulated from.",
+        validate_default=True,
     )
     is_operant: bool = Field(default=True, description="Whether the reward delivery is contingent on licking.")
     time_to_collect: Optional[distributions.Distribution] = Field(
@@ -131,9 +141,7 @@ class QuiescencePeriod(BaseModel):
     duration: distributions.Distribution = Field(
         default=scalar_value(0.5), description="Duration of the quiescence period", validate_default=True
     )
-    action_threshold: float = Field(
-        default=0, le=MAX_LOAD_CELL_FORCE, ge=-MAX_LOAD_CELL_FORCE, description="Time out for the quiescence period"
-    )
+    action_threshold: float = Field(default=0, description="Time out for the quiescence period")
     has_cue: bool = Field(default=False, description="Whether to use a cue to signal the start of the period.")
 
 
@@ -146,7 +154,38 @@ class ResponsePeriod(BaseModel):
         validate_default=True,
     )
     has_cue: bool = Field(default=True, description="Whether to use a cue to signal the start of the period.")
-    action: Action = Field(default=Action(), description="Action to be performed during the response period", validate_default=True)
+    action: Action = Field(
+        default=Action(), description="Action to be performed during the response period", validate_default=True
+    )
+
+
+class ActionSourceType(str, Enum):
+    """Defines the source of the data to use in the action"""
+
+    LOADCELL = "LoadCell"
+    BEHAVIOR_ANALOG_INPUT = "BehaviorAnalogInput"
+
+
+class _ActionSource(BaseModel):
+    action_source: ActionSourceType = Field(
+        default=ActionSourceType.LOADCELL, description="Source of the data to use in the action"
+    )
+
+
+class LoadCellActionSource(_ActionSource):
+    action_source: Literal[ActionSourceType.LOADCELL] = ActionSourceType.LOADCELL
+    channel: LoadCellChannel = Field(default=0, description="Index of the load cell channel to use")
+
+
+class BehaviorAnalogInputActionSource(_ActionSource):
+    action_source: Literal[ActionSourceType.BEHAVIOR_ANALOG_INPUT] = ActionSourceType.BEHAVIOR_ANALOG_INPUT
+    channel: Literal[0, 1] = Field(default=0, description="Index of the behavior analog input channel to use")
+
+
+ActionSource = TypeAliasType(
+    "ActionSource",
+    Annotated[Union[LoadCellActionSource, BehaviorAnalogInputActionSource], Field(discriminator="action_source")],
+)
 
 
 class Trial(BaseModel):
@@ -158,6 +197,14 @@ class Trial(BaseModel):
     quiescence_period: Optional[QuiescencePeriod] = Field(default=None, description="Quiescence settings")
     response_period: ResponsePeriod = Field(
         default=ResponsePeriod(), validate_default=True, description="Response settings"
+    )
+    action_source_0: ActionSource = Field(..., description="Action source for the first axis to be sample from the LUT")
+    action_source_1: Optional[ActionSource] = Field(
+        default=None,
+        description="Action source for the second axis to be sample from the LUT. If None, LUT will be sampled from [action_source_0, 0]",
+    )
+    lut_reference: str = Field(
+        ..., description="Reference to the look up table image. Should be a key in the action_luts dictionary"
     )
 
 
@@ -197,19 +244,7 @@ class Environment(BaseModel):
     )
 
 
-class PressMode(str, Enum):
-    """Defines the press mode"""
-
-    DOUBLE = "Double"
-    SINGLE_AVERAGE = "SingleAverage"
-    SINGLE_MAX = "SingleMax"
-    SINGLE_MIN = "SingleMin"
-    SINGLE_LEFT = "SingleLeft"
-    SINGLE_RIGHT = "SingleRight"
-    SINGLE_LOOKUP_TABLE = "SingleLookupTable"
-
-
-class ForceLookUpTable(BaseModel):
+class ActionLookUpTable(BaseModel):
     path: str = Field(
         ..., description="Reference to the look up table image. Should be a 1 channel image. Value = LUT[Left, Right]"
     )
@@ -240,8 +275,6 @@ class ForceLookUpTable(BaseModel):
         return self
 
 
-
-
 class SpoutOperationControl(BaseModel):
     default_retracted_position: float = Field(default=0, description="Default retracted position (mm)")
     default_extended_position: float = Field(default=0, description="Default extended position (mm)")
@@ -249,8 +282,8 @@ class SpoutOperationControl(BaseModel):
 
 
 class OperationControl(BaseModel):
-    action_lut: Dict = Field(
-        default=ForceOperationControl(), validate_default=True, description="Operation control for force sensor"
+    action_luts: Dict[str, ActionLookUpTable] = Field(
+        ..., validate_default=True, description="Look up tables to derive action output from."
     )
     spout: SpoutOperationControl = Field(
         default=SpoutOperationControl(), validate_default=True, description="Operation control for spout"
@@ -259,10 +292,24 @@ class OperationControl(BaseModel):
 
 class AindTelekinesisTaskParameters(TaskParameters):
     environment: Environment = Field(..., description="Environment settings")
-    updaters: Dict[str, NumericalUpdater] = Field(default_factory=dict, description="List of numerical updaters")
-    operation_control: OperationControl = Field(
-        default=OperationControl(), validate_default=True, description="Operation control"
-    )
+    operation_control: OperationControl = Field(default=..., validate_default=True, description="Operation control")
+
+    @model_validator(mode="after")
+    def _check_valid_lut_reference(self) -> Self:
+        action_luts = self.operation_control.action_luts  # pylint: disable=no-member
+        for block in self.environment.block_statistics:  # pylint: disable=no-member
+            if isinstance(block, BlockGenerator):
+                if block.trial_statistics.lut_reference not in action_luts:
+                    raise ValueError(
+                        f"Look up table reference '{block.trial_statistics.lut_reference}' not found in action_luts"
+                    )
+            elif isinstance(block, Block):
+                for trial in block.trials:
+                    if trial.lut_reference not in action_luts:
+                        raise ValueError(f"Look up table reference '{trial.lut_reference}' not found in action_luts")
+            else:  # guard clause
+                raise ValueError(f"Block statistics mode '{block.mode}' not recognized")
+        return self
 
 
 class AindTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
