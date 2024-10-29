@@ -114,7 +114,7 @@ class Action(BaseModel):
         validate_default=True,
     )
     action_duration: distributions.Distribution = Field(
-        default=0.5, description="Duration that the action much stay above threshold", validate_default=True
+        default=scalar_value(0.5), description="Duration that the action much stay above threshold", validate_default=True
     )
     upper_action_threshold: distributions.Distribution = Field(
         default=scalar_value(20000),
