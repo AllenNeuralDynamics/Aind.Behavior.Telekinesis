@@ -32,6 +32,17 @@ class RigCalibration(BaseModel):
     water_valve: wvc.WaterValveCalibration = Field(default=..., description="Water valve calibration")
 
 
+class ZmqConnection(BaseModel):
+    connection_string: str = Field(default="@tcp://localhost:5556")
+    topic: str = Field(default="")
+
+
+class Networking(BaseModel):
+    zmq_publisher: ZmqConnection = Field(
+        default=ZmqConnection(connection_string="@tcp://localhost:5556", topic="telekinesis"), validate_default=True)
+    zmq_subscriber: Literal[None] = Field(default=None)
+
+
 class AindTelekinesisRig(AindBehaviorRigModel):
     version: Literal[__version__] = __version__
     triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
@@ -47,5 +58,5 @@ class AindTelekinesisRig(AindBehaviorRigModel):
     harp_clock_repeaters: List[rig.HarpClockGenerator] = Field(default=[], description="Harp clock repeaters")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
     manipulator: AindManipulatorDevice = Field(..., description="Manipulator")
-    screen: rig.Screen = Field(default=rig.Screen(), description="Screen settings")
     calibration: RigCalibration = Field(default=None, description="Load cells calibration")
+    networking: Networking = Field(default=Networking(), description="Networking settings", validate_default=True)

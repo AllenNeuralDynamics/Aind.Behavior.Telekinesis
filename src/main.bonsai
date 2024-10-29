@@ -14,14 +14,14 @@
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:vid="clr-namespace:Bonsai.Video;assembly=Bonsai.Video"
+                 xmlns:p8="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
+                 xmlns:zmq="clr-namespace:Bonsai.ZeroMQ;assembly=Bonsai.ZeroMQ"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
-                 xmlns:p8="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:p9="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
-                 xmlns:p9="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
-                 xmlns:p10="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
-                 xmlns:p11="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
-                 xmlns:p12="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
+                 xmlns:p10="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
+                 xmlns:p11="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p12="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:p13="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:bv="clr-namespace:BonVision;assembly=BonVision"
@@ -858,6 +858,46 @@
                 <Edges />
               </Workflow>
             </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Networking</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SoftwareEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p8:SerializeToJson" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Networking.ZmqPublisher</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="ConnectionString" Selector="ConnectionString" />
+                      <Property Name="Topic" Selector="Topic" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="zmq:Publisher">
+                      <zmq:ConnectionString>@tcp://localhost:5556</zmq:ConnectionString>
+                      <zmq:Topic>telekinesis</zmq:Topic>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -882,13 +922,13 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p8:CreateContinuousUniform">
-                <p8:Lower>0</p8:Lower>
-                <p8:Upper>10</p8:Upper>
+              <Combinator xsi:type="p9:CreateContinuousUniform">
+                <p9:Lower>0</p9:Lower>
+                <p9:Upper>10</p9:Upper>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p8:Sample" />
+              <Combinator xsi:type="p9:Sample" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
@@ -924,35 +964,12 @@
               <Name>RngSeed</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p9:CreateRepository">
-                <p9:Path>../.</p9:Path>
+              <Combinator xsi:type="p10:CreateRepository">
+                <p10:Path>../.</p10:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
               <Name>Repository</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RigSchema</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Screen.TextureAssetsDirectory</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="io:GetFiles,sys:String">
-              <MemberName>Path</MemberName>
-              <Value>Textures</Value>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Take">
-                <rx:Count>1</rx:Count>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>TextureBankPath</Name>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="FarClipHorizon" />
@@ -1010,15 +1027,10 @@
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -1029,25 +1041,25 @@
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(harp:Timestamped(sys:Double),p3:HarvestAction)">
               <rx:Name>LiveHarvestOutcome</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>StartExperiment</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(p11:Mat,p11:IplImage,p3:ForceOperationControl)">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(p12:Mat,p12:IplImage,p3:ForceOperationControl)">
               <rx:Name>CurrentForceLut</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p12:SoftwareEvent">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:SoftwareEvent">
               <rx:Name>SoftwareEvents</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p12:SoftwareEvent">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:SoftwareEvent">
               <rx:Name>UpdaterEvents</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p12:SoftwareEvent">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:SoftwareEvent">
               <rx:Name>RuntimeLogging</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>EndExperiment</rx:Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>StartLogging</rx:Name>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:String">
@@ -1644,8 +1656,8 @@
                     <Name>Repository</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:IsRepositoryClean">
-                      <p9:IgnoreUntracked>false</p9:IgnoreUntracked>
+                    <Combinator xsi:type="p10:IsRepositoryClean">
+                      <p10:IgnoreUntracked>false</p10:IgnoreUntracked>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="BitwiseNot" />
@@ -1854,7 +1866,7 @@
                         <Expression xsi:type="MulticastSubject">
                           <Name>HarpBehaviorCommands</Name>
                         </Expression>
-                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
                           <rx:Name>TriggerValve</rx:Name>
                         </Expression>
                         <Expression xsi:type="beh:CreateMessage">
@@ -2329,7 +2341,7 @@
                   <Expression xsi:type="MulticastSubject">
                     <Name>HarpBehaviorCommands</Name>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
                     <rx:Name>AudioTrigger</rx:Name>
                   </Expression>
                   <Expression xsi:type="beh:CreateMessage">
@@ -3117,7 +3129,7 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>TriggerResponseCue</rx:Name>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\PlayAudioCue.bonsai">
@@ -3131,14 +3143,14 @@
               <Duration>0.1</Duration>
               <Frequency>1000</Frequency>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>TriggerInitiationCue</rx:Name>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\PlayAudioCue.bonsai">
               <Duration>0.1</Duration>
               <Frequency>500</Frequency>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>TriggerQuiescencePeriodCue</rx:Name>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\PlayAudioCue.bonsai">
@@ -3980,8 +3992,8 @@
                                 <Name>Repository</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p9:IsRepositoryClean">
-                                  <p9:IgnoreUntracked>false</p9:IgnoreUntracked>
+                                <Combinator xsi:type="p10:IsRepositoryClean">
+                                  <p10:IgnoreUntracked>false</p10:IgnoreUntracked>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -4631,7 +4643,7 @@ Value.RightForce as RightForce) as Force)</scr:Expression>
                                 <Combinator xsi:type="p7:TimestampSoftwareEvent" />
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p12:SerializeToJson" />
+                                <Combinator xsi:type="p8:SerializeToJson" />
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Modality</Name>
@@ -6373,7 +6385,7 @@ Value.RightForce as RightForce) as Force)</scr:Expression>
         <Name>StartCondition</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Unit">
               <rx:Name>StartExperimentShortcut</rx:Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">

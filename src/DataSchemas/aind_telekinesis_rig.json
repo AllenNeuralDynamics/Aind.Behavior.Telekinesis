@@ -422,174 +422,6 @@
       "title": "CameraController[WebCamera]",
       "type": "object"
     },
-    "DisplayCalibration": {
-      "properties": {
-        "intrinsics": {
-          "$ref": "#/definitions/DisplayIntrinsics",
-          "default": {
-            "frame_width": 1920,
-            "frame_height": 1080,
-            "display_width": 20.0,
-            "display_height": 15.0
-          },
-          "description": "Intrinsics"
-        },
-        "extrinsics": {
-          "$ref": "#/definitions/DisplayExtrinsics",
-          "default": {
-            "rotation": {
-              "x": 0.0,
-              "y": 0.0,
-              "z": 0.0
-            },
-            "translation": {
-              "x": 0.0,
-              "y": 1.309016,
-              "z": -13.27
-            }
-          },
-          "description": "Extrinsics"
-        }
-      },
-      "title": "DisplayCalibration",
-      "type": "object"
-    },
-    "DisplayExtrinsics": {
-      "properties": {
-        "rotation": {
-          "$ref": "#/definitions/Vector3",
-          "default": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-          },
-          "description": "Rotation vector (radians)"
-        },
-        "translation": {
-          "$ref": "#/definitions/Vector3",
-          "default": {
-            "x": 0.0,
-            "y": 1.309016,
-            "z": -13.27
-          },
-          "description": "Translation (in cm)"
-        }
-      },
-      "title": "DisplayExtrinsics",
-      "type": "object"
-    },
-    "DisplayIntrinsics": {
-      "properties": {
-        "frame_width": {
-          "default": 1920,
-          "description": "Frame width (px)",
-          "minimum": 0,
-          "title": "Frame Width",
-          "type": "integer"
-        },
-        "frame_height": {
-          "default": 1080,
-          "description": "Frame height (px)",
-          "minimum": 0,
-          "title": "Frame Height",
-          "type": "integer"
-        },
-        "display_width": {
-          "default": 20,
-          "description": "Display width (cm)",
-          "minimum": 0.0,
-          "title": "Display Width",
-          "type": "number"
-        },
-        "display_height": {
-          "default": 15,
-          "description": "Display width (cm)",
-          "minimum": 0.0,
-          "title": "Display Height",
-          "type": "number"
-        }
-      },
-      "title": "DisplayIntrinsics",
-      "type": "object"
-    },
-    "DisplaysCalibration": {
-      "properties": {
-        "left": {
-          "$ref": "#/definitions/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": -16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Left display calibration"
-        },
-        "center": {
-          "$ref": "#/definitions/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 0.0,
-                "y": 1.309016,
-                "z": -13.27
-              }
-            }
-          },
-          "description": "Center display calibration"
-        },
-        "right": {
-          "$ref": "#/definitions/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": -1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Right display calibration"
-        }
-      },
-      "title": "DisplaysCalibration",
-      "type": "object"
-    },
     "HarpAnalogInput": {
       "properties": {
         "device_type": {
@@ -1211,6 +1043,25 @@
         "Dynamic"
       ]
     },
+    "Networking": {
+      "properties": {
+        "zmq_publisher": {
+          "$ref": "#/definitions/ZmqConnection",
+          "default": {
+            "connection_string": "@tcp://localhost:5556",
+            "topic": "telekinesis"
+          }
+        },
+        "zmq_subscriber": {
+          "const": null,
+          "default": null,
+          "title": "Zmq Subscriber",
+          "type": "null"
+        }
+      },
+      "title": "Networking",
+      "type": "object"
+    },
     "Rect": {
       "properties": {
         "x": {
@@ -1256,137 +1107,6 @@
         "water_valve"
       ],
       "title": "RigCalibration",
-      "type": "object"
-    },
-    "Screen": {
-      "properties": {
-        "device_type": {
-          "const": "Screen",
-          "default": "Screen",
-          "description": "Device type",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "$ref": "#/definitions/DisplaysCalibration",
-          "default": {
-            "left": {
-              "extrinsics": {
-                "rotation": {
-                  "x": 0.0,
-                  "y": 1.0472,
-                  "z": 0.0
-                },
-                "translation": {
-                  "x": -16.6917756,
-                  "y": 1.309016,
-                  "z": -3.575264
-                }
-              },
-              "intrinsics": {
-                "display_height": 15.0,
-                "display_width": 20.0,
-                "frame_height": 1080,
-                "frame_width": 1920
-              }
-            },
-            "center": {
-              "extrinsics": {
-                "rotation": {
-                  "x": 0.0,
-                  "y": 0.0,
-                  "z": 0.0
-                },
-                "translation": {
-                  "x": 0.0,
-                  "y": 1.309016,
-                  "z": -13.27
-                }
-              },
-              "intrinsics": {
-                "display_height": 15.0,
-                "display_width": 20.0,
-                "frame_height": 1080,
-                "frame_width": 1920
-              }
-            },
-            "right": {
-              "extrinsics": {
-                "rotation": {
-                  "x": 0.0,
-                  "y": -1.0472,
-                  "z": 0.0
-                },
-                "translation": {
-                  "x": 16.6917756,
-                  "y": 1.309016,
-                  "z": -3.575264
-                }
-              },
-              "intrinsics": {
-                "display_height": 15.0,
-                "display_width": 20.0,
-                "frame_height": 1080,
-                "frame_width": 1920
-              }
-            }
-          },
-          "description": "Screen calibration"
-        },
-        "display_index": {
-          "default": 1,
-          "description": "Display index",
-          "title": "Display Index",
-          "type": "integer"
-        },
-        "target_render_frequency": {
-          "default": 60,
-          "description": "Target render frequency",
-          "title": "Target Render Frequency",
-          "type": "number"
-        },
-        "target_update_frequency": {
-          "default": 120,
-          "description": "Target update frequency",
-          "title": "Target Update Frequency",
-          "type": "number"
-        },
-        "texture_assets_directory": {
-          "default": "Textures",
-          "description": "Calibration directory",
-          "title": "Texture Assets Directory",
-          "type": "string"
-        },
-        "brightness": {
-          "default": 0,
-          "description": "Brightness",
-          "maximum": 1.0,
-          "minimum": -1.0,
-          "title": "Brightness",
-          "type": "number"
-        },
-        "contrast": {
-          "default": 1,
-          "description": "Contrast",
-          "maximum": 1.0,
-          "minimum": -1.0,
-          "title": "Contrast",
-          "type": "number"
-        }
-      },
-      "title": "Screen",
       "type": "object"
     },
     "SpinnakerCamera": {
@@ -1526,30 +1246,6 @@
         "Adc10bit",
         "Adc12bit"
       ]
-    },
-    "Vector3": {
-      "properties": {
-        "x": {
-          "default": 0,
-          "description": "X coordinate of the point",
-          "title": "X",
-          "type": "number"
-        },
-        "y": {
-          "default": 0,
-          "description": "Y coordinate of the point",
-          "title": "Y",
-          "type": "number"
-        },
-        "z": {
-          "default": 0,
-          "description": "Z coordinate of the point",
-          "title": "Z",
-          "type": "number"
-        }
-      },
-      "title": "Vector3",
-      "type": "object"
     },
     "VideoWriter": {
       "discriminator": {
@@ -1834,6 +1530,22 @@
       },
       "title": "WebCamera",
       "type": "object"
+    },
+    "ZmqConnection": {
+      "properties": {
+        "connection_string": {
+          "default": "@tcp://localhost:5556",
+          "title": "Connection String",
+          "type": "string"
+        },
+        "topic": {
+          "default": "",
+          "title": "Topic",
+          "type": "string"
+        }
+      },
+      "title": "ZmqConnection",
+      "type": "object"
     }
   },
   "properties": {
@@ -1916,86 +1628,21 @@
       "$ref": "#/definitions/AindManipulatorDevice",
       "description": "Manipulator"
     },
-    "screen": {
-      "$ref": "#/definitions/Screen",
-      "default": {
-        "device_type": "Screen",
-        "additional_settings": null,
-        "calibration": {
-          "center": {
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 0.0,
-                "y": 1.309016,
-                "z": -13.27
-              }
-            },
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            }
-          },
-          "left": {
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": -16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            },
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            }
-          },
-          "right": {
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": -1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            },
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            }
-          }
-        },
-        "display_index": 1,
-        "target_render_frequency": 60.0,
-        "target_update_frequency": 120.0,
-        "texture_assets_directory": "Textures",
-        "brightness": 0.0,
-        "contrast": 1.0
-      },
-      "description": "Screen settings"
-    },
     "calibration": {
       "$ref": "#/definitions/RigCalibration",
       "default": null,
       "description": "Load cells calibration"
+    },
+    "networking": {
+      "$ref": "#/definitions/Networking",
+      "default": {
+        "zmq_publisher": {
+          "connection_string": "@tcp://localhost:5556",
+          "topic": "telekinesis"
+        },
+        "zmq_subscriber": null
+      },
+      "description": "Networking settings"
     }
   },
   "required": [

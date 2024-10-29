@@ -1125,420 +1125,6 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class DisplayCalibration
-    {
-    
-        private DisplayIntrinsics _intrinsics;
-    
-        private DisplayExtrinsics _extrinsics;
-    
-        public DisplayCalibration()
-        {
-        }
-    
-        protected DisplayCalibration(DisplayCalibration other)
-        {
-            _intrinsics = other._intrinsics;
-            _extrinsics = other._extrinsics;
-        }
-    
-        /// <summary>
-        /// Intrinsics
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("intrinsics")]
-        [System.ComponentModel.DescriptionAttribute("Intrinsics")]
-        public DisplayIntrinsics Intrinsics
-        {
-            get
-            {
-                return _intrinsics;
-            }
-            set
-            {
-                _intrinsics = value;
-            }
-        }
-    
-        /// <summary>
-        /// Extrinsics
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("extrinsics")]
-        [System.ComponentModel.DescriptionAttribute("Extrinsics")]
-        public DisplayExtrinsics Extrinsics
-        {
-            get
-            {
-                return _extrinsics;
-            }
-            set
-            {
-                _extrinsics = value;
-            }
-        }
-    
-        public System.IObservable<DisplayCalibration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayCalibration(this)));
-        }
-    
-        public System.IObservable<DisplayCalibration> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new DisplayCalibration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("intrinsics = " + _intrinsics + ", ");
-            stringBuilder.Append("extrinsics = " + _extrinsics);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class DisplayExtrinsics
-    {
-    
-        private Vector3 _rotation;
-    
-        private Vector3 _translation;
-    
-        public DisplayExtrinsics()
-        {
-        }
-    
-        protected DisplayExtrinsics(DisplayExtrinsics other)
-        {
-            _rotation = other._rotation;
-            _translation = other._translation;
-        }
-    
-        /// <summary>
-        /// Rotation vector (radians)
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rotation")]
-        [System.ComponentModel.DescriptionAttribute("Rotation vector (radians)")]
-        public Vector3 Rotation
-        {
-            get
-            {
-                return _rotation;
-            }
-            set
-            {
-                _rotation = value;
-            }
-        }
-    
-        /// <summary>
-        /// Translation (in cm)
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("translation")]
-        [System.ComponentModel.DescriptionAttribute("Translation (in cm)")]
-        public Vector3 Translation
-        {
-            get
-            {
-                return _translation;
-            }
-            set
-            {
-                _translation = value;
-            }
-        }
-    
-        public System.IObservable<DisplayExtrinsics> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayExtrinsics(this)));
-        }
-    
-        public System.IObservable<DisplayExtrinsics> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new DisplayExtrinsics(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("rotation = " + _rotation + ", ");
-            stringBuilder.Append("translation = " + _translation);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class DisplayIntrinsics
-    {
-    
-        private int _frameWidth = 1920;
-    
-        private int _frameHeight = 1080;
-    
-        private double _displayWidth = 20D;
-    
-        private double _displayHeight = 15D;
-    
-        public DisplayIntrinsics()
-        {
-        }
-    
-        protected DisplayIntrinsics(DisplayIntrinsics other)
-        {
-            _frameWidth = other._frameWidth;
-            _frameHeight = other._frameHeight;
-            _displayWidth = other._displayWidth;
-            _displayHeight = other._displayHeight;
-        }
-    
-        /// <summary>
-        /// Frame width (px)
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("frame_width")]
-        [System.ComponentModel.DescriptionAttribute("Frame width (px)")]
-        public int FrameWidth
-        {
-            get
-            {
-                return _frameWidth;
-            }
-            set
-            {
-                _frameWidth = value;
-            }
-        }
-    
-        /// <summary>
-        /// Frame height (px)
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("frame_height")]
-        [System.ComponentModel.DescriptionAttribute("Frame height (px)")]
-        public int FrameHeight
-        {
-            get
-            {
-                return _frameHeight;
-            }
-            set
-            {
-                _frameHeight = value;
-            }
-        }
-    
-        /// <summary>
-        /// Display width (cm)
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("display_width")]
-        [System.ComponentModel.DescriptionAttribute("Display width (cm)")]
-        public double DisplayWidth
-        {
-            get
-            {
-                return _displayWidth;
-            }
-            set
-            {
-                _displayWidth = value;
-            }
-        }
-    
-        /// <summary>
-        /// Display width (cm)
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("display_height")]
-        [System.ComponentModel.DescriptionAttribute("Display width (cm)")]
-        public double DisplayHeight
-        {
-            get
-            {
-                return _displayHeight;
-            }
-            set
-            {
-                _displayHeight = value;
-            }
-        }
-    
-        public System.IObservable<DisplayIntrinsics> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplayIntrinsics(this)));
-        }
-    
-        public System.IObservable<DisplayIntrinsics> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new DisplayIntrinsics(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("frame_width = " + _frameWidth + ", ");
-            stringBuilder.Append("frame_height = " + _frameHeight + ", ");
-            stringBuilder.Append("display_width = " + _displayWidth + ", ");
-            stringBuilder.Append("display_height = " + _displayHeight);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class DisplaysCalibration
-    {
-    
-        private DisplayCalibration _left;
-    
-        private DisplayCalibration _center;
-    
-        private DisplayCalibration _right;
-    
-        public DisplaysCalibration()
-        {
-        }
-    
-        protected DisplaysCalibration(DisplaysCalibration other)
-        {
-            _left = other._left;
-            _center = other._center;
-            _right = other._right;
-        }
-    
-        /// <summary>
-        /// Left display calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("left")]
-        [System.ComponentModel.DescriptionAttribute("Left display calibration")]
-        public DisplayCalibration Left
-        {
-            get
-            {
-                return _left;
-            }
-            set
-            {
-                _left = value;
-            }
-        }
-    
-        /// <summary>
-        /// Center display calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("center")]
-        [System.ComponentModel.DescriptionAttribute("Center display calibration")]
-        public DisplayCalibration Center
-        {
-            get
-            {
-                return _center;
-            }
-            set
-            {
-                _center = value;
-            }
-        }
-    
-        /// <summary>
-        /// Right display calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("right")]
-        [System.ComponentModel.DescriptionAttribute("Right display calibration")]
-        public DisplayCalibration Right
-        {
-            get
-            {
-                return _right;
-            }
-            set
-            {
-                _right = value;
-            }
-        }
-    
-        public System.IObservable<DisplaysCalibration> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new DisplaysCalibration(this)));
-        }
-    
-        public System.IObservable<DisplaysCalibration> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new DisplaysCalibration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("left = " + _left + ", ");
-            stringBuilder.Append("center = " + _center + ", ");
-            stringBuilder.Append("right = " + _right);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpAnalogInput
     {
     
@@ -3303,6 +2889,86 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Networking
+    {
+    
+        private ZmqConnection _zmqPublisher;
+    
+        private ZmqSubscriber _zmqSubscriber;
+    
+        public Networking()
+        {
+        }
+    
+        protected Networking(Networking other)
+        {
+            _zmqPublisher = other._zmqPublisher;
+            _zmqSubscriber = other._zmqSubscriber;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zmq_publisher")]
+        public ZmqConnection ZmqPublisher
+        {
+            get
+            {
+                return _zmqPublisher;
+            }
+            set
+            {
+                _zmqPublisher = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zmq_subscriber")]
+        public ZmqSubscriber ZmqSubscriber
+        {
+            get
+            {
+                return _zmqSubscriber;
+            }
+            set
+            {
+                _zmqSubscriber = value;
+            }
+        }
+    
+        public System.IObservable<Networking> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Networking(this)));
+        }
+    
+        public System.IObservable<Networking> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Networking(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("zmq_publisher = " + _zmqPublisher + ", ");
+            stringBuilder.Append("zmq_subscriber = " + _zmqSubscriber);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Rect
     {
     
@@ -3476,241 +3142,6 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("water_valve = " + _waterValve);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Screen
-    {
-    
-        private string _deviceType = "Screen";
-    
-        private BaseModel _additionalSettings;
-    
-        private DisplaysCalibration _calibration;
-    
-        private int _displayIndex = 1;
-    
-        private double _targetRenderFrequency = 60D;
-    
-        private double _targetUpdateFrequency = 120D;
-    
-        private string _textureAssetsDirectory = "Textures";
-    
-        private double _brightness = 0D;
-    
-        private double _contrast = 1D;
-    
-        public Screen()
-        {
-        }
-    
-        protected Screen(Screen other)
-        {
-            _deviceType = other._deviceType;
-            _additionalSettings = other._additionalSettings;
-            _calibration = other._calibration;
-            _displayIndex = other._displayIndex;
-            _targetRenderFrequency = other._targetRenderFrequency;
-            _targetUpdateFrequency = other._targetUpdateFrequency;
-            _textureAssetsDirectory = other._textureAssetsDirectory;
-            _brightness = other._brightness;
-            _contrast = other._contrast;
-        }
-    
-        /// <summary>
-        /// Device type
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [System.ComponentModel.DescriptionAttribute("Device type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Screen calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Screen calibration")]
-        public DisplaysCalibration Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Display index
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("display_index")]
-        [System.ComponentModel.DescriptionAttribute("Display index")]
-        public int DisplayIndex
-        {
-            get
-            {
-                return _displayIndex;
-            }
-            set
-            {
-                _displayIndex = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target render frequency
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("target_render_frequency")]
-        [System.ComponentModel.DescriptionAttribute("Target render frequency")]
-        public double TargetRenderFrequency
-        {
-            get
-            {
-                return _targetRenderFrequency;
-            }
-            set
-            {
-                _targetRenderFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Target update frequency
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("target_update_frequency")]
-        [System.ComponentModel.DescriptionAttribute("Target update frequency")]
-        public double TargetUpdateFrequency
-        {
-            get
-            {
-                return _targetUpdateFrequency;
-            }
-            set
-            {
-                _targetUpdateFrequency = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration directory
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("texture_assets_directory")]
-        [System.ComponentModel.DescriptionAttribute("Calibration directory")]
-        public string TextureAssetsDirectory
-        {
-            get
-            {
-                return _textureAssetsDirectory;
-            }
-            set
-            {
-                _textureAssetsDirectory = value;
-            }
-        }
-    
-        /// <summary>
-        /// Brightness
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("brightness")]
-        [System.ComponentModel.DescriptionAttribute("Brightness")]
-        public double Brightness
-        {
-            get
-            {
-                return _brightness;
-            }
-            set
-            {
-                _brightness = value;
-            }
-        }
-    
-        /// <summary>
-        /// Contrast
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("contrast")]
-        [System.ComponentModel.DescriptionAttribute("Contrast")]
-        public double Contrast
-        {
-            get
-            {
-                return _contrast;
-            }
-            set
-            {
-                _contrast = value;
-            }
-        }
-    
-        public System.IObservable<Screen> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Screen(this)));
-        }
-    
-        public System.IObservable<Screen> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Screen(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("display_index = " + _displayIndex + ", ");
-            stringBuilder.Append("target_render_frequency = " + _targetRenderFrequency + ", ");
-            stringBuilder.Append("target_update_frequency = " + _targetUpdateFrequency + ", ");
-            stringBuilder.Append("texture_assets_directory = " + _textureAssetsDirectory + ", ");
-            stringBuilder.Append("brightness = " + _brightness + ", ");
-            stringBuilder.Append("contrast = " + _contrast);
             return true;
         }
     
@@ -4044,113 +3475,6 @@ namespace AindTelekinesisDataSchema.Rig
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="2")]
         Adc12bit = 2,
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Vector3
-    {
-    
-        private double _x = 0D;
-    
-        private double _y = 0D;
-    
-        private double _z = 0D;
-    
-        public Vector3()
-        {
-        }
-    
-        protected Vector3(Vector3 other)
-        {
-            _x = other._x;
-            _y = other._y;
-            _z = other._z;
-        }
-    
-        /// <summary>
-        /// X coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("x")]
-        [System.ComponentModel.DescriptionAttribute("X coordinate of the point")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        /// <summary>
-        /// Y coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("y")]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate of the point")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        /// <summary>
-        /// Z coordinate of the point
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("z")]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate of the point")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<Vector3> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Vector3(this)));
-        }
-    
-        public System.IObservable<Vector3> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Vector3(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("x = " + _x + ", ");
-            stringBuilder.Append("y = " + _y + ", ");
-            stringBuilder.Append("z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
     }
 
 
@@ -4955,6 +4279,84 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZmqConnection
+    {
+    
+        private string _connectionString = "@tcp://localhost:5556";
+    
+        private string _topic = "";
+    
+        public ZmqConnection()
+        {
+        }
+    
+        protected ZmqConnection(ZmqConnection other)
+        {
+            _connectionString = other._connectionString;
+            _topic = other._topic;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("connection_string")]
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+            set
+            {
+                _connectionString = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("topic")]
+        public string Topic
+        {
+            get
+            {
+                return _topic;
+            }
+            set
+            {
+                _topic = value;
+            }
+        }
+    
+        public System.IObservable<ZmqConnection> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZmqConnection(this)));
+        }
+    
+        public System.IObservable<ZmqConnection> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ZmqConnection(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("connection_string = " + _connectionString + ", ");
+            stringBuilder.Append("topic = " + _topic);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class AindTelekinesisRig
     {
     
@@ -4984,9 +4386,9 @@ namespace AindTelekinesisDataSchema.Rig
     
         private AindManipulatorDevice _manipulator = new AindManipulatorDevice();
     
-        private Screen _screen;
-    
         private RigCalibration _calibration;
+    
+        private Networking _networking;
     
         public AindTelekinesisRig()
         {
@@ -5007,8 +4409,8 @@ namespace AindTelekinesisDataSchema.Rig
             _harpClockRepeaters = other._harpClockRepeaters;
             _harpAnalogInput = other._harpAnalogInput;
             _manipulator = other._manipulator;
-            _screen = other._screen;
             _calibration = other._calibration;
+            _networking = other._networking;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
@@ -5234,24 +4636,6 @@ namespace AindTelekinesisDataSchema.Rig
         }
     
         /// <summary>
-        /// Screen settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("screen")]
-        [System.ComponentModel.DescriptionAttribute("Screen settings")]
-        public Screen Screen
-        {
-            get
-            {
-                return _screen;
-            }
-            set
-            {
-                _screen = value;
-            }
-        }
-    
-        /// <summary>
         /// Load cells calibration
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5266,6 +4650,24 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _calibration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Networking settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("networking")]
+        [System.ComponentModel.DescriptionAttribute("Networking settings")]
+        public Networking Networking
+        {
+            get
+            {
+                return _networking;
+            }
+            set
+            {
+                _networking = value;
             }
         }
     
@@ -5294,9 +4696,53 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("harp_clock_repeaters = " + _harpClockRepeaters + ", ");
             stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
             stringBuilder.Append("manipulator = " + _manipulator + ", ");
-            stringBuilder.Append("screen = " + _screen + ", ");
-            stringBuilder.Append("calibration = " + _calibration);
+            stringBuilder.Append("calibration = " + _calibration + ", ");
+            stringBuilder.Append("networking = " + _networking);
             return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZmqSubscriber
+    {
+    
+        public ZmqSubscriber()
+        {
+        }
+    
+        protected ZmqSubscriber(ZmqSubscriber other)
+        {
+        }
+    
+        public System.IObservable<ZmqSubscriber> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZmqSubscriber(this)));
+        }
+    
+        public System.IObservable<ZmqSubscriber> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ZmqSubscriber(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
         }
     
         public override string ToString()
@@ -5565,26 +5011,6 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<CameraControllerWebCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<DisplayCalibration> source)
-        {
-            return Process<DisplayCalibration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<DisplayExtrinsics> source)
-        {
-            return Process<DisplayExtrinsics>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<DisplayIntrinsics> source)
-        {
-            return Process<DisplayIntrinsics>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<DisplaysCalibration> source)
-        {
-            return Process<DisplaysCalibration>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
         {
             return Process<HarpAnalogInput>(source);
@@ -5655,6 +5081,11 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<Measurement>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Networking> source)
+        {
+            return Process<Networking>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Rect> source)
         {
             return Process<Rect>(source);
@@ -5665,19 +5096,9 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<RigCalibration>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Screen> source)
-        {
-            return Process<Screen>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<Vector3> source)
-        {
-            return Process<Vector3>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<VideoWriter> source)
@@ -5715,9 +5136,19 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<WebCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ZmqConnection> source)
+        {
+            return Process<ZmqConnection>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindTelekinesisRig> source)
         {
             return Process<AindTelekinesisRig>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqSubscriber> source)
+        {
+            return Process<ZmqSubscriber>(source);
         }
     }
 
@@ -5738,10 +5169,6 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplaysCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
@@ -5756,11 +5183,10 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MeasuredOffset>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MeasuredWeight>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rect>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
@@ -5768,7 +5194,9 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisRig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
