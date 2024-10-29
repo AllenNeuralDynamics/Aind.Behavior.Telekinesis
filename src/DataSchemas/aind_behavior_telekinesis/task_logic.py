@@ -59,78 +59,6 @@ def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
     )
 
 
-class HarvestActionLabel(str, Enum):
-    """Defines the harvest actions"""
-
-    LEFT = "Left"
-    RIGHT = "Right"
-    NONE = "None"
-
-
-# Updaters
-class NumericalUpdaterOperation(str, Enum):
-    NONE = "None"
-    ADD = "Offset"
-    MULTIPLY = "Gain"
-    SET = "Set"
-
-
-class NumericalUpdaterParameters(BaseModel):
-    value: distributions.Distribution = Field(
-        default=scalar_value(0),
-        validate_default=True,
-        description="The value of the update. This value will be multiplied by the optional input event value.",
-    )
-    minimum: float = Field(default=0, description="Minimum value of the parameter")
-    maximum: float = Field(default=0, description="Maximum value of the parameter")
-
-
-class NumericalUpdater(BaseModel):
-    operation: NumericalUpdaterOperation = Field(
-        default=NumericalUpdaterOperation.NONE, description="Operation to perform on the parameter"
-    )
-    parameters: NumericalUpdaterParameters = Field(
-        NumericalUpdaterParameters(), description="Parameters of the updater"
-    )
-
-
-class UpdateTargetParameterBy(str, Enum):
-    """Defines the independent variable used for the update"""
-
-    TIME = "Time"
-    REWARD = "Reward"
-    TRIAL = "Trial"
-
-
-class UpdateTargetParameter(str, Enum):
-    """Defines the target parameters"""
-
-    LOWER_FORCE_THRESHOLD = "LowerForceThreshold"
-    UPPER_FORCE_THRESHOLD = "UpperForceThreshold"
-    PROBABILITY = "Probability"
-    AMOUNT = "Amount"
-    FORCE_DURATION = "ForceDuration"
-    DELAY = "Delay"
-
-
-class ActionUpdater(BaseModel):
-    target_parameter: UpdateTargetParameter = Field(
-        default=UpdateTargetParameter.PROBABILITY, description="Target parameter"
-    )
-    updated_by: UpdateTargetParameterBy = Field(
-        default=UpdateTargetParameterBy.TIME, description="Independent variable"
-    )
-    updater: NumericalUpdater = Field(..., description="Updater")
-
-
-class HarvestMode(str, Enum):
-    """Defines the trial types"""
-
-    NONE = "None"
-    ACCUMULATION = "Accumulation"
-    ROI = "RegionOfInterest"
-
-
 class ContinuousFeedbackMode(str, Enum):
     """Defines the feedback mode"""
 
@@ -173,26 +101,20 @@ ContinuousFeedback = TypeAliasType(
 )
 
 
-class HarvestAction(BaseModel):
+class Action(BaseModel):
     """Defines an abstract class for an harvest action"""
 
-    action: HarvestActionLabel = Field(default=HarvestActionLabel.NONE, description="Label of the action")
-    harvest_mode: HarvestMode = Field(..., description="Type of the trial")
-    probability: float = Field(default=1, description="Probability of reward")
-    amount: float = Field(default=1, description="Amount of reward to be delivered")
-    delay: float = Field(default=0, description="Delay between successful harvest and reward delivery")
-    force_duration: float = Field(default=0.5, description="Duration that the force much stay above threshold")
-    upper_force_threshold: float = Field(
-        default=MAX_LOAD_CELL_FORCE,
-        le=MAX_LOAD_CELL_FORCE,
-        ge=-MAX_LOAD_CELL_FORCE,
-        description="Upper bound of the force target region or the target cached force required.",
+    reward_probability: distributions.Distribution = Field(default=scalar_value(1), description="Probability of reward", validate_default=True)
+    reward_amount: distributions.Distribution = Field(default=scalar_value(1), description="Amount of reward to be delivered", validate_default=True)
+    reward_delay: distributions.Distribution = Field(default=scalar_value(1), description="Delay between successful harvest and reward delivery", validate_default=True)
+    action_duration: distributions.Distribution = Field(default=0.5, description="Duration that the action much stay above threshold", validate_default=True)
+    upper_action_threshold: distributions.Distribution = Field(
+        default=scalar_value(20000),
+        description="Upper bound of the cached action required to get reward.", validate_default=True,
     )
-    lower_force_threshold: float = Field(
-        default=5000,
-        le=MAX_LOAD_CELL_FORCE,
-        ge=-MAX_LOAD_CELL_FORCE,
-        description="Lower bound of the force target region.",
+    lower_action_threshold: distributions.Distribution = Field(
+        default=scalar_value(0),
+        description="Lower bound of the cached action required to get reward. This determines from which value the action is accumulated from.", validate_default=True
     )
     is_operant: bool = Field(default=True, description="Whether the reward delivery is contingent on licking.")
     time_to_collect: Optional[distributions.Distribution] = Field(
@@ -200,34 +122,7 @@ class HarvestAction(BaseModel):
         description="Time to collect the reward after it is available. If null, the reward will be available indefinitely.",
         validate_default=True,
     )
-    action_updaters: List[ActionUpdater] = Field(
-        default=[], description="List of action updaters. All updaters are called at the start of a new trial."
-    )
     continuous_feedback: Optional[ContinuousFeedback] = Field(default=None, description="Continuous feedback settings")
-
-    @model_validator(mode="after")
-    def _validate_thresholds(self) -> Self:
-        if self.upper_force_threshold < self.lower_force_threshold:
-            raise ValueError(
-                f"Upper force threshold ({self.upper_force_threshold}) must be greater than lower force threshold({self.lower_force_threshold})"
-            )
-        return self
-
-    @model_validator(mode="after")
-    def _validate_trial_type(self) -> Self:
-        if self.harvest_mode == HarvestMode.ROI:
-            if not all(
-                [
-                    self._between_thresholds(self.upper_force_threshold),
-                    self._between_thresholds(self.lower_force_threshold),
-                ]
-            ):
-                raise ValueError("Force thresholds must be between -32768 and 32768 for ROI trials")
-        return self
-
-    @staticmethod
-    def _between_thresholds(value: float) -> bool:
-        return value <= MAX_LOAD_CELL_FORCE and value >= -MAX_LOAD_CELL_FORCE
 
 
 class QuiescencePeriod(BaseModel):
@@ -236,25 +131,10 @@ class QuiescencePeriod(BaseModel):
     duration: distributions.Distribution = Field(
         default=scalar_value(0.5), description="Duration of the quiescence period", validate_default=True
     )
-    force_threshold: float = Field(
+    action_threshold: float = Field(
         default=0, le=MAX_LOAD_CELL_FORCE, ge=-MAX_LOAD_CELL_FORCE, description="Time out for the quiescence period"
     )
     has_cue: bool = Field(default=False, description="Whether to use a cue to signal the start of the period.")
-
-
-class InitiationPeriod(BaseModel):
-    """Defines an initiation period"""
-
-    duration: distributions.Distribution = Field(
-        default=scalar_value(0.5), description="Duration of the initiation period", validate_default=True
-    )
-    has_cue: bool = Field(default=True, description="Whether to use a cue to signal the start of the period.")
-    abort_on_force: bool = Field(
-        default=False, description="Whether to abort the trial if a choice is made during the initiation period."
-    )
-    abort_on_force_threshold: float = Field(
-        default=0, le=MAX_LOAD_CELL_FORCE, ge=-MAX_LOAD_CELL_FORCE, description="Time out for the quiescence period"
-    )
 
 
 class ResponsePeriod(BaseModel):
@@ -266,13 +146,7 @@ class ResponsePeriod(BaseModel):
         validate_default=True,
     )
     has_cue: bool = Field(default=True, description="Whether to use a cue to signal the start of the period.")
-    has_feedback: bool = Field(
-        default=False, description="Whether to provide feedback to the animal after the response period."
-    )
-
-
-RightHarvestAction = partial(HarvestAction, action=HarvestActionLabel.RIGHT)
-LeftHarvestAction = partial(HarvestAction, action=HarvestActionLabel.LEFT)
+    action: Action = Field(default=Action(), description="Action to be performed during the response period", validate_default=True)
 
 
 class Trial(BaseModel):
@@ -282,36 +156,9 @@ class Trial(BaseModel):
         default=scalar_value(0.5), description="Time between trials", validate_default=True
     )
     quiescence_period: Optional[QuiescencePeriod] = Field(default=None, description="Quiescence settings")
-    initiation_period: InitiationPeriod = Field(
-        default=InitiationPeriod(), validate_default=True, description="Initiation settings"
-    )
     response_period: ResponsePeriod = Field(
         default=ResponsePeriod(), validate_default=True, description="Response settings"
     )
-    left_harvest: Optional[HarvestAction] = Field(
-        default=None, validate_default=True, description="Specification of the left action"
-    )
-    right_harvest: Optional[HarvestAction] = Field(
-        default=None, validate_default=True, description="Specification of the right action"
-    )
-
-    @field_validator("left_harvest", mode="after")
-    @classmethod
-    def _validate_left_harvest(cls, value: Optional[HarvestAction]) -> Optional[HarvestAction]:
-        return cls._validate_harvest(value, HarvestActionLabel.LEFT)
-
-    @field_validator("right_harvest", mode="after")
-    @classmethod
-    def _validate_right_harvest(cls, value: Optional[HarvestAction]) -> Optional[HarvestAction]:
-        return cls._validate_harvest(value, HarvestActionLabel.RIGHT)
-
-    @staticmethod
-    def _validate_harvest(value: Optional[HarvestAction], harvest_label: HarvestActionLabel) -> Optional[HarvestAction]:
-        if value is None:
-            return value
-        if value.action != harvest_label:
-            raise ValueError(f"Harvest action must be of type {harvest_label}")
-        return value
 
 
 class BlockStatisticsMode(str, Enum):
@@ -323,7 +170,6 @@ class BlockStatisticsMode(str, Enum):
 
 class Block(BaseModel):
     mode: Literal[BlockStatisticsMode.BLOCK] = BlockStatisticsMode.BLOCK
-    is_baited: bool = Field(default=False, description="Whether the trials are baited")
     trials: List[Trial] = Field(default=[], description="List of trials in the block")
     shuffle: bool = Field(default=False, description="Whether to shuffle the trials in the block")
     repeat_count: Optional[int] = Field(
@@ -333,7 +179,6 @@ class Block(BaseModel):
 
 class BlockGenerator(BaseModel):
     mode: Literal[BlockStatisticsMode.BLOCK_GENERATOR] = BlockStatisticsMode.BLOCK_GENERATOR
-    is_baited: bool = Field(default=False, description="Whether the trials are baited")
     block_size: distributions.Distribution = Field(
         default=uniform_distribution_value(min=50, max=60), validate_default=True, description="Size of the block"
     )
@@ -395,23 +240,6 @@ class ForceLookUpTable(BaseModel):
         return self
 
 
-class ForceOperationControl(BaseModel):
-    press_mode: PressMode = Field(
-        default=PressMode.DOUBLE, description="Defines the press mode. Default is to use both sensors individually"
-    )
-    left_index: int = Field(default=0, description="Index of the left sensor")
-    right_index: int = Field(default=1, description="Index of the right sensor")
-    force_lookup_table: Optional[ForceLookUpTable] = Field(
-        default=None, description="Look up table for force projection"
-    )
-
-    @model_validator(mode="after")
-    def _validate_press_mode_versus_lut(self) -> Self:
-        if self.press_mode == PressMode.SINGLE_LOOKUP_TABLE and self.force_lookup_table is None:
-            raise ValueError("Look up table must be provided when using single lookup table mode")
-        if self.press_mode != PressMode.SINGLE_LOOKUP_TABLE:
-            self.force_lookup_table = None
-        return self
 
 
 class SpoutOperationControl(BaseModel):
@@ -421,7 +249,7 @@ class SpoutOperationControl(BaseModel):
 
 
 class OperationControl(BaseModel):
-    force: ForceOperationControl = Field(
+    action_lut: Dict = Field(
         default=ForceOperationControl(), validate_default=True, description="Operation control for force sensor"
     )
     spout: SpoutOperationControl = Field(
