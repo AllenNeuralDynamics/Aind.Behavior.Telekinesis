@@ -65,7 +65,7 @@
               <Combinator xsi:type="rx:Zip" />
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Name>Force/Second</scr:Name>
+              <scr:Name>ActionUnits/Second</scr:Name>
               <scr:Expression>0.5 * (it.Item2.Value + it.Item1.Value) * (it.Item2.Seconds - it.Item1.Seconds)</scr:Expression>
             </Expression>
             <Expression xsi:type="MemberSelector">
@@ -81,7 +81,7 @@
               <Name>ActionPerSecond</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>cachedForce</Name>
+              <Name>cachedActionUnits</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>thisAction</Name>
@@ -104,7 +104,7 @@
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>cachedForce</Name>
+                    <Name>cachedActionUnits</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>targetThreshold</Name>
@@ -147,7 +147,7 @@
               <Name>lowerBound</Name>
             </Expression>
             <Expression xsi:type="rx:Scan">
-              <Name>AccumulateForce</Name>
+              <Name>AccumulateActionUnits</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
@@ -192,7 +192,7 @@
               <Combinator xsi:type="harp:CreateTimestamped" />
             </Expression>
             <Expression xsi:type="rx:PublishSubject">
-              <Name>cachedForce</Name>
+              <Name>cachedActionUnits</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>targetThreshold</Name>

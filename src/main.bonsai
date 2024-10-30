@@ -1026,7 +1026,7 @@
               <rx:Name>StartExperiment</rx:Name>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p12:Mat">
-              <rx:Name>CurrentForceLut</rx:Name>
+              <rx:Name>CurrentLut</rx:Name>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:SoftwareEvent">
               <rx:Name>SoftwareEvents</rx:Name>
@@ -2989,7 +2989,7 @@
                     <rx:Name>ActiveTrial</rx:Name>
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
-                    <Name>ParseForce</Name>
+                    <Name>ParseAction</Name>
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="WorkflowInput">
@@ -3032,7 +3032,7 @@
                           <Selector>Item1</Selector>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>CurrentForceLut</Name>
+                          <Name>CurrentLut</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>trial</Name>
@@ -4027,7 +4027,7 @@
                         </Expression>
                         <Expression xsi:type="Disable">
                           <Builder xsi:type="SubscribeSubject">
-                            <Name>CurrentForceLut</Name>
+                            <Name>CurrentLut</Name>
                           </Builder>
                         </Expression>
                         <Expression xsi:type="Disable">
@@ -4067,7 +4067,7 @@
                           <Builder xsi:type="IncludeWorkflow" Path="Extensions\LogImage.bonsai">
                             <SubjectName>LoggingRootPath</SubjectName>
                             <Modality xsi:nil="true" />
-                            <LogName>ForceLut</LogName>
+                            <LogName>Lut</LogName>
                             <DeviceName />
                           </Builder>
                         </Expression>
@@ -5970,7 +5970,7 @@
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>CurrentForceLut</Name>
+                    <Name>CurrentLut</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:ConvertToImage" />
@@ -6035,7 +6035,7 @@
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Name>ForceVisualization</gui:Name>
+                    <gui:Name>ActionVisualization</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:ColumnCount>2</gui:ColumnCount>
