@@ -259,7 +259,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ActionLookUpTable
+    public partial class ActionLookUpTableFactory
     {
     
         private string _path;
@@ -268,27 +268,27 @@ namespace AindTelekinesisDataSchema.TaskLogic
     
         private double _scale = 1D;
     
-        private double _leftMin;
+        private double _action0Min;
     
-        private double _leftMax;
+        private double _action0Max;
     
-        private double _rightMin;
+        private double _action1Min;
     
-        private double _rightMax;
+        private double _action1Max;
     
-        public ActionLookUpTable()
+        public ActionLookUpTableFactory()
         {
         }
     
-        protected ActionLookUpTable(ActionLookUpTable other)
+        protected ActionLookUpTableFactory(ActionLookUpTableFactory other)
         {
             _path = other._path;
             _offset = other._offset;
             _scale = other._scale;
-            _leftMin = other._leftMin;
-            _leftMax = other._leftMax;
-            _rightMin = other._rightMin;
-            _rightMax = other._rightMax;
+            _action0Min = other._action0Min;
+            _action0Max = other._action0Max;
+            _action1Min = other._action1Min;
+            _action1Max = other._action1Max;
         }
     
         /// <summary>
@@ -344,81 +344,81 @@ namespace AindTelekinesisDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// The lower value of Left force used to linearly scale the input coordinate to.
+        /// The lower value of Action0 used to linearly scale the input coordinate to.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("left_min", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The lower value of Left force used to linearly scale the input coordinate to.")]
-        public double LeftMin
+        [Newtonsoft.Json.JsonPropertyAttribute("action0_min", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower value of Action0 used to linearly scale the input coordinate to.")]
+        public double Action0Min
         {
             get
             {
-                return _leftMin;
+                return _action0Min;
             }
             set
             {
-                _leftMin = value;
+                _action0Min = value;
             }
         }
     
         /// <summary>
-        /// The upper value of Left force used to linearly scale the input coordinate to.
+        /// The upper value of Action0 used to linearly scale the input coordinate to.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("left_max", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The upper value of Left force used to linearly scale the input coordinate to.")]
-        public double LeftMax
+        [Newtonsoft.Json.JsonPropertyAttribute("action0_max", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper value of Action0 used to linearly scale the input coordinate to.")]
+        public double Action0Max
         {
             get
             {
-                return _leftMax;
+                return _action0Max;
             }
             set
             {
-                _leftMax = value;
+                _action0Max = value;
             }
         }
     
         /// <summary>
-        /// The lower value of Right force used to linearly scale the input coordinate to.
+        /// The lower value of Action1 used to linearly scale the input coordinate to.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("right_min", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The lower value of Right force used to linearly scale the input coordinate to.")]
-        public double RightMin
+        [Newtonsoft.Json.JsonPropertyAttribute("action1_min", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower value of Action1 used to linearly scale the input coordinate to.")]
+        public double Action1Min
         {
             get
             {
-                return _rightMin;
+                return _action1Min;
             }
             set
             {
-                _rightMin = value;
+                _action1Min = value;
             }
         }
     
         /// <summary>
-        /// The upper value of Right force used to linearly scale the input coordinate to.
+        /// The upper value of Action1 used to linearly scale the input coordinate to.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("right_max", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The upper value of Right force used to linearly scale the input coordinate to.")]
-        public double RightMax
+        [Newtonsoft.Json.JsonPropertyAttribute("action1_max", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper value of Action1 used to linearly scale the input coordinate to.")]
+        public double Action1Max
         {
             get
             {
-                return _rightMax;
+                return _action1Max;
             }
             set
             {
-                _rightMax = value;
+                _action1Max = value;
             }
         }
     
-        public System.IObservable<ActionLookUpTable> Process()
+        public System.IObservable<ActionLookUpTableFactory> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ActionLookUpTable(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ActionLookUpTableFactory(this)));
         }
     
-        public System.IObservable<ActionLookUpTable> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<ActionLookUpTableFactory> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new ActionLookUpTable(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new ActionLookUpTableFactory(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -426,10 +426,10 @@ namespace AindTelekinesisDataSchema.TaskLogic
             stringBuilder.Append("path = " + _path + ", ");
             stringBuilder.Append("offset = " + _offset + ", ");
             stringBuilder.Append("scale = " + _scale + ", ");
-            stringBuilder.Append("left_min = " + _leftMin + ", ");
-            stringBuilder.Append("left_max = " + _leftMax + ", ");
-            stringBuilder.Append("right_min = " + _rightMin + ", ");
-            stringBuilder.Append("right_max = " + _rightMax);
+            stringBuilder.Append("action0_min = " + _action0Min + ", ");
+            stringBuilder.Append("action0_max = " + _action0Max + ", ");
+            stringBuilder.Append("action1_min = " + _action1Min + ", ");
+            stringBuilder.Append("action1_max = " + _action1Max);
             return true;
         }
     
@@ -708,7 +708,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     public partial class BehaviorAnalogInputActionSource : ActionSource
     {
     
-        private BehaviorAnalogInputActionSourceChannel _channel = AindTelekinesisDataSchema.TaskLogic.BehaviorAnalogInputActionSourceChannel._0;
+        private int _channel = 0;
     
         public BehaviorAnalogInputActionSource()
         {
@@ -723,10 +723,9 @@ namespace AindTelekinesisDataSchema.TaskLogic
         /// <summary>
         /// Index of the behavior analog input channel to use
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("channel")]
         [System.ComponentModel.DescriptionAttribute("Index of the behavior analog input channel to use")]
-        public BehaviorAnalogInputActionSourceChannel Channel
+        public int Channel
         {
             get
             {
@@ -2557,7 +2556,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     public partial class OperationControl
     {
     
-        private System.Collections.Generic.IDictionary<string, ActionLookUpTable> _actionLuts = new System.Collections.Generic.Dictionary<string, ActionLookUpTable>();
+        private System.Collections.Generic.IDictionary<string, ActionLookUpTableFactory> _actionLuts = new System.Collections.Generic.Dictionary<string, ActionLookUpTableFactory>();
     
         private SpoutOperationControl _spout;
     
@@ -2577,7 +2576,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("action_luts", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Look up tables to derive action output from.")]
-        public System.Collections.Generic.IDictionary<string, ActionLookUpTable> ActionLuts
+        public System.Collections.Generic.IDictionary<string, ActionLookUpTableFactory> ActionLuts
         {
             get
             {
@@ -4264,18 +4263,6 @@ namespace AindTelekinesisDataSchema.TaskLogic
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    public enum BehaviorAnalogInputActionSourceChannel
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
-        _0 = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
-        _1 = 1,
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class TruncationParameters2
@@ -4692,9 +4679,9 @@ namespace AindTelekinesisDataSchema.TaskLogic
             return Process<Action>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ActionLookUpTable> source)
+        public System.IObservable<string> Process(System.IObservable<ActionLookUpTableFactory> source)
         {
-            return Process<ActionLookUpTable>(source);
+            return Process<ActionLookUpTableFactory>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<ActionSource> source)
@@ -4917,7 +4904,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Action>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionLookUpTable>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionLookUpTableFactory>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionSource>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioFeedback>))]

@@ -9,8 +9,8 @@ from aind_behavior_experiment_launcher.resource_monitor.resource_monitor_service
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
 
-from aind_behavior_telekinesis.rig import AindForceForagingRig
-from aind_behavior_telekinesis.task_logic import AindForceForagingTaskLogic
+from aind_behavior_telekinesis.rig import AindTelekinesisRig
+from aind_behavior_telekinesis.task_logic import AindTelekinesisTaskLogic
 
 
 def make_launcher() -> behavior_launcher.BehaviorLauncher:
@@ -29,9 +29,9 @@ def make_launcher() -> behavior_launcher.BehaviorLauncher:
     )
 
     return behavior_launcher.BehaviorLauncher(
-        rig_schema_model=AindForceForagingRig,
+        rig_schema_model=AindTelekinesisRig,
         session_schema_model=AindBehaviorSessionModel,
-        task_logic_schema_model=AindForceForagingTaskLogic,
+        task_logic_schema_model=AindTelekinesisTaskLogic,
         data_dir=data_dir,
         config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\Telekinesis",
         temp_dir=r"./local/.temp",

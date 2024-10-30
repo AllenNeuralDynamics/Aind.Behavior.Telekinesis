@@ -115,7 +115,7 @@
       "title": "Action",
       "type": "object"
     },
-    "ActionLookUpTable": {
+    "ActionLookUpTableFactory": {
       "properties": {
         "path": {
           "description": "Reference to the look up table image. Should be a 1 channel image. Value = LUT[Left, Right]",
@@ -134,35 +134,35 @@
           "title": "Scale",
           "type": "number"
         },
-        "left_min": {
-          "description": "The lower value of Left force used to linearly scale the input coordinate to.",
-          "title": "Left Min",
+        "action0_min": {
+          "description": "The lower value of Action0 used to linearly scale the input coordinate to.",
+          "title": "Action0 Min",
           "type": "number"
         },
-        "left_max": {
-          "description": "The upper value of Left force used to linearly scale the input coordinate to.",
-          "title": "Left Max",
+        "action0_max": {
+          "description": "The upper value of Action0 used to linearly scale the input coordinate to.",
+          "title": "Action0 Max",
           "type": "number"
         },
-        "right_min": {
-          "description": "The lower value of Right force used to linearly scale the input coordinate to.",
-          "title": "Right Min",
+        "action1_min": {
+          "description": "The lower value of Action1 used to linearly scale the input coordinate to.",
+          "title": "Action1 Min",
           "type": "number"
         },
-        "right_max": {
-          "description": "The upper value of Right force used to linearly scale the input coordinate to.",
-          "title": "Right Max",
+        "action1_max": {
+          "description": "The upper value of Action1 used to linearly scale the input coordinate to.",
+          "title": "Action1 Max",
           "type": "number"
         }
       },
       "required": [
         "path",
-        "left_min",
-        "left_max",
-        "right_min",
-        "right_max"
+        "action0_min",
+        "action0_max",
+        "action1_min",
+        "action1_max"
       ],
-      "title": "ActionLookUpTable",
+      "title": "ActionLookUpTableFactory",
       "type": "object"
     },
     "ActionSource": {
@@ -271,10 +271,8 @@
         "channel": {
           "default": 0,
           "description": "Index of the behavior analog input channel to use",
-          "enum": [
-            0,
-            1
-          ],
+          "maximum": 1,
+          "minimum": 0,
           "title": "Channel",
           "type": "integer"
         }
@@ -955,7 +953,7 @@
       "properties": {
         "action_luts": {
           "additionalProperties": {
-            "$ref": "#/definitions/ActionLookUpTable"
+            "$ref": "#/definitions/ActionLookUpTableFactory"
           },
           "description": "Look up tables to derive action output from.",
           "title": "Action Luts",

@@ -179,7 +179,7 @@ class LoadCellActionSource(_ActionSource):
 
 class BehaviorAnalogInputActionSource(_ActionSource):
     action_source: Literal[ActionSourceType.BEHAVIOR_ANALOG_INPUT] = ActionSourceType.BEHAVIOR_ANALOG_INPUT
-    channel: Literal[0, 1] = Field(default=0, description="Index of the behavior analog input channel to use")
+    channel: int = Field(default=0, ge=0, le=1, description="Index of the behavior analog input channel to use")
 
 
 ActionSource = TypeAliasType(
@@ -244,7 +244,7 @@ class Environment(BaseModel):
     )
 
 
-class ActionLookUpTable(BaseModel):
+class ActionLookUpTableFactory(BaseModel):
     path: str = Field(
         ..., description="Reference to the look up table image. Should be a 1 channel image. Value = LUT[Left, Right]"
     )
@@ -253,24 +253,24 @@ class ActionLookUpTable(BaseModel):
 
     scale: float = Field(default=1, description="Scale to multiply the look up table value")
 
-    left_min: float = Field(
-        ..., description="The lower value of Left force used to linearly scale the input coordinate to."
+    action0_min: float = Field(
+        ..., description="The lower value of Action0 used to linearly scale the input coordinate to."
     )
-    left_max: float = Field(
-        ..., description="The upper value of Left force used to linearly scale the input coordinate to."
+    action0_max: float = Field(
+        ..., description="The upper value of Action0 used to linearly scale the input coordinate to."
     )
-    right_min: float = Field(
-        ..., description="The lower value of Right force used to linearly scale the input coordinate to."
+    action1_min: float = Field(
+        ..., description="The lower value of Action1 used to linearly scale the input coordinate to."
     )
-    right_max: float = Field(
-        ..., description="The upper value of Right force used to linearly scale the input coordinate to."
+    action1_max: float = Field(
+        ..., description="The upper value of Action1 used to linearly scale the input coordinate to."
     )
 
     @model_validator(mode="after")
     def _validate_bounds(self) -> Self:
-        if self.left_min > self.left_max:
+        if self.action0_min > self.action0_max:
             raise ValueError("Left min must be less than left max")
-        if self.right_min > self.right_max:
+        if self.action1_min > self.action1_max:
             raise ValueError("Right min must be less than right max")
         return self
 
@@ -282,7 +282,7 @@ class SpoutOperationControl(BaseModel):
 
 
 class OperationControl(BaseModel):
-    action_luts: Dict[str, ActionLookUpTable] = Field(
+    action_luts: Dict[str, ActionLookUpTableFactory] = Field(
         ..., validate_default=True, description="Look up tables to derive action output from."
     )
     spout: SpoutOperationControl = Field(
