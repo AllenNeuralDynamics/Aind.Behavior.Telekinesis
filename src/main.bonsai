@@ -3181,7 +3181,7 @@
                     <Combinator xsi:type="rx:Switch" />
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
-                    <Name>CurrentForce</Name>
+                    <Name>CurrentActionVector</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ActionLuts</Name>
@@ -4112,7 +4112,7 @@
                           <DeviceName xsi:nil="true" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>CurrentForce</Name>
+                          <Name>CurrentActionVector</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>deviceName</Name>
@@ -4133,7 +4133,7 @@
                         <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogCsv.bonsai">
                           <SubjectName>LoggingRootPath</SubjectName>
                           <Modality>Behavior</Modality>
-                          <LogName>CurrentForce</LogName>
+                          <LogName>CurrentActionVector</LogName>
                           <DeviceName />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -5942,7 +5942,7 @@
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>CurrentForce</Name>
+                    <Name>CurrentActionVector</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Slice">
@@ -5987,7 +5987,7 @@
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>CurrentForce</Name>
+                    <Name>CurrentActionVector</Name>
                   </Expression>
                   <Expression xsi:type="zg:RollingGraphBuilder">
                     <zg:IndexSelector>Seconds</zg:IndexSelector>

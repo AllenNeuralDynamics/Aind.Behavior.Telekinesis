@@ -95,7 +95,7 @@
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>CurrentForce</Name>
+                          <Name>CurrentActionVector</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Value</Selector>
