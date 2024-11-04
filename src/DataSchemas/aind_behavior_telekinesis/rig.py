@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 # Import core types
-from typing import List, Literal, Optional
+from typing import Annotated, List, Literal, Optional, Union
 
 import aind_behavior_services.calibration.load_cells as lcc
 import aind_behavior_services.calibration.water_valve as wvc
@@ -10,6 +10,7 @@ import aind_behavior_services.rig as rig
 from aind_behavior_services.calibration import aind_manipulator
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
+from typing_extensions import TypeAliasType
 
 __version__ = "0.2.0"
 
@@ -44,6 +45,34 @@ class Networking(BaseModel):
     zmq_subscriber: Literal[None] = Field(default=None)
 
 
+class _OphysInterfaceBase(BaseModel):
+    interface: str
+
+
+class BergamoInterface(_OphysInterfaceBase):
+    interface: Literal["bergamo"] = "bergamo"
+    delay_trial: float = Field(default=0.0, ge=0, description="Arbitrary delay between start trigger and trial start")
+
+
+class Slap2pInterface(_OphysInterfaceBase):
+    interface: Literal["slap2p"] = "slap2p"
+    delay_trial: float = Field(default=0.0, ge=0, description="Arbitrary delay between start trigger and trial start")
+    delay_ready_start: float = Field(
+        default=0.2, ge=0, description="Delay between the system being ready and a start signal being issued"
+    )
+    timeout_for_error: float = Field(
+        default=5,
+        ge=0,
+        description="Time to wait for the ready signal to go low after start. If it doesn't, an error is raised.",
+    )
+
+
+OphysInterface = TypeAliasType(
+    "OphysInterface",
+    Annotated[Union[BergamoInterface, Slap2pInterface], Field(discriminator="interface")],
+)
+
+
 class AindTelekinesisRig(AindBehaviorRigModel):
     version: Literal[__version__] = __version__
     triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
@@ -61,3 +90,4 @@ class AindTelekinesisRig(AindBehaviorRigModel):
     manipulator: AindManipulatorDevice = Field(..., description="Manipulator")
     calibration: RigCalibration = Field(default=None, description="Load cells calibration")
     networking: Networking = Field(default=Networking(), description="Networking settings", validate_default=True)
+    ophys_interface: Optional[OphysInterface] = Field(default=None, description="Ophys interface")

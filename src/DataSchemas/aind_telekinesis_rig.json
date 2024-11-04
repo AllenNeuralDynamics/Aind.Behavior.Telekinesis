@@ -300,6 +300,25 @@
       "title": "BaseModel",
       "type": "object"
     },
+    "BergamoInterface": {
+      "properties": {
+        "interface": {
+          "const": "bergamo",
+          "default": "bergamo",
+          "title": "Interface",
+          "type": "string"
+        },
+        "delay_trial": {
+          "default": 0.0,
+          "description": "Arbitrary delay between start trigger and trial start",
+          "minimum": 0.0,
+          "title": "Delay Trial",
+          "type": "number"
+        }
+      },
+      "title": "BergamoInterface",
+      "type": "object"
+    },
     "CameraController_SpinnakerCamera_": {
       "properties": {
         "device_type": {
@@ -1062,6 +1081,23 @@
       "title": "Networking",
       "type": "object"
     },
+    "OphysInterface": {
+      "discriminator": {
+        "mapping": {
+          "bergamo": "#/definitions/BergamoInterface",
+          "slap2p": "#/definitions/Slap2pInterface"
+        },
+        "propertyName": "interface"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BergamoInterface"
+        },
+        {
+          "$ref": "#/definitions/Slap2pInterface"
+        }
+      ]
+    },
     "Rect": {
       "properties": {
         "x": {
@@ -1107,6 +1143,39 @@
         "water_valve"
       ],
       "title": "RigCalibration",
+      "type": "object"
+    },
+    "Slap2pInterface": {
+      "properties": {
+        "interface": {
+          "const": "slap2p",
+          "default": "slap2p",
+          "title": "Interface",
+          "type": "string"
+        },
+        "delay_trial": {
+          "default": 0.0,
+          "description": "Arbitrary delay between start trigger and trial start",
+          "minimum": 0.0,
+          "title": "Delay Trial",
+          "type": "number"
+        },
+        "delay_ready_start": {
+          "default": 0.2,
+          "description": "Delay between the system being ready and a start signal being issued",
+          "minimum": 0.0,
+          "title": "Delay Ready Start",
+          "type": "number"
+        },
+        "timeout_for_error": {
+          "default": 5,
+          "description": "Time to wait for the ready signal to go low after start. If it doesn't, an error is raised.",
+          "minimum": 0.0,
+          "title": "Timeout For Error",
+          "type": "number"
+        }
+      },
+      "title": "Slap2pInterface",
       "type": "object"
     },
     "SpinnakerCamera": {
@@ -1643,6 +1712,18 @@
         "zmq_subscriber": null
       },
       "description": "Networking settings"
+    },
+    "ophys_interface": {
+      "default": null,
+      "description": "Ophys interface",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/OphysInterface"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [

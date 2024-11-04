@@ -827,6 +827,63 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BergamoInterface : OphysInterface
+    {
+    
+        private double _delayTrial = 0D;
+    
+        public BergamoInterface()
+        {
+        }
+    
+        protected BergamoInterface(BergamoInterface other) : 
+                base(other)
+        {
+            _delayTrial = other._delayTrial;
+        }
+    
+        /// <summary>
+        /// Arbitrary delay between start trigger and trial start
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("delay_trial")]
+        [System.ComponentModel.DescriptionAttribute("Arbitrary delay between start trigger and trial start")]
+        public double DelayTrial
+        {
+            get
+            {
+                return _delayTrial;
+            }
+            set
+            {
+                _delayTrial = value;
+            }
+        }
+    
+        public System.IObservable<BergamoInterface> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BergamoInterface(this)));
+        }
+    
+        public System.IObservable<BergamoInterface> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BergamoInterface(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("delay_trial = " + _delayTrial);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class CameraControllerSpinnakerCamera
     {
     
@@ -2967,6 +3024,53 @@ namespace AindTelekinesisDataSchema.Rig
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "interface")]
+    [JsonInheritanceAttribute("bergamo", typeof(BergamoInterface))]
+    [JsonInheritanceAttribute("slap2p", typeof(Slap2pInterface))]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class OphysInterface
+    {
+    
+        public OphysInterface()
+        {
+        }
+    
+        protected OphysInterface(OphysInterface other)
+        {
+        }
+    
+        public System.IObservable<OphysInterface> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new OphysInterface(this)));
+        }
+    
+        public System.IObservable<OphysInterface> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new OphysInterface(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Rect
@@ -3156,6 +3260,106 @@ namespace AindTelekinesisDataSchema.Rig
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Slap2pInterface : OphysInterface
+    {
+    
+        private double _delayTrial = 0D;
+    
+        private double _delayReadyStart = 0.2D;
+    
+        private double _timeoutForError = 5D;
+    
+        public Slap2pInterface()
+        {
+        }
+    
+        protected Slap2pInterface(Slap2pInterface other) : 
+                base(other)
+        {
+            _delayTrial = other._delayTrial;
+            _delayReadyStart = other._delayReadyStart;
+            _timeoutForError = other._timeoutForError;
+        }
+    
+        /// <summary>
+        /// Arbitrary delay between start trigger and trial start
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("delay_trial")]
+        [System.ComponentModel.DescriptionAttribute("Arbitrary delay between start trigger and trial start")]
+        public double DelayTrial
+        {
+            get
+            {
+                return _delayTrial;
+            }
+            set
+            {
+                _delayTrial = value;
+            }
+        }
+    
+        /// <summary>
+        /// Delay between the system being ready and a start signal being issued
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("delay_ready_start")]
+        [System.ComponentModel.DescriptionAttribute("Delay between the system being ready and a start signal being issued")]
+        public double DelayReadyStart
+        {
+            get
+            {
+                return _delayReadyStart;
+            }
+            set
+            {
+                _delayReadyStart = value;
+            }
+        }
+    
+        /// <summary>
+        /// Time to wait for the ready signal to go low after start. If it doesn't, an error is raised.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("timeout_for_error")]
+        [System.ComponentModel.DescriptionAttribute("Time to wait for the ready signal to go low after start. If it doesn\'t, an error " +
+            "is raised.")]
+        public double TimeoutForError
+        {
+            get
+            {
+                return _timeoutForError;
+            }
+            set
+            {
+                _timeoutForError = value;
+            }
+        }
+    
+        public System.IObservable<Slap2pInterface> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Slap2pInterface(this)));
+        }
+    
+        public System.IObservable<Slap2pInterface> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Slap2pInterface(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("delay_trial = " + _delayTrial + ", ");
+            stringBuilder.Append("delay_ready_start = " + _delayReadyStart + ", ");
+            stringBuilder.Append("timeout_for_error = " + _timeoutForError);
+            return true;
         }
     }
 
@@ -4390,6 +4594,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private Networking _networking;
     
+        private OphysInterface _ophysInterface;
+    
         public AindTelekinesisRig()
         {
         }
@@ -4411,6 +4617,7 @@ namespace AindTelekinesisDataSchema.Rig
             _manipulator = other._manipulator;
             _calibration = other._calibration;
             _networking = other._networking;
+            _ophysInterface = other._ophysInterface;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
@@ -4671,6 +4878,24 @@ namespace AindTelekinesisDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Ophys interface
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("ophys_interface")]
+        [System.ComponentModel.DescriptionAttribute("Ophys interface")]
+        public OphysInterface OphysInterface
+        {
+            get
+            {
+                return _ophysInterface;
+            }
+            set
+            {
+                _ophysInterface = value;
+            }
+        }
+    
         public System.IObservable<AindTelekinesisRig> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindTelekinesisRig(this)));
@@ -4697,7 +4922,8 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
             stringBuilder.Append("manipulator = " + _manipulator + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("networking = " + _networking);
+            stringBuilder.Append("networking = " + _networking + ", ");
+            stringBuilder.Append("ophys_interface = " + _ophysInterface);
             return true;
         }
     
@@ -4913,6 +5139,47 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BergamoInterface>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Slap2pInterface>))]
+    public partial class MatchOphysInterface : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(OphysInterface);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchOphysInterface),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<OphysInterface> source)
+            where TResult : OphysInterface
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<OphysInterface>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
     public partial class MatchVideoWriter : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -5001,6 +5268,11 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<BaseModel>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<BergamoInterface> source)
+        {
+            return Process<BergamoInterface>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<CameraControllerSpinnakerCamera> source)
         {
             return Process<CameraControllerSpinnakerCamera>(source);
@@ -5086,6 +5358,11 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<Networking>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<OphysInterface> source)
+        {
+            return Process<OphysInterface>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Rect> source)
         {
             return Process<Rect>(source);
@@ -5094,6 +5371,11 @@ namespace AindTelekinesisDataSchema.Rig
         public System.IObservable<string> Process(System.IObservable<RigCalibration> source)
         {
             return Process<RigCalibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Slap2pInterface> source)
+        {
+            return Process<Slap2pInterface>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
@@ -5167,6 +5449,7 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AxisConfiguration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BergamoInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
@@ -5184,8 +5467,10 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MeasuredWeight>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<OphysInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rect>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Slap2pInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
