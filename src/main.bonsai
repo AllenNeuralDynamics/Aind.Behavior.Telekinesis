@@ -6334,7 +6334,7 @@
                     <gui:CellSpans />
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>AnalogInputData</Name>
@@ -6345,9 +6345,9 @@
                     <zg:SymbolType>None</zg:SymbolType>
                     <zg:LineWidth>3</zg:LineWidth>
                     <zg:CurveSettings />
-                    <zg:Capacity xsi:nil="true" />
-                    <zg:Min xsi:nil="true" />
-                    <zg:Max xsi:nil="true" />
+                    <zg:Capacity>5000</zg:Capacity>
+                    <zg:Min>0</zg:Min>
+                    <zg:Max>4096</zg:Max>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
@@ -6355,13 +6355,13 @@
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:ColumnCount>1</gui:ColumnCount>
-                    <gui:RowCount>2</gui:RowCount>
+                    <gui:RowCount>1</gui:RowCount>
                     <gui:ColumnStyles />
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
                   <Expression xsi:type="gui:TabControlBuilder">
                     <gui:Name>ActionInputs</gui:Name>
