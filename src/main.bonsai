@@ -32,6 +32,7 @@
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
+                 xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -6119,13 +6120,6 @@
         <Name>Visualizers</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TriggeredCamerasStream</Name>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core.Design:SpinnakerCameraControllerVisualizer.bonsai" />
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>TrialVisualizer</Name>
               <Workflow>
@@ -6277,10 +6271,11 @@
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
+              <gui:Name>TaskVisualization</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:ColumnCount>1</gui:ColumnCount>
-              <gui:RowCount>3</gui:RowCount>
+              <gui:RowCount>2</gui:RowCount>
               <gui:ColumnStyles />
               <gui:RowStyles>
                 <gui:RowStyle>
@@ -6298,19 +6293,125 @@
               </gui:RowStyles>
               <gui:CellSpans />
             </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TriggeredCamerasStream</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core.Design:SpinnakerCameraControllerVisualizer.bonsai" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>ActionInputs</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RawLoadCellData</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CalibratedLoadCellData</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>RawLoadCells</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>AnalogInputData</Name>
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphBuilder">
+                    <zg:IndexSelector>Seconds</zg:IndexSelector>
+                    <zg:ValueSelector>Value.Item1,Value.Item2</zg:ValueSelector>
+                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:LineWidth>3</zg:LineWidth>
+                    <zg:CurveSettings />
+                    <zg:Capacity xsi:nil="true" />
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>AnalogInputData</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="gui:TabControlBuilder">
+                    <gui:Name>ActionInputs</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="6" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="13" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="14" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TabControlVisualizer" />
+            </Expression>
+            <Expression xsi:type="gui:TabControlBuilder">
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+            </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="9" Label="Source1" />
+            <Edge From="1" To="6" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="9" Label="Source2" />
-            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source2" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source3" />
+            <Edge From="7" To="13" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="13" Label="Source2" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source3" />
+            <Edge From="13" To="14" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
