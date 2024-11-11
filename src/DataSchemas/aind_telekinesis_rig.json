@@ -441,6 +441,34 @@
       "title": "CameraController[WebCamera]",
       "type": "object"
     },
+    "ConnectedClockOutput": {
+      "properties": {
+        "target_device": {
+          "default": null,
+          "description": "Optional device name to provide user additional information",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Device"
+        },
+        "output_channel": {
+          "description": "Output channel",
+          "minimum": 0,
+          "title": "Output Channel",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "output_channel"
+      ],
+      "title": "ConnectedClockOutput",
+      "type": "object"
+    },
     "HarpAnalogInput": {
       "properties": {
         "device_type": {
@@ -622,6 +650,15 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
+        },
+        "connected_clock_outputs": {
+          "default": [],
+          "description": "Connected clock outputs",
+          "items": {
+            "$ref": "#/definitions/ConnectedClockOutput"
+          },
+          "title": "Connected Clock Outputs",
+          "type": "array"
         }
       },
       "required": [
@@ -1618,7 +1655,7 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.8.5",
+      "default": "0.8.6",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
@@ -1670,15 +1707,6 @@
     "harp_clock_generator": {
       "$ref": "#/definitions/HarpClockGenerator",
       "description": "Harp clock generator"
-    },
-    "harp_clock_repeaters": {
-      "default": [],
-      "description": "Harp clock repeaters",
-      "items": {
-        "$ref": "#/definitions/HarpClockGenerator"
-      },
-      "title": "Harp Clock Repeaters",
-      "type": "array"
     },
     "harp_analog_input": {
       "default": null,

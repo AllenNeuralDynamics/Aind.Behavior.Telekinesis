@@ -1182,6 +1182,92 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ConnectedClockOutput
+    {
+    
+        private string _targetDevice;
+    
+        private int _outputChannel;
+    
+        public ConnectedClockOutput()
+        {
+        }
+    
+        protected ConnectedClockOutput(ConnectedClockOutput other)
+        {
+            _targetDevice = other._targetDevice;
+            _outputChannel = other._outputChannel;
+        }
+    
+        /// <summary>
+        /// Optional device name to provide user additional information
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("target_device")]
+        [System.ComponentModel.DescriptionAttribute("Optional device name to provide user additional information")]
+        public string TargetDevice
+        {
+            get
+            {
+                return _targetDevice;
+            }
+            set
+            {
+                _targetDevice = value;
+            }
+        }
+    
+        /// <summary>
+        /// Output channel
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("output_channel", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Output channel")]
+        public int OutputChannel
+        {
+            get
+            {
+                return _outputChannel;
+            }
+            set
+            {
+                _outputChannel = value;
+            }
+        }
+    
+        public System.IObservable<ConnectedClockOutput> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ConnectedClockOutput(this)));
+        }
+    
+        public System.IObservable<ConnectedClockOutput> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ConnectedClockOutput(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("target_device = " + _targetDevice + ", ");
+            stringBuilder.Append("output_channel = " + _outputChannel);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpAnalogInput
     {
     
@@ -1525,6 +1611,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _portName;
     
+        private System.Collections.Generic.List<ConnectedClockOutput> _connectedClockOutputs = new System.Collections.Generic.List<ConnectedClockOutput>();
+    
         public HarpClockGenerator()
         {
         }
@@ -1537,6 +1625,7 @@ namespace AindTelekinesisDataSchema.Rig
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
             _portName = other._portName;
+            _connectedClockOutputs = other._connectedClockOutputs;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
@@ -1635,6 +1724,24 @@ namespace AindTelekinesisDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Connected clock outputs
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("connected_clock_outputs")]
+        [System.ComponentModel.DescriptionAttribute("Connected clock outputs")]
+        public System.Collections.Generic.List<ConnectedClockOutput> ConnectedClockOutputs
+        {
+            get
+            {
+                return _connectedClockOutputs;
+            }
+            set
+            {
+                _connectedClockOutputs = value;
+            }
+        }
+    
         public System.IObservable<HarpClockGenerator> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpClockGenerator(this)));
@@ -1652,7 +1759,8 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName);
+            stringBuilder.Append("port_name = " + _portName + ", ");
+            stringBuilder.Append("connected_clock_outputs = " + _connectedClockOutputs);
             return true;
         }
     
@@ -4564,7 +4672,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class AindTelekinesisRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.5";
+        private string _aindBehaviorServicesPkgVersion = "0.8.6";
     
         private string _version = "0.2.0";
     
@@ -4583,8 +4691,6 @@ namespace AindTelekinesisDataSchema.Rig
         private LoadCells _harpLoadCells = new LoadCells();
     
         private HarpClockGenerator _harpClockGenerator = new HarpClockGenerator();
-    
-        private System.Collections.Generic.List<HarpClockGenerator> _harpClockRepeaters = new System.Collections.Generic.List<HarpClockGenerator>();
     
         private HarpAnalogInput _harpAnalogInput;
     
@@ -4612,7 +4718,6 @@ namespace AindTelekinesisDataSchema.Rig
             _harpLickometer = other._harpLickometer;
             _harpLoadCells = other._harpLoadCells;
             _harpClockGenerator = other._harpClockGenerator;
-            _harpClockRepeaters = other._harpClockRepeaters;
             _harpAnalogInput = other._harpAnalogInput;
             _manipulator = other._manipulator;
             _calibration = other._calibration;
@@ -4789,24 +4894,6 @@ namespace AindTelekinesisDataSchema.Rig
         }
     
         /// <summary>
-        /// Harp clock repeaters
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_repeaters")]
-        [System.ComponentModel.DescriptionAttribute("Harp clock repeaters")]
-        public System.Collections.Generic.List<HarpClockGenerator> HarpClockRepeaters
-        {
-            get
-            {
-                return _harpClockRepeaters;
-            }
-            set
-            {
-                _harpClockRepeaters = value;
-            }
-        }
-    
-        /// <summary>
         /// Harp analog input
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -4918,7 +5005,6 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("harp_lickometer = " + _harpLickometer + ", ");
             stringBuilder.Append("harp_load_cells = " + _harpLoadCells + ", ");
             stringBuilder.Append("harp_clock_generator = " + _harpClockGenerator + ", ");
-            stringBuilder.Append("harp_clock_repeaters = " + _harpClockRepeaters + ", ");
             stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
             stringBuilder.Append("manipulator = " + _manipulator + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
@@ -5283,6 +5369,11 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<CameraControllerWebCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ConnectedClockOutput> source)
+        {
+            return Process<ConnectedClockOutput>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpAnalogInput> source)
         {
             return Process<HarpAnalogInput>(source);
@@ -5452,6 +5543,7 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BergamoInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConnectedClockOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
