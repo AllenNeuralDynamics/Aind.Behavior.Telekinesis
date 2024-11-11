@@ -818,6 +818,7 @@
                       <p9:Message>Repository is not clean! Please discard all local changes.</p9:Message>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\ValidateHarpClkOutput.bonsai" />
                 </Nodes>
                 <Edges>
                   <Edge From="1" To="2" Label="Source1" />
