@@ -2353,7 +2353,7 @@
                     <Selector>OphysInterface</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="Extensions\IsNull.bonsai" />
-                  <Expression xsi:type="rx:AsyncSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>SkipOphysInterfaceHandshake</Name>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p6:Unit">
@@ -2470,14 +2470,6 @@
                         <Expression xsi:type="beh:Parse">
                           <harp:Register xsi:type="beh:TimestampedDigitalInputState" />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value</Selector>
-                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
@@ -2485,15 +2477,28 @@
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
                       </Edges>
                     </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
                   </Expression>
                   <Expression xsi:type="HasFlag">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="beh:DigitalInputs">
                       <Value>DIPort0</Value>
                     </Operand>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Seconds</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
@@ -2502,6 +2507,51 @@
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>IsReadyOphysInterface</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpBehaviorEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="beh:Parse">
+                    <harp:Register xsi:type="beh:TimestampedDigitalInputState" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="OphysStrobePin" />
+                  </Expression>
+                  <Expression xsi:type="HasFlag">
+                    <Operand xsi:type="WorkflowProperty" TypeArguments="beh:DigitalInputs">
+                      <Value>DIPort0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:DistinctUntilChanged" />
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Seconds</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>OphysFrameStrobe</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -2519,8 +2569,25 @@
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="15" To="18" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="17" To="19" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="25" To="31" Label="Source1" />
+                  <Edge From="26" To="28" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source2" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="32" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5472,6 +5539,221 @@
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TabControlVisualizer" />
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:Visualizer">
+              <Name>OphysInterfaceVisualizer</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>StartOphysInterface</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>false</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="BitwiseNot" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Delay">
+                      <rx:DueTime>PT0.1S</rx:DueTime>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpTimestampSource</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphBuilder">
+                    <zg:IndexSelector>Seconds</zg:IndexSelector>
+                    <zg:ValueSelector>Value</zg:ValueSelector>
+                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:LineWidth>2</zg:LineWidth>
+                    <zg:CurveSettings>
+                      <zg:CurveConfiguration>
+                        <zg:Label>StartTrigger</zg:Label>
+                        <zg:Color>#00C000</zg:Color>
+                      </zg:CurveConfiguration>
+                    </zg:CurveSettings>
+                    <zg:Capacity xsi:nil="true" />
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>StopOphysInterface</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>false</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="BitwiseNot" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Delay">
+                      <rx:DueTime>PT0.1S</rx:DueTime>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpTimestampSource</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphBuilder">
+                    <zg:IndexSelector>Seconds</zg:IndexSelector>
+                    <zg:ValueSelector>Value</zg:ValueSelector>
+                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:LineWidth>2</zg:LineWidth>
+                    <zg:CurveSettings>
+                      <zg:CurveConfiguration>
+                        <zg:Label>StopTrigger</zg:Label>
+                        <zg:Color>Red</zg:Color>
+                      </zg:CurveConfiguration>
+                    </zg:CurveSettings>
+                    <zg:Capacity xsi:nil="true" />
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>IsReadyOphysInterface</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpTimestampSource</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphBuilder">
+                    <zg:IndexSelector>Seconds</zg:IndexSelector>
+                    <zg:ValueSelector>Value</zg:ValueSelector>
+                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:LineWidth>2</zg:LineWidth>
+                    <zg:CurveSettings>
+                      <zg:CurveConfiguration>
+                        <zg:Label>IsArmed</zg:Label>
+                        <zg:Color>#8080FF</zg:Color>
+                      </zg:CurveConfiguration>
+                    </zg:CurveSettings>
+                    <zg:Capacity xsi:nil="true" />
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>OphysFrameStrobe</Name>
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphBuilder">
+                    <zg:IndexSelector>Seconds</zg:IndexSelector>
+                    <zg:ValueSelector>Value</zg:ValueSelector>
+                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:LineWidth>1</zg:LineWidth>
+                    <zg:CurveSettings>
+                      <zg:CurveConfiguration>
+                        <zg:Label>FrameStrobe</zg:Label>
+                        <zg:Color>#E0E0E0</zg:Color>
+                      </zg:CurveConfiguration>
+                    </zg:CurveSettings>
+                    <zg:Capacity xsi:nil="true" />
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphPanelBuilder">
+                    <zg:Name>OphysInterfaceState</zg:Name>
+                    <zg:ReverseX>false</zg:ReverseX>
+                    <zg:ReverseY>false</zg:ReverseY>
+                    <zg:Span>30</zg:Span>
+                    <zg:Capacity xsi:nil="true" />
+                    <zg:BaseAxis>X</zg:BaseAxis>
+                    <zg:BarType>Cluster</zg:BarType>
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphPanelVisualizer" />
+                  </Expression>
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>OphysInterface</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>1</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="6" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="29" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="11" To="14" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
+                  <Edge From="14" To="16" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="29" Label="Source2" />
+                  <Edge From="20" To="22" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="29" Label="Source3" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source4" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                  <Edge From="31" To="32" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="gui:TabControlBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
@@ -5486,13 +5768,16 @@
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source2" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="13" Label="Source1" />
+            <Edge From="7" To="16" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="13" Label="Source2" />
+            <Edge From="10" To="16" Label="Source2" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source3" />
+            <Edge From="12" To="16" Label="Source3" />
             <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source4" />
+            <Edge From="16" To="17" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
