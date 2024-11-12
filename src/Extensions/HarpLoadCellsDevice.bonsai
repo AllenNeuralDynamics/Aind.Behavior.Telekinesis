@@ -79,7 +79,7 @@
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
-        <Name>HarpBehaviorCommands</Name>
+        <Name>HarpLoadCellsCommands</Name>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoadCellsCalibration.bonsai" />
     </Nodes>

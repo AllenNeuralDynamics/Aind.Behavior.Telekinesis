@@ -2902,6 +2902,23 @@
                           <DeviceName>StepperDriver</DeviceName>
                           <HarpDeviceName>StepperDriver</HarpDeviceName>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpEnvironmentSensorEvents</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Modality</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Modality" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogHarpDevice.bonsai">
+                          <SubjectName>LoggingRootPath</SubjectName>
+                          <Modality>Behavior</Modality>
+                          <DeviceName>EnvironmentSensor</DeviceName>
+                          <HarpDeviceName>EnvironmentSensor</HarpDeviceName>
+                        </Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="3" Label="Source1" />
@@ -2922,6 +2939,9 @@
                         <Edge From="20" To="23" Label="Source1" />
                         <Edge From="21" To="22" Label="Source1" />
                         <Edge From="22" To="23" Label="Source2" />
+                        <Edge From="24" To="27" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -3115,6 +3135,35 @@
                           <DeviceName>HarpCommands/AnalogInput</DeviceName>
                           <HarpDeviceName>AnalogInput</HarpDeviceName>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpEnvironmentSensorCommands</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>HarpSeconds</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p15:ModifyMessage">
+                            <p15:Address xsi:nil="true" />
+                            <p15:MessageTypeModified xsi:nil="true" />
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Modality</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Modality" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogHarpDevice.bonsai">
+                          <SubjectName>LoggingRootPath</SubjectName>
+                          <Modality>Behavior</Modality>
+                          <DeviceName>HarpCommands/EnvironmentSensor</DeviceName>
+                          <HarpDeviceName>EnvironmentSensor</HarpDeviceName>
+                        </Expression>
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
@@ -3155,6 +3204,12 @@
                         <Edge From="41" To="44" Label="Source1" />
                         <Edge From="42" To="43" Label="Source1" />
                         <Edge From="43" To="44" Label="Source2" />
+                        <Edge From="45" To="47" Label="Source1" />
+                        <Edge From="46" To="47" Label="Source2" />
+                        <Edge From="47" To="48" Label="Source1" />
+                        <Edge From="48" To="51" Label="Source1" />
+                        <Edge From="49" To="50" Label="Source1" />
+                        <Edge From="50" To="51" Label="Source2" />
                       </Edges>
                     </Workflow>
                   </Expression>

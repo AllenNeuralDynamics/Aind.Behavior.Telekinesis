@@ -1782,6 +1782,170 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class HarpEnvironmentSensor
+    {
+    
+        private string _deviceType = "environmentsensor";
+    
+        private BaseModel _additionalSettings;
+    
+        private BaseModel _calibration;
+    
+        private int _whoAmI = 1405;
+    
+        private string _serialNumber;
+    
+        private string _portName;
+    
+        public HarpEnvironmentSensor()
+        {
+        }
+    
+        protected HarpEnvironmentSensor(HarpEnvironmentSensor other)
+        {
+            _deviceType = other._deviceType;
+            _additionalSettings = other._additionalSettings;
+            _calibration = other._calibration;
+            _whoAmI = other._whoAmI;
+            _serialNumber = other._serialNumber;
+            _portName = other._portName;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Additional settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
+        [System.ComponentModel.DescriptionAttribute("Additional settings")]
+        public BaseModel AdditionalSettings
+        {
+            get
+            {
+                return _additionalSettings;
+            }
+            set
+            {
+                _additionalSettings = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        public BaseModel Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
+        public int WhoAmI
+        {
+            get
+            {
+                return _whoAmI;
+            }
+            set
+            {
+                _whoAmI = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device serial number
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
+        [System.ComponentModel.DescriptionAttribute("Device serial number")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device port name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Device port name")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        public System.IObservable<HarpEnvironmentSensor> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpEnvironmentSensor(this)));
+        }
+    
+        public System.IObservable<HarpEnvironmentSensor> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new HarpEnvironmentSensor(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
+            stringBuilder.Append("calibration = " + _calibration + ", ");
+            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
+            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
+            stringBuilder.Append("port_name = " + _portName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpLickometer
     {
     
@@ -4694,6 +4858,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private HarpAnalogInput _harpAnalogInput;
     
+        private HarpEnvironmentSensor _harpEnvironmentSensor;
+    
         private AindManipulatorDevice _manipulator = new AindManipulatorDevice();
     
         private RigCalibration _calibration;
@@ -4719,6 +4885,7 @@ namespace AindTelekinesisDataSchema.Rig
             _harpLoadCells = other._harpLoadCells;
             _harpClockGenerator = other._harpClockGenerator;
             _harpAnalogInput = other._harpAnalogInput;
+            _harpEnvironmentSensor = other._harpEnvironmentSensor;
             _manipulator = other._manipulator;
             _calibration = other._calibration;
             _networking = other._networking;
@@ -4912,6 +5079,24 @@ namespace AindTelekinesisDataSchema.Rig
         }
     
         /// <summary>
+        /// Harp environment sensor
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_environment_sensor")]
+        [System.ComponentModel.DescriptionAttribute("Harp environment sensor")]
+        public HarpEnvironmentSensor HarpEnvironmentSensor
+        {
+            get
+            {
+                return _harpEnvironmentSensor;
+            }
+            set
+            {
+                _harpEnvironmentSensor = value;
+            }
+        }
+    
+        /// <summary>
         /// Manipulator
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5006,6 +5191,7 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("harp_load_cells = " + _harpLoadCells + ", ");
             stringBuilder.Append("harp_clock_generator = " + _harpClockGenerator + ", ");
             stringBuilder.Append("harp_analog_input = " + _harpAnalogInput + ", ");
+            stringBuilder.Append("harp_environment_sensor = " + _harpEnvironmentSensor + ", ");
             stringBuilder.Append("manipulator = " + _manipulator + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("networking = " + _networking + ", ");
@@ -5389,6 +5575,11 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<HarpClockGenerator>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<HarpEnvironmentSensor> source)
+        {
+            return Process<HarpEnvironmentSensor>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpLickometer> source)
         {
             return Process<HarpLickometer>(source);
@@ -5547,6 +5738,7 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpEnvironmentSensor>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLickometer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibrationOutput>))]
