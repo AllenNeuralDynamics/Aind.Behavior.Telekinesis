@@ -6736,11 +6736,13 @@ it.Value[7] as Channel7
                     <zg:SymbolType>None</zg:SymbolType>
                     <zg:LineWidth>2</zg:LineWidth>
                     <zg:CurveSettings />
-                    <zg:Capacity>2</zg:Capacity>
+                    <zg:Capacity xsi:nil="true" />
                     <zg:Min xsi:nil="true" />
                     <zg:Max xsi:nil="true" />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Name>MotorFeedback</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -6750,12 +6752,6 @@ it.Value[7] as Channel7
                     <gui:ColumnStyles />
                     <gui:RowStyles />
                     <gui:CellSpans />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TabControlBuilder">
-                    <gui:Name>ContinuousFeedbackMonitor</gui:Name>
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -6769,13 +6765,11 @@ it.Value[7] as Channel7
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TabControlVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
             </Expression>
             <Expression xsi:type="gui:TabControlBuilder">
               <gui:Enabled>true</gui:Enabled>
