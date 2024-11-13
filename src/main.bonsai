@@ -6732,11 +6732,15 @@ it.Value[7] as Channel7
                   </Expression>
                   <Expression xsi:type="zg:RollingGraphBuilder">
                     <zg:IndexSelector>Seconds</zg:IndexSelector>
-                    <zg:ValueSelector>Seconds, Value</zg:ValueSelector>
-                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:ValueSelector>Value</zg:ValueSelector>
+                    <zg:SymbolType>Circle</zg:SymbolType>
                     <zg:LineWidth>2</zg:LineWidth>
-                    <zg:CurveSettings />
-                    <zg:Capacity xsi:nil="true" />
+                    <zg:CurveSettings>
+                      <zg:CurveConfiguration>
+                        <zg:Color>#C000C0</zg:Color>
+                      </zg:CurveConfiguration>
+                    </zg:CurveSettings>
+                    <zg:Capacity>5000</zg:Capacity>
                     <zg:Min xsi:nil="true" />
                     <zg:Max xsi:nil="true" />
                   </Expression>
