@@ -30,6 +30,7 @@
                  xmlns:p15="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
+                 xmlns:p16="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -5891,11 +5892,15 @@
                   <Expression xsi:type="MemberSelector">
                     <Selector>Item1</Selector>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PointVisualizer" />
+                  </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Item2</Selector>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:IplImageVisualizer" />
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentActionVector</Name>
                   </Expression>
@@ -5918,7 +5923,9 @@
                     <zg:Min xsi:nil="true" />
                     <zg:Max xsi:nil="true" />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:LabelBuilder">
                     <gui:Name />
                     <gui:Enabled>true</gui:Enabled>
@@ -5926,7 +5933,9 @@
                     <gui:Font>Microsoft Sans Serif, 14.25pt</gui:Font>
                     <gui:Text>ActionVector</gui:Text>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -5936,7 +5945,9 @@
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentActionVector</Name>
                   </Expression>
@@ -5959,7 +5970,9 @@
                     <zg:Min xsi:nil="true" />
                     <zg:Max xsi:nil="true" />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:LabelBuilder">
                     <gui:Name />
                     <gui:Enabled>true</gui:Enabled>
@@ -5967,7 +5980,9 @@
                     <gui:Font>Microsoft Sans Serif, 14.25pt</gui:Font>
                     <gui:Text>ProjectedAction</gui:Text>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -5977,7 +5992,9 @@
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>LiveHarvestOutcome</Name>
                   </Expression>
@@ -6002,7 +6019,9 @@
                     <zg:Min xsi:nil="true" />
                     <zg:Max xsi:nil="true" />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="zg:RollingGraphVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:LabelBuilder">
                     <gui:Name />
                     <gui:Enabled>true</gui:Enabled>
@@ -6010,7 +6029,9 @@
                     <gui:Font>Microsoft Sans Serif, 14.25pt</gui:Font>
                     <gui:Text>LiveHarvestOutcome</gui:Text>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -6020,7 +6041,9 @@
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="VisualizerMapping">
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+                  </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Name>ActionVisualization</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -6075,7 +6098,9 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SoftwareEvents</Name>
             </Expression>
@@ -6090,7 +6115,9 @@
               <gui:RowStyles />
               <gui:CellSpans />
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Name>TaskVisualization</gui:Name>
               <gui:Enabled>true</gui:Enabled>
@@ -6101,11 +6128,7 @@
               <gui:RowStyles>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.4</gui:Height>
-                </gui:RowStyle>
-                <gui:RowStyle>
-                  <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Height>0.4</gui:Height>
+                  <gui:Height>0.8</gui:Height>
                 </gui:RowStyle>
                 <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
@@ -6114,7 +6137,9 @@
               </gui:RowStyles>
               <gui:CellSpans />
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TriggeredCamerasStream</Name>
             </Expression>
