@@ -916,6 +916,9 @@ Item2.Item3 as LowerThr)]]></Text>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p10:Unit">
               <rx:Name>StartExperiment</rx:Name>
             </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Double,p3:ContinuousFeedback)">
+              <rx:Name>ContinuousFeedbackMonitor</rx:Name>
+            </Expression>
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p11:Mat">
               <rx:Name>CurrentLut</rx:Name>
             </Expression>
@@ -1003,19 +1006,19 @@ Item2.Item3 as LowerThr)]]></Text>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="23" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="24" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="23" Label="Source2" />
-            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="24" Label="Source2" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source3" />
-            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source3" />
+            <Edge From="24" To="25" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2365,6 +2368,22 @@ Item2.Item3 as LowerThr)]]></Text>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>interpolatedFeedback</Name>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>thisFeedback</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
+                        </Expression>
+                        <Expression xsi:type="p3:MatchContinuousFeedback" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>ContinuousFeedbackMonitor</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>interpolatedFeedback</Name>
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>SpoutPosition</Name>
                         </Expression>
@@ -2423,17 +2442,22 @@ Item2.Item3 as LowerThr)]]></Text>
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="9" To="10" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="17" Label="Source1" />
+                        <Edge From="12" To="16" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source2" />
-                        <Edge From="18" To="20" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source2" />
+                        <Edge From="15" To="16" Label="Source2" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="23" Label="Source1" />
                         <Edge From="20" To="21" Label="Source1" />
                         <Edge From="21" To="22" Label="Source1" />
-                        <Edge From="22" To="23" Label="Source1" />
-                        <Edge From="23" To="24" Label="Source1" />
+                        <Edge From="22" To="23" Label="Source2" />
+                        <Edge From="24" To="26" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source2" />
+                        <Edge From="26" To="27" Label="Source1" />
+                        <Edge From="27" To="28" Label="Source1" />
+                        <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="29" To="30" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -6678,6 +6702,81 @@ it.Value[7] as Channel7
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:Visualizer">
+              <Name>ContinuousFeedbackMonitor</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Annotation">
+                    <Name>TODO</Name>
+                    <Text><![CDATA[This should be generalized across all feedback modes]]></Text>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ContinuousFeedbackMonitor</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpTimestampSource</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="zg:RollingGraphBuilder">
+                    <zg:IndexSelector>Seconds</zg:IndexSelector>
+                    <zg:ValueSelector>Seconds, Value</zg:ValueSelector>
+                    <zg:SymbolType>None</zg:SymbolType>
+                    <zg:LineWidth>2</zg:LineWidth>
+                    <zg:CurveSettings />
+                    <zg:Capacity>2</zg:Capacity>
+                    <zg:Min xsi:nil="true" />
+                    <zg:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>MotorFeedback</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>1</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TabControlBuilder">
+                    <gui:Name>ContinuousFeedbackMonitor</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TabControlVisualizer" />
+            </Expression>
             <Expression xsi:type="gui:TabControlBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
@@ -6693,17 +6792,20 @@ it.Value[7] as Channel7
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="18" Label="Source1" />
+            <Edge From="8" To="21" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="18" Label="Source2" />
+            <Edge From="11" To="21" Label="Source2" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="18" Label="Source3" />
+            <Edge From="14" To="21" Label="Source3" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="18" Label="Source4" />
+            <Edge From="17" To="21" Label="Source4" />
             <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source5" />
+            <Edge From="21" To="22" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
