@@ -162,7 +162,7 @@ public class SubPixelBilinearInterpolator
         var d0 = action0Value - idx0;
         idx0 = Math.Min(idx0, src.Size.Height - 2);
 
-        if (double.IsNaN(action1Value)){
+        if (!double.IsNaN(action1Value)){
             var idx1 = (int)action1Value;
             var d1 = action1Value - idx1;
             idx1 = Math.Min(idx1, src.Size.Width - 2);
