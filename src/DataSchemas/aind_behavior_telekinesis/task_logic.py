@@ -316,5 +316,5 @@ class AindTelekinesisTaskParameters(TaskParameters):
 
 class AindTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
     version: Literal[__version__] = __version__
-    name: str = Field(default="AindTelekinesis", description="Name of the task logic", frozen=True)
+    name: Literal["AindTelekinesis"] = Field(default="AindTelekinesis", description="Name of the task logic")
     task_parameters: AindTelekinesisTaskParameters = Field(..., description="Parameters of the task logic")

@@ -1562,6 +1562,7 @@
   "additionalProperties": false,
   "properties": {
     "name": {
+      "const": "AindTelekinesis",
       "default": "AindTelekinesis",
       "description": "Name of the task logic",
       "title": "Name",
