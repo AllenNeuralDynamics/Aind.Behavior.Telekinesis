@@ -5314,7 +5314,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class AindTelekinesisRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.8.9";
+        private string _aindBehaviorServicesPkgVersion = "0.9.0";
     
         private string _version = "0.2.0";
     
@@ -5340,7 +5340,7 @@ namespace AindTelekinesisDataSchema.Rig
     
         private AindManipulatorDevice _manipulator = new AindManipulatorDevice();
     
-        private RigCalibration _calibration;
+        private RigCalibration _calibration = new RigCalibration();
     
         private Networking _networking;
     
@@ -5593,11 +5593,11 @@ namespace AindTelekinesisDataSchema.Rig
         }
     
         /// <summary>
-        /// Load cells calibration
+        /// General rig calibration
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Load cells calibration")]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("General rig calibration")]
         public RigCalibration Calibration
         {
             get

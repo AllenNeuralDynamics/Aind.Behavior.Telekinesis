@@ -2038,7 +2038,7 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.8.9",
+      "default": "0.9.0",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
@@ -2121,8 +2121,7 @@
     },
     "calibration": {
       "$ref": "#/definitions/RigCalibration",
-      "default": null,
-      "description": "Load cells calibration"
+      "description": "General rig calibration"
     },
     "networking": {
       "$ref": "#/definitions/Networking",
@@ -2155,7 +2154,8 @@
     "harp_lickometer",
     "harp_load_cells",
     "harp_clock_generator",
-    "manipulator"
+    "manipulator",
+    "calibration"
   ],
   "title": "AindTelekinesisRig",
   "type": "object"
