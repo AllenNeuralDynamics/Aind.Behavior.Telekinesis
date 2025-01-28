@@ -5330,7 +5330,7 @@ namespace AindTelekinesisDataSchema.Rig
     
         private HarpLickometer _harpLickometer = new HarpLickometer();
     
-        private LoadCells _harpLoadCells = new LoadCells();
+        private LoadCells _harpLoadCells;
     
         private HarpClockGenerator _harpClockGenerator = new HarpClockGenerator();
     

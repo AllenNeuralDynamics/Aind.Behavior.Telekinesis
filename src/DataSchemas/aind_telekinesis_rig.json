@@ -2084,8 +2084,15 @@
       "description": "Harp lickometer"
     },
     "harp_load_cells": {
-      "$ref": "#/definitions/LoadCells",
-      "description": "Harp load cells"
+      "description": "Harp load cells",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/LoadCells"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "harp_clock_generator": {
       "$ref": "#/definitions/HarpClockGenerator",
