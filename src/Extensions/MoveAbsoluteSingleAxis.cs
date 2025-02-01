@@ -6,7 +6,6 @@ using System.Reactive.Linq;
 using AindTelekinesisDataSchema.Rig;
 using Harp.StepperDriver;
 using Bonsai.Harp;
-using YamlDotNet.Serialization.ObjectGraphTraversalStrategies;
 
 [Combinator]
 [Description("")]
