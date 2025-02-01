@@ -26,11 +26,12 @@
                  xmlns:p12="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:bv="clr-namespace:BonVision;assembly=BonVision"
                  xmlns:p13="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
-                 xmlns:p14="clr-namespace:;assembly=Extensions"
-                 xmlns:p15="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
+                 xmlns:p14="clr-namespace:Harp.Behavior;assembly=Extensions"
+                 xmlns:p15="clr-namespace:;assembly=Extensions"
+                 xmlns:p16="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
-                 xmlns:p16="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:p17="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -2252,20 +2253,8 @@ Item2.Item3 as LowerThr)]]></Text>
                   <Expression xsi:type="beh:Parse">
                     <harp:Register xsi:type="beh:TimestampedAnalogData" />
                   </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>AnalogInput0,AnalogInput1</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Seconds</Selector>
-                  </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Zip" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="harp:CreateTimestamped" />
+                    <Combinator xsi:type="p14:AdcToVolt" />
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
                     <Name>AnalogInputData</Name>
@@ -2274,12 +2263,7 @@ Item2.Item3 as LowerThr)]]></Text>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="5" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source2" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2312,7 +2296,7 @@ Item2.Item3 as LowerThr)]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p14:ApplyLoadCellsCalibration" />
+                    <Combinator xsi:type="p15:ApplyLoadCellsCalibration" />
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
                     <Name>CalibratedLoadCellData</Name>
@@ -2681,9 +2665,9 @@ Item2.Item3 as LowerThr)]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p14:MoveAbsoluteSingleAxis">
-                      <p14:Axis>Y1</p14:Axis>
-                      <p14:MessageType>Write</p14:MessageType>
+                    <Combinator xsi:type="p15:MoveAbsoluteSingleAxis">
+                      <p15:Axis>Y1</p15:Axis>
+                      <p15:MessageType>Write</p15:MessageType>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -3064,7 +3048,7 @@ Item2.Item3 as LowerThr)]]></Text>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p14:ParseAction" />
+                          <Combinator xsi:type="p15:ParseAction" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
@@ -3828,9 +3812,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -3857,9 +3841,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -3886,9 +3870,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -3915,9 +3899,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -3944,9 +3928,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -3973,9 +3957,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -4002,9 +3986,9 @@ Item2.Item3 as LowerThr)]]></Text>
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p15:ModifyMessage">
-                            <p15:Address xsi:nil="true" />
-                            <p15:MessageTypeModified xsi:nil="true" />
+                          <Combinator xsi:type="p16:ModifyMessage">
+                            <p16:Address xsi:nil="true" />
+                            <p16:MessageTypeModified xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -4480,8 +4464,8 @@ Item2.Item3 as LowerThr)]]></Text>
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p14:CopyFile">
-                                  <p14:Overwrite>false</p14:Overwrite>
+                                <Combinator xsi:type="p15:CopyFile">
+                                  <p15:Overwrite>false</p15:Overwrite>
                                 </Combinator>
                               </Expression>
                             </Nodes>
@@ -6009,13 +5993,13 @@ Item2.Item3 as LowerThr)]]></Text>
                     <Selector>Item1</Selector>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:PointVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PointVisualizer" />
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Item2</Selector>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p16:IplImageVisualizer" />
+                    <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:IplImageVisualizer" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentActionVector</Name>
@@ -6442,7 +6426,7 @@ it.Value[7] as Channel7
                         </Expression>
                         <Expression xsi:type="zg:RollingGraphBuilder">
                           <zg:IndexSelector>Seconds</zg:IndexSelector>
-                          <zg:ValueSelector>Value.Item1,Value.Item2</zg:ValueSelector>
+                          <zg:ValueSelector>Value.AnalogInput0,Value.AnalogInput1</zg:ValueSelector>
                           <zg:SymbolType>None</zg:SymbolType>
                           <zg:LineWidth>3</zg:LineWidth>
                           <zg:CurveSettings />

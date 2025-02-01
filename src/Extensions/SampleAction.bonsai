@@ -138,8 +138,9 @@
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>SelectChannel</scr:Name>
                     <scr:Expression>new(
-Item2 == 0 ? Item1.Value.Item1 : Item1.Value.Item2 as Value,
+Item2 == 0 ? Item1.Value.AnalogInput0 : Item1.Value.AnalogInput1 as Value,
 Item1.Seconds as Seconds)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
