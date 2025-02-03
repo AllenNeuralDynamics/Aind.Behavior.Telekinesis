@@ -18,6 +18,8 @@ dynamic = ["version"]
 
 dependencies = [
   "aind_behavior_services>=0.9, <0.10",
+  "numpy",
+  "pillow"
 ]
 
 [project.urls]
@@ -36,6 +38,7 @@ dev = [
      "ruff",
      "codespell",
 ]
+
 
 docs = [
     'Sphinx<7.3',
