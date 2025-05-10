@@ -503,7 +503,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     
         private double? _rngSeed;
     
-        private string _aindBehaviorServicesPkgVersion = "0.9.0";
+        private string _aindBehaviorServicesPkgVersion = "0.10.2";
     
         private Environment _environment = new Environment();
     
@@ -1445,6 +1445,9 @@ namespace AindTelekinesisDataSchema.TaskLogic
     }
 
 
+    /// <summary>
+    /// Available distributions
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "family")]
     [JsonInheritanceAttribute("Scalar", typeof(Scalar))]
@@ -1457,6 +1460,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     [JsonInheritanceAttribute("Beta", typeof(BetaDistribution))]
     [JsonInheritanceAttribute("Gamma", typeof(GammaDistribution))]
     [JsonInheritanceAttribute("Pdf", typeof(PdfDistribution))]
+    [System.ComponentModel.DescriptionAttribute("Available distributions")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Distribution
