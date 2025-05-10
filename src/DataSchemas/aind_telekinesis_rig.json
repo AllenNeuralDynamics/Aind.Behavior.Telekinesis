@@ -164,8 +164,8 @@
       "description": "Overrides the default settings for the manipulator device by spec'ing additional_settings field",
       "properties": {
         "device_type": {
-          "const": "stepperdriver",
-          "default": "stepperdriver",
+          "const": "StepperDriver",
+          "default": "StepperDriver",
           "title": "Device Type",
           "type": "string"
         },
@@ -311,7 +311,7 @@
         "delay_trial": {
           "default": 0.0,
           "description": "Arbitrary delay between start trigger and trial start",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Delay Trial",
           "type": "number"
         }
@@ -380,67 +380,6 @@
       "title": "CameraController[SpinnakerCamera]",
       "type": "object"
     },
-    "CameraController_WebCamera_": {
-      "properties": {
-        "device_type": {
-          "const": "CameraController",
-          "default": "CameraController",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "cameras": {
-          "additionalProperties": {
-            "$ref": "#/definitions/WebCamera"
-          },
-          "description": "Cameras to be instantiated",
-          "title": "Cameras",
-          "type": "object"
-        },
-        "frame_rate": {
-          "default": 30,
-          "description": "Frame rate of the trigger to all cameras",
-          "oneOf": [
-            {
-              "minimum": 0,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Frame Rate"
-        }
-      },
-      "required": [
-        "cameras"
-      ],
-      "title": "CameraController[WebCamera]",
-      "type": "object"
-    },
     "ConnectedClockOutput": {
       "properties": {
         "target_device": {
@@ -472,8 +411,8 @@
     "HarpAnalogInput": {
       "properties": {
         "device_type": {
-          "const": "analoginput",
-          "default": "analoginput",
+          "const": "AnalogInput",
+          "default": "AnalogInput",
           "title": "Device Type",
           "type": "string"
         },
@@ -535,8 +474,8 @@
     "HarpBehavior": {
       "properties": {
         "device_type": {
-          "const": "behavior",
-          "default": "behavior",
+          "const": "Behavior",
+          "default": "Behavior",
           "title": "Device Type",
           "type": "string"
         },
@@ -595,83 +534,11 @@
       "title": "HarpBehavior",
       "type": "object"
     },
-    "HarpClockGenerator": {
-      "properties": {
-        "device_type": {
-          "const": "clockgenerator",
-          "default": "clockgenerator",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "who_am_i": {
-          "const": 1158,
-          "default": 1158,
-          "title": "Who Am I",
-          "type": "integer"
-        },
-        "serial_number": {
-          "default": null,
-          "description": "Device serial number",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Serial Number"
-        },
-        "port_name": {
-          "description": "Device port name",
-          "title": "Port Name",
-          "type": "string"
-        },
-        "connected_clock_outputs": {
-          "default": [],
-          "description": "Connected clock outputs",
-          "items": {
-            "$ref": "#/definitions/ConnectedClockOutput"
-          },
-          "title": "Connected Clock Outputs",
-          "type": "array"
-        }
-      },
-      "required": [
-        "port_name"
-      ],
-      "title": "HarpClockGenerator",
-      "type": "object"
-    },
     "HarpEnvironmentSensor": {
       "properties": {
         "device_type": {
-          "const": "environmentsensor",
-          "default": "environmentsensor",
+          "const": "EnvironmentSensor",
+          "default": "EnvironmentSensor",
           "title": "Device Type",
           "type": "string"
         },
@@ -730,11 +597,11 @@
       "title": "HarpEnvironmentSensor",
       "type": "object"
     },
-    "HarpLickometer": {
+    "HarpLicketySplit": {
       "properties": {
         "device_type": {
-          "const": "lickometer",
-          "default": "lickometer",
+          "const": "LicketySplit",
+          "default": "LicketySplit",
           "title": "Device Type",
           "type": "string"
         },
@@ -790,7 +657,79 @@
       "required": [
         "port_name"
       ],
-      "title": "HarpLickometer",
+      "title": "HarpLicketySplit",
+      "type": "object"
+    },
+    "HarpWhiteRabbit": {
+      "properties": {
+        "device_type": {
+          "const": "WhiteRabbit",
+          "default": "WhiteRabbit",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1404,
+          "default": 1404,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "connected_clock_outputs": {
+          "default": [],
+          "description": "Connected clock outputs",
+          "items": {
+            "$ref": "#/definitions/ConnectedClockOutput"
+          },
+          "title": "Connected Clock Outputs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpWhiteRabbit",
       "type": "object"
     },
     "LoadCellCalibrationInput": {
@@ -835,43 +774,22 @@
           "type": "integer"
         },
         "offset": {
-          "default": null,
-          "oneOf": [
-            {
-              "description": "Load cell offset value [-255, 255]",
-              "maximum": 255,
-              "minimum": -255,
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Load cell offset applied to the wheatstone bridge circuit"
+          "default": 0,
+          "description": "Load cell offset value [-255, 255]",
+          "maximum": 255,
+          "minimum": -255,
+          "title": "Load cell offset applied to the wheatstone bridge circuit",
+          "type": "integer"
         },
         "baseline": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Load cell baseline that will be DSP subtracted"
+          "default": 0.0,
+          "title": "Load cell baseline that will be DSP subtracted to the raw adc output.",
+          "type": "number"
         },
         "slope": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Load cell slope that will be used to convert adc units to weight (g)."
+          "default": 1.0,
+          "title": "Load cell slope that will be used to convert tared (- baseline) adc units to weight (g).",
+          "type": "number"
         },
         "weight_lookup": {
           "default": [],
@@ -891,8 +809,8 @@
     "LoadCells": {
       "properties": {
         "device_type": {
-          "const": "loadcells",
-          "default": "loadcells",
+          "const": "LoadCells",
+          "default": "LoadCells",
           "title": "Device Type",
           "type": "string"
         },
@@ -1110,20 +1028,20 @@
       "properties": {
         "valve_open_interval": {
           "description": "Time between two consecutive valve openings (s)",
-          "exclusiveMinimum": 0.0,
+          "exclusiveMinimum": 0,
           "title": "Valve open interval",
           "type": "number"
         },
         "valve_open_time": {
           "description": "Valve open interval (s)",
-          "exclusiveMinimum": 0.0,
+          "exclusiveMinimum": 0,
           "title": "Valve open time",
           "type": "number"
         },
         "water_weight": {
           "description": "Weight of water delivered (g)",
           "items": {
-            "exclusiveMinimum": 0.0,
+            "exclusiveMinimum": 0,
             "type": "number"
           },
           "minItems": 1,
@@ -1268,21 +1186,21 @@
         "delay_trial": {
           "default": 0.0,
           "description": "Arbitrary delay between start trigger and trial start",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Delay Trial",
           "type": "number"
         },
         "delay_ready_start": {
           "default": 0.2,
           "description": "Delay between the system being ready and a start signal being issued",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Delay Ready Start",
           "type": "number"
         },
         "timeout_for_error": {
           "default": 5,
           "description": "Time to wait for the ready signal to go low after start. If it doesn't, an error is raised.",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Timeout For Error",
           "type": "number"
         }
@@ -1355,7 +1273,7 @@
         "gain": {
           "default": 0,
           "description": "Gain",
-          "minimum": 0.0,
+          "minimum": 0,
           "title": "Gain",
           "type": "number"
         },
@@ -1364,7 +1282,7 @@
           "description": "Gamma. If None, will disable gamma correction.",
           "oneOf": [
             {
-              "minimum": 0.0,
+              "minimum": 0,
               "type": "number"
             },
             {
@@ -1901,7 +1819,7 @@
           "oneOf": [
             {
               "additionalProperties": {
-                "exclusiveMinimum": 0.0,
+                "exclusiveMinimum": 0,
                 "type": "number"
               },
               "type": "object"
@@ -1927,8 +1845,8 @@
           "description": "R2 metric from the linear model.",
           "oneOf": [
             {
-              "maximum": 1.0,
-              "minimum": 0.0,
+              "maximum": 1,
+              "minimum": 0,
               "type": "number"
             },
             {
@@ -1943,7 +1861,7 @@
           "oneOf": [
             {
               "items": {
-                "exclusiveMinimum": 0.0,
+                "exclusiveMinimum": 0,
                 "type": "number"
               },
               "minItems": 2,
@@ -1961,62 +1879,6 @@
         "offset"
       ],
       "title": "WaterValveCalibrationOutput",
-      "type": "object"
-    },
-    "WebCamera": {
-      "properties": {
-        "device_type": {
-          "const": "WebCamera",
-          "default": "WebCamera",
-          "description": "Device type",
-          "title": "Device Type",
-          "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "calibration": {
-          "default": null,
-          "description": "Calibration",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "index": {
-          "default": 0,
-          "description": "Camera index",
-          "minimum": 0,
-          "title": "Index",
-          "type": "integer"
-        },
-        "video_writer": {
-          "default": null,
-          "description": "Video writer. If not provided, no video will be saved.",
-          "oneOf": [
-            {
-              "$ref": "#/definitions/VideoWriter"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "title": "WebCamera",
       "type": "object"
     },
     "ZmqConnection": {
@@ -2038,7 +1900,7 @@
   },
   "properties": {
     "aind_behavior_services_pkg_version": {
-      "default": "0.9.0",
+      "default": "0.10.2",
       "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
       "title": "aind_behavior_services package version",
       "type": "string"
@@ -2063,27 +1925,16 @@
       "$ref": "#/definitions/CameraController_SpinnakerCamera_",
       "description": "Required camera controller to triggered cameras."
     },
-    "monitoring_camera_controller": {
-      "default": null,
-      "description": "Optional camera controller for monitoring cameras.",
-      "oneOf": [
-        {
-          "$ref": "#/definitions/CameraController_WebCamera_"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "harp_behavior": {
       "$ref": "#/definitions/HarpBehavior",
       "description": "Harp behavior"
     },
     "harp_lickometer": {
-      "$ref": "#/definitions/HarpLickometer",
+      "$ref": "#/definitions/HarpLicketySplit",
       "description": "Harp lickometer"
     },
     "harp_load_cells": {
+      "default": null,
       "description": "Harp load cells",
       "oneOf": [
         {
@@ -2095,7 +1946,7 @@
       ]
     },
     "harp_clock_generator": {
-      "$ref": "#/definitions/HarpClockGenerator",
+      "$ref": "#/definitions/HarpWhiteRabbit",
       "description": "Harp clock generator"
     },
     "harp_analog_input": {
@@ -2159,7 +2010,6 @@
     "triggered_camera_controller",
     "harp_behavior",
     "harp_lickometer",
-    "harp_load_cells",
     "harp_clock_generator",
     "manipulator",
     "calibration"

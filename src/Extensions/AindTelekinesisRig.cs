@@ -407,7 +407,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class AindManipulatorDevice
     {
     
-        private string _deviceType = "stepperdriver";
+        private string _deviceType = "StepperDriver";
     
         private AindManipulatorAdditionalSettings _additionalSettings;
     
@@ -1033,155 +1033,6 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class CameraControllerWebCamera
-    {
-    
-        private string _deviceType = "CameraController";
-    
-        private BaseModel _additionalSettings;
-    
-        private BaseModel _calibration;
-    
-        private System.Collections.Generic.IDictionary<string, WebCamera> _cameras = new System.Collections.Generic.Dictionary<string, WebCamera>();
-    
-        private int? _frameRate;
-    
-        public CameraControllerWebCamera()
-        {
-        }
-    
-        protected CameraControllerWebCamera(CameraControllerWebCamera other)
-        {
-            _deviceType = other._deviceType;
-            _additionalSettings = other._additionalSettings;
-            _calibration = other._calibration;
-            _cameras = other._cameras;
-            _frameRate = other._frameRate;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
-        public BaseModel Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Cameras to be instantiated
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("cameras", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Cameras to be instantiated")]
-        public System.Collections.Generic.IDictionary<string, WebCamera> Cameras
-        {
-            get
-            {
-                return _cameras;
-            }
-            set
-            {
-                _cameras = value;
-            }
-        }
-    
-        /// <summary>
-        /// Frame rate of the trigger to all cameras
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("frame_rate")]
-        [System.ComponentModel.DescriptionAttribute("Frame rate of the trigger to all cameras")]
-        public int? FrameRate
-        {
-            get
-            {
-                return _frameRate;
-            }
-            set
-            {
-                _frameRate = value;
-            }
-        }
-    
-        public System.IObservable<CameraControllerWebCamera> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraControllerWebCamera(this)));
-        }
-    
-        public System.IObservable<CameraControllerWebCamera> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new CameraControllerWebCamera(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("cameras = " + _cameras + ", ");
-            stringBuilder.Append("frame_rate = " + _frameRate);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class ConnectedClockOutput
     {
     
@@ -1271,7 +1122,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class HarpAnalogInput
     {
     
-        private string _deviceType = "analoginput";
+        private string _deviceType = "AnalogInput";
     
         private BaseModel _additionalSettings;
     
@@ -1435,7 +1286,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class HarpBehavior
     {
     
-        private string _deviceType = "behavior";
+        private string _deviceType = "Behavior";
     
         private BaseModel _additionalSettings;
     
@@ -1596,196 +1447,10 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpClockGenerator
-    {
-    
-        private string _deviceType = "clockgenerator";
-    
-        private BaseModel _additionalSettings;
-    
-        private BaseModel _calibration;
-    
-        private int _whoAmI = 1158;
-    
-        private string _serialNumber;
-    
-        private string _portName;
-    
-        private System.Collections.Generic.List<ConnectedClockOutput> _connectedClockOutputs = new System.Collections.Generic.List<ConnectedClockOutput>();
-    
-        public HarpClockGenerator()
-        {
-        }
-    
-        protected HarpClockGenerator(HarpClockGenerator other)
-        {
-            _deviceType = other._deviceType;
-            _additionalSettings = other._additionalSettings;
-            _calibration = other._calibration;
-            _whoAmI = other._whoAmI;
-            _serialNumber = other._serialNumber;
-            _portName = other._portName;
-            _connectedClockOutputs = other._connectedClockOutputs;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
-        public BaseModel Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
-        public int WhoAmI
-        {
-            get
-            {
-                return _whoAmI;
-            }
-            set
-            {
-                _whoAmI = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device serial number
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
-        [System.ComponentModel.DescriptionAttribute("Device serial number")]
-        public string SerialNumber
-        {
-            get
-            {
-                return _serialNumber;
-            }
-            set
-            {
-                _serialNumber = value;
-            }
-        }
-    
-        /// <summary>
-        /// Device port name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Device port name")]
-        public string PortName
-        {
-            get
-            {
-                return _portName;
-            }
-            set
-            {
-                _portName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Connected clock outputs
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("connected_clock_outputs")]
-        [System.ComponentModel.DescriptionAttribute("Connected clock outputs")]
-        public System.Collections.Generic.List<ConnectedClockOutput> ConnectedClockOutputs
-        {
-            get
-            {
-                return _connectedClockOutputs;
-            }
-            set
-            {
-                _connectedClockOutputs = value;
-            }
-        }
-    
-        public System.IObservable<HarpClockGenerator> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpClockGenerator(this)));
-        }
-    
-        public System.IObservable<HarpClockGenerator> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new HarpClockGenerator(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
-            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
-            stringBuilder.Append("port_name = " + _portName + ", ");
-            stringBuilder.Append("connected_clock_outputs = " + _connectedClockOutputs);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpEnvironmentSensor
     {
     
-        private string _deviceType = "environmentsensor";
+        private string _deviceType = "EnvironmentSensor";
     
         private BaseModel _additionalSettings;
     
@@ -1946,10 +1611,10 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpLickometer
+    public partial class HarpLicketySplit
     {
     
-        private string _deviceType = "lickometer";
+        private string _deviceType = "LicketySplit";
     
         private BaseModel _additionalSettings;
     
@@ -1961,11 +1626,11 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _portName;
     
-        public HarpLickometer()
+        public HarpLicketySplit()
         {
         }
     
-        protected HarpLickometer(HarpLickometer other)
+        protected HarpLicketySplit(HarpLicketySplit other)
         {
             _deviceType = other._deviceType;
             _additionalSettings = other._additionalSettings;
@@ -2071,14 +1736,14 @@ namespace AindTelekinesisDataSchema.Rig
             }
         }
     
-        public System.IObservable<HarpLickometer> Process()
+        public System.IObservable<HarpLicketySplit> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpLickometer(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpLicketySplit(this)));
         }
     
-        public System.IObservable<HarpLickometer> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpLicketySplit> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new HarpLickometer(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new HarpLicketySplit(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -2089,6 +1754,192 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
             stringBuilder.Append("port_name = " + _portName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class HarpWhiteRabbit
+    {
+    
+        private string _deviceType = "WhiteRabbit";
+    
+        private BaseModel _additionalSettings;
+    
+        private BaseModel _calibration;
+    
+        private int _whoAmI = 1404;
+    
+        private string _serialNumber;
+    
+        private string _portName;
+    
+        private System.Collections.Generic.List<ConnectedClockOutput> _connectedClockOutputs = new System.Collections.Generic.List<ConnectedClockOutput>();
+    
+        public HarpWhiteRabbit()
+        {
+        }
+    
+        protected HarpWhiteRabbit(HarpWhiteRabbit other)
+        {
+            _deviceType = other._deviceType;
+            _additionalSettings = other._additionalSettings;
+            _calibration = other._calibration;
+            _whoAmI = other._whoAmI;
+            _serialNumber = other._serialNumber;
+            _portName = other._portName;
+            _connectedClockOutputs = other._connectedClockOutputs;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
+        public string DeviceType
+        {
+            get
+            {
+                return _deviceType;
+            }
+            set
+            {
+                _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Additional settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
+        [System.ComponentModel.DescriptionAttribute("Additional settings")]
+        public BaseModel AdditionalSettings
+        {
+            get
+            {
+                return _additionalSettings;
+            }
+            set
+            {
+                _additionalSettings = value;
+            }
+        }
+    
+        /// <summary>
+        /// Calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        public BaseModel Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("who_am_i")]
+        public int WhoAmI
+        {
+            get
+            {
+                return _whoAmI;
+            }
+            set
+            {
+                _whoAmI = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device serial number
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("serial_number")]
+        [System.ComponentModel.DescriptionAttribute("Device serial number")]
+        public string SerialNumber
+        {
+            get
+            {
+                return _serialNumber;
+            }
+            set
+            {
+                _serialNumber = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device port name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("port_name", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Device port name")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Connected clock outputs
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("connected_clock_outputs")]
+        [System.ComponentModel.DescriptionAttribute("Connected clock outputs")]
+        public System.Collections.Generic.List<ConnectedClockOutput> ConnectedClockOutputs
+        {
+            get
+            {
+                return _connectedClockOutputs;
+            }
+            set
+            {
+                _connectedClockOutputs = value;
+            }
+        }
+    
+        public System.IObservable<HarpWhiteRabbit> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpWhiteRabbit(this)));
+        }
+    
+        public System.IObservable<HarpWhiteRabbit> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new HarpWhiteRabbit(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
+            stringBuilder.Append("calibration = " + _calibration + ", ");
+            stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
+            stringBuilder.Append("serial_number = " + _serialNumber + ", ");
+            stringBuilder.Append("port_name = " + _portName + ", ");
+            stringBuilder.Append("connected_clock_outputs = " + _connectedClockOutputs);
             return true;
         }
     
@@ -2216,11 +2067,11 @@ namespace AindTelekinesisDataSchema.Rig
     
         private int _channel;
     
-        private int? _offset;
+        private int _offset = 0;
     
-        private double? _baseline;
+        private double _baseline = 0D;
     
-        private double? _slope;
+        private double _slope = 1D;
     
         private System.Collections.Generic.List<MeasuredWeight> _weightLookup = new System.Collections.Generic.List<MeasuredWeight>();
     
@@ -2254,9 +2105,12 @@ namespace AindTelekinesisDataSchema.Rig
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        /// <summary>
+        /// Load cell offset value [-255, 255]
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("offset")]
-        public int? Offset
+        [System.ComponentModel.DescriptionAttribute("Load cell offset value [-255, 255]")]
+        public int Offset
         {
             get
             {
@@ -2268,9 +2122,8 @@ namespace AindTelekinesisDataSchema.Rig
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("baseline")]
-        public double? Baseline
+        public double Baseline
         {
             get
             {
@@ -2282,9 +2135,8 @@ namespace AindTelekinesisDataSchema.Rig
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("slope")]
-        public double? Slope
+        public double Slope
         {
             get
             {
@@ -2351,7 +2203,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class LoadCells
     {
     
-        private string _deviceType = "loadcells";
+        private string _deviceType = "LoadCells";
     
         private BaseModel _additionalSettings;
     
@@ -5081,158 +4933,6 @@ namespace AindTelekinesisDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class WebCamera
-    {
-    
-        private string _deviceType = "WebCamera";
-    
-        private BaseModel _additionalSettings;
-    
-        private BaseModel _calibration;
-    
-        private int _index = 0;
-    
-        private VideoWriter _videoWriter;
-    
-        public WebCamera()
-        {
-        }
-    
-        protected WebCamera(WebCamera other)
-        {
-            _deviceType = other._deviceType;
-            _additionalSettings = other._additionalSettings;
-            _calibration = other._calibration;
-            _index = other._index;
-            _videoWriter = other._videoWriter;
-        }
-    
-        /// <summary>
-        /// Device type
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [System.ComponentModel.DescriptionAttribute("Device type")]
-        public string DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
-        public BaseModel Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Camera index
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("index")]
-        [System.ComponentModel.DescriptionAttribute("Camera index")]
-        public int Index
-        {
-            get
-            {
-                return _index;
-            }
-            set
-            {
-                _index = value;
-            }
-        }
-    
-        /// <summary>
-        /// Video writer. If not provided, no video will be saved.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("video_writer")]
-        [System.ComponentModel.DescriptionAttribute("Video writer. If not provided, no video will be saved.")]
-        public VideoWriter VideoWriter
-        {
-            get
-            {
-                return _videoWriter;
-            }
-            set
-            {
-                _videoWriter = value;
-            }
-        }
-    
-        public System.IObservable<WebCamera> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WebCamera(this)));
-        }
-    
-        public System.IObservable<WebCamera> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new WebCamera(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("device_type = " + _deviceType + ", ");
-            stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
-            stringBuilder.Append("calibration = " + _calibration + ", ");
-            stringBuilder.Append("index = " + _index + ", ");
-            stringBuilder.Append("video_writer = " + _videoWriter);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class ZmqConnection
     {
     
@@ -5314,7 +5014,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class AindTelekinesisRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.9.0";
+        private string _aindBehaviorServicesPkgVersion = "0.10.2";
     
         private string _version = "0.2.0";
     
@@ -5324,15 +5024,13 @@ namespace AindTelekinesisDataSchema.Rig
     
         private CameraControllerSpinnakerCamera _triggeredCameraController = new CameraControllerSpinnakerCamera();
     
-        private CameraControllerWebCamera _monitoringCameraController;
-    
         private HarpBehavior _harpBehavior = new HarpBehavior();
     
-        private HarpLickometer _harpLickometer = new HarpLickometer();
+        private HarpLicketySplit _harpLickometer = new HarpLicketySplit();
     
         private LoadCells _harpLoadCells;
     
-        private HarpClockGenerator _harpClockGenerator = new HarpClockGenerator();
+        private HarpWhiteRabbit _harpClockGenerator = new HarpWhiteRabbit();
     
         private HarpAnalogInput _harpAnalogInput;
     
@@ -5357,7 +5055,6 @@ namespace AindTelekinesisDataSchema.Rig
             _computerName = other._computerName;
             _rigName = other._rigName;
             _triggeredCameraController = other._triggeredCameraController;
-            _monitoringCameraController = other._monitoringCameraController;
             _harpBehavior = other._harpBehavior;
             _harpLickometer = other._harpLickometer;
             _harpLoadCells = other._harpLoadCells;
@@ -5449,24 +5146,6 @@ namespace AindTelekinesisDataSchema.Rig
         }
     
         /// <summary>
-        /// Optional camera controller for monitoring cameras.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("monitoring_camera_controller")]
-        [System.ComponentModel.DescriptionAttribute("Optional camera controller for monitoring cameras.")]
-        public CameraControllerWebCamera MonitoringCameraController
-        {
-            get
-            {
-                return _monitoringCameraController;
-            }
-            set
-            {
-                _monitoringCameraController = value;
-            }
-        }
-    
-        /// <summary>
         /// Harp behavior
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -5490,7 +5169,7 @@ namespace AindTelekinesisDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_lickometer", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Harp lickometer")]
-        public HarpLickometer HarpLickometer
+        public HarpLicketySplit HarpLickometer
         {
             get
             {
@@ -5506,7 +5185,7 @@ namespace AindTelekinesisDataSchema.Rig
         /// Harp load cells
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_load_cells", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_load_cells")]
         [System.ComponentModel.DescriptionAttribute("Harp load cells")]
         public LoadCells HarpLoadCells
         {
@@ -5526,7 +5205,7 @@ namespace AindTelekinesisDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_generator", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Harp clock generator")]
-        public HarpClockGenerator HarpClockGenerator
+        public HarpWhiteRabbit HarpClockGenerator
         {
             get
             {
@@ -5663,7 +5342,6 @@ namespace AindTelekinesisDataSchema.Rig
             stringBuilder.Append("computer_name = " + _computerName + ", ");
             stringBuilder.Append("rig_name = " + _rigName + ", ");
             stringBuilder.Append("triggered_camera_controller = " + _triggeredCameraController + ", ");
-            stringBuilder.Append("monitoring_camera_controller = " + _monitoringCameraController + ", ");
             stringBuilder.Append("harp_behavior = " + _harpBehavior + ", ");
             stringBuilder.Append("harp_lickometer = " + _harpLickometer + ", ");
             stringBuilder.Append("harp_load_cells = " + _harpLoadCells + ", ");
@@ -6028,11 +5706,6 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<CameraControllerSpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<CameraControllerWebCamera> source)
-        {
-            return Process<CameraControllerWebCamera>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<ConnectedClockOutput> source)
         {
             return Process<ConnectedClockOutput>(source);
@@ -6048,19 +5721,19 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<HarpBehavior>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpClockGenerator> source)
-        {
-            return Process<HarpClockGenerator>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<HarpEnvironmentSensor> source)
         {
             return Process<HarpEnvironmentSensor>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpLickometer> source)
+        public System.IObservable<string> Process(System.IObservable<HarpLicketySplit> source)
         {
-            return Process<HarpLickometer>(source);
+            return Process<HarpLicketySplit>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HarpWhiteRabbit> source)
+        {
+            return Process<HarpWhiteRabbit>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<LoadCellCalibrationInput> source)
@@ -6173,11 +5846,6 @@ namespace AindTelekinesisDataSchema.Rig
             return Process<WaterValveCalibrationOutput>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<WebCamera> source)
-        {
-            return Process<WebCamera>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<ZmqConnection> source)
         {
             return Process<ZmqConnection>(source);
@@ -6211,13 +5879,12 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BergamoInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ConnectedClockOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpAnalogInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpEnvironmentSensor>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLickometer>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLicketySplit>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpWhiteRabbit>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCells>))]
@@ -6240,7 +5907,6 @@ namespace AindTelekinesisDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationOutput>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]

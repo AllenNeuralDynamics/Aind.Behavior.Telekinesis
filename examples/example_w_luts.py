@@ -1,7 +1,6 @@
 import datetime
 import os
 
-import aind_behavior_services.calibration.load_cells as lcc
 import aind_behavior_services.rig as rig
 import aind_behavior_telekinesis.task_logic as tl
 from aind_behavior_services import db_utils as db
@@ -82,29 +81,25 @@ def mock_rig() -> AindTelekinesisRig:
         container_extension="avi",
     )
 
-    load_cells_calibration = lcc.LoadCellsCalibration(
-        output=lcc.LoadCellsCalibrationOutput(),
-        input=lcc.LoadCellsCalibrationInput(),
-        date=datetime.datetime.now(),
-    )
     return AindTelekinesisRig(
         rig_name="BCI_Bonsai_i",
         triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
             frame_rate=25,
             cameras={
                 "MainCamera": rig.SpinnakerCamera(
-                    serial_number="SerialNumber",
+                    serial_number="23381093",
                     binning=2,
                     exposure=10000,
                     gain=20,
                     video_writer=video_writer,
+                    adc_bit_depth=None,
                 )
             },
         ),
-        harp_load_cells=lcc.LoadCells(port_name="COM4", calibration=load_cells_calibration),
-        harp_behavior=rig.HarpBehavior(port_name="COM6"),
-        harp_lickometer=rig.HarpLickometer(port_name="COM8"),
-        harp_clock_generator=rig.HarpClockGenerator(port_name="COM3"),
+        harp_load_cells=None,
+        harp_behavior=rig.HarpBehavior(port_name="COM4"),
+        harp_lickometer=rig.HarpLicketySplit(port_name="COM6"),
+        harp_clock_generator=rig.HarpWhiteRabbit(port_name="COM7"),
         harp_analog_input=None,
         manipulator=AindManipulatorDevice(port_name="COM5", calibration=manipulator_calibration),
         calibration=RigCalibration(water_valve=water_valve_calibration),
@@ -133,7 +128,7 @@ def mock_task_logic() -> tl.AindTelekinesisTaskLogic:
                 continuous_feedback=tl.ManipulatorFeedback(converter_lut_input=[0, 1], converter_lut_output=[0, 15]),
             ),
         ),
-        action_source_0=tl.BehaviorAnalogInputActionSource(channel=0),
+        action_source_0=tl.BehaviorAnalogInputActionSource(channel=1),
         lut_reference="linear_normalized_to_1",
     )
 
@@ -149,7 +144,7 @@ def mock_task_logic() -> tl.AindTelekinesisTaskLogic:
             operation_control=tl.OperationControl(
                 action_luts={
                     "linear_normalized_to_1": tl.ActionLookUpTableFactory(
-                        path=f"{LOCAL_ASSET_FOLDER}/1d_ramp.tiff",
+                        path=f"../{LOCAL_ASSET_FOLDER}/1d_ramp.tiff",
                         offset=0,
                         scale=1,
                         action0_max=5,
@@ -158,7 +153,7 @@ def mock_task_logic() -> tl.AindTelekinesisTaskLogic:
                         action1_min=0,
                     ),
                     "linear_normalized_to_5": tl.ActionLookUpTableFactory(
-                        path=f"{LOCAL_ASSET_FOLDER}/1d_ramp.tiff",
+                        path=f"../{LOCAL_ASSET_FOLDER}/1d_ramp.tiff",
                         offset=0,
                         scale=5,
                         action0_max=5,
@@ -206,13 +201,17 @@ def main(path_seed: str = "{LOCAL_ASSET_FOLDER}/{schema}.json"):
     example_rig = mock_rig()
     example_task_logic = mock_task_logic()
     example_database = mock_subject_database()
-    os.makedirs(os.path.dirname(path_seed), exist_ok=True)
+    os.makedirs(os.path.dirname(path_seed).format(LOCAL_ASSET_FOLDER=LOCAL_ASSET_FOLDER, schema=""), exist_ok=True)
     generate_luts()
 
     models = [example_task_logic, example_session, example_rig, example_database]
 
     for model in models:
-        with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:
+        with open(
+            path_seed.format(schema=model.__class__.__name__, LOCAL_ASSET_FOLDER=LOCAL_ASSET_FOLDER),
+            "w",
+            encoding="utf-8",
+        ) as f:
             f.write(model.model_dump_json(indent=2))
 
 

@@ -17,7 +17,7 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services>=0.9, <0.10",
+  "aind_behavior_services<0.11",
   "numpy",
   "pillow"
 ]
@@ -30,7 +30,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.Telekinesis/re
 
 [project.optional-dependencies]
 
-launcher = ["aind_behavior_experiment_launcher[aind-services]>=0.3, <0.4"]
+launcher = ["aind_behavior_experiment_launcher[aind-services]"]
 
 dev = [
      "aind_behavior_telekinesis[launcher]",

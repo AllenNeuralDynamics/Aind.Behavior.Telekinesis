@@ -78,13 +78,10 @@ class AindTelekinesisRig(AindBehaviorRigModel):
     triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )
-    monitoring_camera_controller: Optional[rig.CameraController[rig.WebCamera]] = Field(
-        default=None, description="Optional camera controller for monitoring cameras."
-    )
     harp_behavior: rig.HarpBehavior = Field(..., description="Harp behavior")
-    harp_lickometer: rig.HarpLickometer = Field(..., description="Harp lickometer")
-    harp_load_cells: Optional[lcc.LoadCells] = Field(..., description="Harp load cells")
-    harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock generator")
+    harp_lickometer: rig.HarpLicketySplit = Field(..., description="Harp lickometer")
+    harp_load_cells: Optional[lcc.LoadCells] = Field(default=None, description="Harp load cells")
+    harp_clock_generator: rig.HarpWhiteRabbit = Field(..., description="Harp clock generator")
     harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
     harp_environment_sensor: Optional[rig.HarpEnvironmentSensor] = Field(
         default=None, description="Harp environment sensor"
