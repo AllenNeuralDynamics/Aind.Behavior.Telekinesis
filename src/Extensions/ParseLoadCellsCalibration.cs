@@ -56,10 +56,10 @@ public class ParseLoadCellsCalibration
             {
                 calibrations.Add(new LoadCellCalibration
                 {
-                    Offset = calibration.Offset.HasValue ? calibration.Offset.Value : 0,
-                    Baseline = (int)(calibration.Baseline.HasValue ? calibration.Baseline.Value : 0),
+                    Offset = calibration.Offset,
+                    Baseline = (int)calibration.Baseline,
                     LoadCellIndex = calibration.Channel,
-                    Slope = calibration.Slope.HasValue ? calibration.Slope.Value : 1,
+                    Slope = calibration.Slope,
                 });
             }
             return calibrations;
