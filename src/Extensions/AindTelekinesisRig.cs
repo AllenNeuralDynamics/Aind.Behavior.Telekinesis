@@ -409,6 +409,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "StepperDriver";
     
+        private string _deviceName;
+    
         private AindManipulatorAdditionalSettings _additionalSettings;
     
         private AindManipulatorCalibration _calibration;
@@ -426,6 +428,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected AindManipulatorDevice(AindManipulatorDevice other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -443,6 +446,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -538,6 +558,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -889,6 +910,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "CameraController";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -904,6 +927,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected CameraControllerSpinnakerCamera(CameraControllerSpinnakerCamera other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _cameras = other._cameras;
@@ -920,6 +944,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1008,6 +1049,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("cameras = " + _cameras + ", ");
@@ -1124,6 +1166,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "AnalogInput";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1141,6 +1185,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected HarpAnalogInput(HarpAnalogInput other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1158,6 +1203,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1257,6 +1319,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -1288,6 +1351,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "Behavior";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1305,6 +1370,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected HarpBehavior(HarpBehavior other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1322,6 +1388,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1421,6 +1504,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -1452,6 +1536,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "EnvironmentSensor";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1469,6 +1555,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected HarpEnvironmentSensor(HarpEnvironmentSensor other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1486,6 +1573,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1585,6 +1689,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -1616,6 +1721,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "LicketySplit";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1633,6 +1740,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected HarpLicketySplit(HarpLicketySplit other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1650,6 +1758,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1749,6 +1874,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -1780,6 +1906,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "WhiteRabbit";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -1799,6 +1927,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected HarpWhiteRabbit(HarpWhiteRabbit other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -1817,6 +1946,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -1934,6 +2080,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -2205,6 +2352,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "LoadCells";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private LoadCellsCalibration _calibration;
@@ -2222,6 +2371,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected LoadCells(LoadCells other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
@@ -2239,6 +2389,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -2334,6 +2501,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("who_am_i = " + _whoAmI + ", ");
@@ -3514,6 +3682,8 @@ namespace AindTelekinesisDataSchema.Rig
     
         private string _deviceType = "SpinnakerCamera";
     
+        private string _deviceName;
+    
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
@@ -3545,6 +3715,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected SpinnakerCamera(SpinnakerCamera other)
         {
             _deviceType = other._deviceType;
+            _deviceName = other._deviceName;
             _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _serialNumber = other._serialNumber;
@@ -3573,6 +3744,23 @@ namespace AindTelekinesisDataSchema.Rig
             set
             {
                 _deviceType = value;
+            }
+        }
+    
+        /// <summary>
+        /// Device name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Device name")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
             }
         }
     
@@ -3801,6 +3989,7 @@ namespace AindTelekinesisDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_type = " + _deviceType + ", ");
+            stringBuilder.Append("device_name = " + _deviceName + ", ");
             stringBuilder.Append("additional_settings = " + _additionalSettings + ", ");
             stringBuilder.Append("calibration = " + _calibration + ", ");
             stringBuilder.Append("serial_number = " + _serialNumber + ", ");
@@ -5014,7 +5203,7 @@ namespace AindTelekinesisDataSchema.Rig
     public partial class AindTelekinesisRig
     {
     
-        private string _aindBehaviorServicesPkgVersion = "0.10.2";
+        private string _aindBehaviorServicesPkgVersion = "0.11.0";
     
         private string _version = "0.2.0";
     

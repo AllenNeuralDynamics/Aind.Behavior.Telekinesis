@@ -75,15 +75,15 @@ OphysInterface = TypeAliasType(
 
 class AindTelekinesisRig(AindBehaviorRigModel):
     version: Literal[__version__] = __version__
-    triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
+    triggered_camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )
-    harp_behavior: rig.HarpBehavior = Field(..., description="Harp behavior")
-    harp_lickometer: rig.HarpLicketySplit = Field(..., description="Harp lickometer")
+    harp_behavior: rig.harp.HarpBehavior = Field(..., description="Harp behavior")
+    harp_lickometer: rig.harp.HarpLicketySplit = Field(..., description="Harp lickometer")
     harp_load_cells: Optional[lcc.LoadCells] = Field(default=None, description="Harp load cells")
-    harp_clock_generator: rig.HarpWhiteRabbit = Field(..., description="Harp clock generator")
-    harp_analog_input: Optional[rig.HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    harp_environment_sensor: Optional[rig.HarpEnvironmentSensor] = Field(
+    harp_clock_generator: rig.harp.HarpWhiteRabbit = Field(..., description="Harp clock generator")
+    harp_analog_input: Optional[rig.harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
+    harp_environment_sensor: Optional[rig.harp.HarpEnvironmentSensor] = Field(
         default=None, description="Harp environment sensor"
     )
     manipulator: AindManipulatorDevice = Field(..., description="Manipulator")

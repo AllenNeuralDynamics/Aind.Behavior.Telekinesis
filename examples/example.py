@@ -4,7 +4,6 @@ import os
 import aind_behavior_services.calibration.load_cells as lcc
 import aind_behavior_services.rig as rig
 import aind_behavior_telekinesis.task_logic as tl
-from aind_behavior_services import db_utils as db
 from aind_behavior_services.calibration.aind_manipulator import (
     AindManipulatorCalibration,
     AindManipulatorCalibrationInput,
@@ -75,7 +74,7 @@ def mock_rig() -> AindTelekinesisRig:
     )
     water_valve_calibration.output = WaterValveCalibrationOutput(slope=1.0 / 20, offset=0)  # For testing purposes
 
-    video_writer = rig.VideoWriterOpenCv(
+    video_writer = rig.cameras.VideoWriterOpenCv(
         frame_rate=25,
         container_extension="avi",
     )
@@ -87,10 +86,10 @@ def mock_rig() -> AindTelekinesisRig:
     )
     return AindTelekinesisRig(
         rig_name="BCI_Bonsai_i",
-        triggered_camera_controller=rig.CameraController[rig.SpinnakerCamera](
+        triggered_camera_controller=rig.cameras.CameraController[rig.cameras.SpinnakerCamera](
             frame_rate=25,
             cameras={
-                "MainCamera": rig.SpinnakerCamera(
+                "MainCamera": rig.cameras.SpinnakerCamera(
                     serial_number="SerialNumber",
                     binning=2,
                     exposure=10000,
@@ -100,9 +99,9 @@ def mock_rig() -> AindTelekinesisRig:
             },
         ),
         harp_load_cells=lcc.LoadCells(port_name="COM4", calibration=load_cells_calibration),
-        harp_behavior=rig.HarpBehavior(port_name="COM6"),
-        harp_lickometer=rig.HarpLicketySplit(port_name="COM8"),
-        harp_clock_generator=rig.HarpWhiteRabbit(port_name="COM3"),
+        harp_behavior=rig.harp.HarpBehavior(port_name="COM6"),
+        harp_lickometer=rig.harp.HarpLicketySplit(port_name="COM8"),
+        harp_clock_generator=rig.harp.HarpWhiteRabbit(port_name="COM3"),
         harp_analog_input=None,
         manipulator=AindManipulatorDevice(port_name="COM5", calibration=manipulator_calibration),
         calibration=RigCalibration(water_valve=water_valve_calibration),
@@ -165,23 +164,14 @@ def mock_task_logic() -> tl.AindTelekinesisTaskLogic:
     )
 
 
-def mock_subject_database() -> db.SubjectDataBase:
-    """Generates a mock database object"""
-    database = db.SubjectDataBase()
-    database.add_subject("test", db.SubjectEntry(task_logic_target="preward_intercept_stageA"))
-    database.add_subject("test2", db.SubjectEntry(task_logic_target="does_notexist"))
-    return database
-
-
 def main(path_seed: str = "./local/{schema}.json"):
     example_session = mock_session()
     example_rig = mock_rig()
     example_task_logic = mock_task_logic()
-    example_database = mock_subject_database()
 
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)
 
-    models = [example_task_logic, example_session, example_rig, example_database]
+    models = [example_task_logic, example_session, example_rig]
 
     for model in models:
         with open(path_seed.format(schema=model.__class__.__name__), "w", encoding="utf-8") as f:

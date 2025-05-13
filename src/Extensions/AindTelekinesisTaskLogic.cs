@@ -503,7 +503,7 @@ namespace AindTelekinesisDataSchema.TaskLogic
     
         private double? _rngSeed;
     
-        private string _aindBehaviorServicesPkgVersion = "0.10.2";
+        private string _aindBehaviorServicesPkgVersion = "0.11.0";
     
         private Environment _environment = new Environment();
     
