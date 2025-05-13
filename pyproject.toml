@@ -6,13 +6,15 @@ build-backend = "setuptools.build_meta"
 name = "aind-behavior-telekinesis"
 description = "A library that defines AIND data schema for the brain-computer interface experiments."
 authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
-license = {text = "MIT"}
 requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Operating System :: Microsoft :: Windows",
 ]
+license = "MIT"
+license-files = ["LICENSE"]
 readme = "README.md"
 dynamic = ["version"]
 
