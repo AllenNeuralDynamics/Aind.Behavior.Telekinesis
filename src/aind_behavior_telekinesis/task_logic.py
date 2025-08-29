@@ -9,8 +9,7 @@ from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskPa
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
 
-__version__ = "0.1.0"
-
+from aind_behavior_telekinesis import __version__
 
 def scalar_value(value: float) -> distributions.Scalar:
     """

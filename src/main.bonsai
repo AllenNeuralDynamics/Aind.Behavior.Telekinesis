@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:AindTelekinesisDataSchema.Session;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AindTelekinesisDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p2="clr-namespace:AindTelekinesisDataSchema.Rig;assembly=Extensions"
-                 xmlns:p3="clr-namespace:AindTelekinesisDataSchema.TaskLogic;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AindTelekinesisDataSchema;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AindTelekinesisDataSchema;assembly=Extensions"
                  xmlns:p4="clr-namespace:AllenNeuralDynamics.WhiteRabbit;assembly=AllenNeuralDynamics.WhiteRabbit"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p5="clr-namespace:AllenNeuralDynamics.AindManipulator;assembly=AllenNeuralDynamics.AindManipulator"
@@ -711,7 +711,9 @@
                     <Name>SoftwareEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p8:SerializeToJson" />
+                    <Combinator xsi:type="p8:SerializeToJson">
+                      <p8:Formatting>None</p8:Formatting>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
@@ -3797,7 +3799,6 @@ Item2.Item3 as LowerThr)]]></Text>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Timer">
                             <rx:DueTime>PT0.5S</rx:DueTime>
-                            <rx:Period>PT0S</rx:Period>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedMapping">

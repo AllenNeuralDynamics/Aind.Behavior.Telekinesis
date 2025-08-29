@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Reactive.Linq;
 using Bonsai.Harp;
-using AindTelekinesisDataSchema.TaskLogic;
+using AindTelekinesisDataSchema;
 using System.Xml.Serialization;
 using System.ComponentModel;
 using OpenCV.Net;

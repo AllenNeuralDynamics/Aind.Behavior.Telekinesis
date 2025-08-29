@@ -12,8 +12,7 @@ from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
 from typing_extensions import TypeAliasType
 
-__version__ = "0.2.0"
-
+from aind_behavior_telekinesis import __version__
 
 class AindManipulatorAdditionalSettings(BaseModel):
     """Additional settings for the manipulator device"""
