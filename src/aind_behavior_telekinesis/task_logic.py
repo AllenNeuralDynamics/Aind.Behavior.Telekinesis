@@ -11,6 +11,7 @@ from typing_extensions import TypeAliasType
 
 from aind_behavior_telekinesis import __version__
 
+
 def scalar_value(value: float) -> distributions.Scalar:
     """
     Helper function to create a scalar value distribution for a given value.

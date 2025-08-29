@@ -14,6 +14,7 @@ from typing_extensions import TypeAliasType
 
 from aind_behavior_telekinesis import __version__
 
+
 class AindManipulatorAdditionalSettings(BaseModel):
     """Additional settings for the manipulator device"""
 
