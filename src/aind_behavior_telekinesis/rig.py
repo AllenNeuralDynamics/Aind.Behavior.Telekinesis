@@ -1,7 +1,3 @@
-# Import core types
-from __future__ import annotations
-
-# Import core types
 from typing import Annotated, Literal, Optional, Union
 
 import aind_behavior_services.calibration.load_cells as lcc
@@ -11,9 +7,7 @@ from aind_behavior_services.calibration import aind_manipulator
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
 from typing_extensions import TypeAliasType
-
-__version__ = "0.2.0"
-
+from aind_behavior_telekinesis import __semver__
 
 class AindManipulatorAdditionalSettings(BaseModel):
     """Additional settings for the manipulator device"""
@@ -73,8 +67,8 @@ OphysInterface = TypeAliasType(
 )
 
 
-class AindTelekinesisRig(AindBehaviorRigModel):
-    version: Literal[__version__] = __version__
+class AindBehaviorTelekinesisRig(AindBehaviorRigModel):
+    version: Literal[__semver__] = __semver__
     triggered_camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )

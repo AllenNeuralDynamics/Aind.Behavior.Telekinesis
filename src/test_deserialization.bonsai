@@ -41,7 +41,7 @@
               <Name>RawRigSchema</Name>
             </Expression>
             <Expression xsi:type="p2:DeserializeFromJson">
-              <p2:Type xsi:type="TypeMapping" TypeArguments="p2:AindTelekinesisRig" />
+              <p2:Type xsi:type="TypeMapping" TypeArguments="p2:AindBehaviorTelekinesisRig" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -55,7 +55,7 @@
               <Name>RawTaskLogicSchema</Name>
             </Expression>
             <Expression xsi:type="p3:DeserializeFromJson">
-              <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindTelekinesisTaskLogic" />
+              <p3:Type xsi:type="TypeMapping" TypeArguments="p3:AindBehaviorTelekinesisTaskLogic" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from enum import Enum
 from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
@@ -8,9 +6,7 @@ from aind_behavior_services.calibration.load_cells import LoadCellChannel
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
-
-__version__ = "0.1.0"
-
+from aind_behavior_telekinesis import __semver__
 
 def scalar_value(value: float) -> distributions.Scalar:
     """
@@ -314,7 +310,7 @@ class AindTelekinesisTaskParameters(TaskParameters):
         return self
 
 
-class AindTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
-    version: Literal[__version__] = __version__
+class AindBehaviorTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
+    version: Literal[__semver__] = __semver__
     name: Literal["AindTelekinesis"] = Field(default="AindTelekinesis", description="Name of the task logic")
     task_parameters: AindTelekinesisTaskParameters = Field(..., description="Parameters of the task logic")
