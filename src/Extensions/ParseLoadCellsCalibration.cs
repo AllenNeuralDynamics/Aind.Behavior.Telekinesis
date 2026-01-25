@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Collections.ObjectModel;
-using AindTelekinesisDataSchema.Rig;
+using AindBehaviorTelekinesisDataSchema;
 
 [Combinator]
 [Description("Parses LoadCell calibration data into a LoadCellsCalibrations object.")]

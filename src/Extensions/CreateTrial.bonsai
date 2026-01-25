@@ -5,7 +5,7 @@
                  xmlns:p1="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:p2="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:p3="clr-namespace:AindTelekinesisDataSchema.TaskLogic;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>

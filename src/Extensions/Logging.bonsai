@@ -14,9 +14,9 @@
                  xmlns:p8="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:p9="clr-namespace:;assembly=Extensions"
-                 xmlns:p10="clr-namespace:AindTelekinesisDataSchema.Session;assembly=Extensions"
-                 xmlns:p11="clr-namespace:AindTelekinesisDataSchema.TaskLogic;assembly=Extensions"
-                 xmlns:p12="clr-namespace:AindTelekinesisDataSchema.Rig;assembly=Extensions"
+                 xmlns:p10="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
+                 xmlns:p11="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
+                 xmlns:p12="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
                  xmlns:p13="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>

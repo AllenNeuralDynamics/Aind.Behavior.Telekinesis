@@ -4,7 +4,7 @@
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p1="clr-namespace:Harp.LoadCells;assembly=Harp.LoadCells"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p2="clr-namespace:AindTelekinesisDataSchema.Rig;assembly=Extensions"
+                 xmlns:p2="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
                  xmlns:p3="clr-namespace:AllenNeuralDynamics.AindManipulator;assembly=AllenNeuralDynamics.AindManipulator"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"

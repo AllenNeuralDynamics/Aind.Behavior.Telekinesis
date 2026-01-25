@@ -37,7 +37,7 @@ def uniform_distribution_value(min: float, max: float) -> distributions.UniformD
     )
 
 
-def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
+def normal_distribution_value(mean: float, std: float) -> distributions.NormalDistribution:
     """
     Helper function to create a normal distribution for a given range.
 
@@ -46,7 +46,7 @@ def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
         std (float): The standard deviation of the normal distribution.
 
     Returns:
-        distributions.Normal: The normal distribution type.
+        distributions.NormalDistribution: The normal distribution type.
     """
     return distributions.NormalDistribution(
         distribution_parameters=distributions.NormalDistributionParameters(mean=mean, std=std)
