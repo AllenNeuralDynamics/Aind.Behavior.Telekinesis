@@ -65,6 +65,23 @@ uv run telekinesis -h
 
 You may need to install optional dependencies depending on the sub-commands you run.
 
+
+
+## Experiment launcher (CLABE)
+
+To manage experiments and input files, this repository contains a launcher script that can be used to run the Telekinesis task. This script is located at `./examples/launcher.py`. It can be run from the command line as follows:
+
+```powershell
+uv run ./examples/launcher.py
+```
+
+Additional arguments can be passed to the script as needed (see `-h` flag), or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`)
+
+In order to run the launcher script, optional dependencies should be installed.
+
+Additional custom launcher scripts can be created and used as needed.
+
+
 ## Primary data quality-control
 
 Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launched using:

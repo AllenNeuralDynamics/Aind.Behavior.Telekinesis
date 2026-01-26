@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "aind-behavior-telekinesis"
 description = "A library with a SDK for the Telekinesis behavior task"
-authors = [ {name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org"}]
+authors = [{ name = "Bruno Cruz", email = "bruno.cruz@alleninstitute.org" }]
 license = "MIT"
 requires-python = ">=3.11"
 classifiers = [
@@ -13,13 +13,13 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
 ]
 version = "0.2.0rc0"
-readme = {file = "README.md", content-type = "text/markdown"}
+readme = { file = "README.md", content-type = "text/markdown" }
 
 dependencies = [
-  "aind_behavior_services>=0.12, <0.13",
-  "pydantic-settings",
-  "numpy",
-  "pillow"
+    "aind_behavior_services>=0.12, <0.13",
+    "pydantic-settings",
+    "numpy",
+    "pillow",
 ]
 
 [project.urls]
@@ -31,6 +31,10 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.Telekinesis/re
 [project.optional-dependencies]
 
 data = ["contraqctor>=0.5.3, <0.6.0"]
+
+launcher = [
+    "aind-clabe[aind-services]", # Until #https://github.com/AllenNeuralDynamics/clabe/issues/229 is resolved
+]
 
 [dependency-groups]
 
@@ -48,7 +52,7 @@ docs = [
     'autodoc_pydantic[erdantic]',
     'myst_parser',
     'sphinx-jsonschema',
-    "aind-behavior-telekinesis[data]",  # Necessary for the data contract rendering
+    "aind-behavior-telekinesis[data]", # Necessary for the data contract rendering
 ]
 
 [project.scripts]
