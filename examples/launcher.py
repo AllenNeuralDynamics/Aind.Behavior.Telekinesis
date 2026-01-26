@@ -1,35 +1,19 @@
+import logging
 from pathlib import Path
 
-from clabe.launcher import Launcher
-from clabe.apps import AindBehaviorServicesBonsaiApp
-from clabe.resource_monitor import ResourceMonitor, available_storage_constraint_factory
-from clabe.data_transfer.robocopy import RobocopyService, RobocopySettings
 from aind_behavior_services.session import AindBehaviorSessionModel
-from clabe.pickers import DefaultBehaviorPicker, DefaultBehaviorPickerSettings
-from aind_behavior_telekinesis.rig import AindBehaviorTelekinesisRig
-from aind_behavior_telekinesis.task_logic import AindBehaviorTaskLogicModel
-
-from aind_behavior_services.calibration.aind_manipulator import ManipulatorPosition
-from aind_behavior_services.session import AindBehaviorSessionModel
-from aind_behavior_services.utils import utcnow
-from clabe import resource_monitor
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
-    CurriculumApp,
-    CurriculumSettings,
-    CurriculumSuggestion,
 )
-from typing import Any, cast
-from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
+from clabe.data_transfer.robocopy import RobocopyService, RobocopySettings
 from clabe.launcher import Launcher, LauncherCliArgs
-from clabe.pickers import ByAnimalModifier, DefaultBehaviorPickerSettings
-from clabe.pickers.dataverse import DataversePicker
-from contraqctor.contract.json import SoftwareEvents
+from clabe.pickers import DefaultBehaviorPicker, DefaultBehaviorPickerSettings
+from clabe.resource_monitor import ResourceMonitor, available_storage_constraint_factory
 from pydantic_settings import CliApp
+
 from aind_behavior_telekinesis import data_contract
 from aind_behavior_telekinesis.rig import AindBehaviorTelekinesisRig
 from aind_behavior_telekinesis.task_logic import AindBehaviorTelekinesisTaskLogic
-import logging
 
 logger = logging.getLogger(__name__)
 
