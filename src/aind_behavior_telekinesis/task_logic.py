@@ -6,7 +6,9 @@ from aind_behavior_services.calibration.load_cells import LoadCellChannel
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
+
 from aind_behavior_telekinesis import __semver__
+
 
 def scalar_value(value: float) -> distributions.Scalar:
     """

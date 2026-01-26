@@ -7,7 +7,9 @@ from aind_behavior_services.calibration import aind_manipulator
 from aind_behavior_services.rig import AindBehaviorRigModel
 from pydantic import BaseModel, Field
 from typing_extensions import TypeAliasType
+
 from aind_behavior_telekinesis import __semver__
+
 
 class AindManipulatorAdditionalSettings(BaseModel):
     """Additional settings for the manipulator device"""

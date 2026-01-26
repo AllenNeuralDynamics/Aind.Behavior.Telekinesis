@@ -435,7 +435,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p2:CreateSoftwareEvent">
-                      <p2:EventName>Action</p2:EventName>
+                      <p2:EventName>PerformedAction</p2:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -689,7 +689,7 @@
                           <Combinator xsi:type="rx:Merge" />
                         </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="Extensions\CreateSoftwareEventInline.bonsai">
-                          <EventName>RewardOutcome</EventName>
+                          <EventName>IsValidRewardOutcome</EventName>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">

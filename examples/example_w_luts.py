@@ -2,7 +2,6 @@ import datetime
 import os
 
 import aind_behavior_services.rig as rig
-import aind_behavior_telekinesis.task_logic as tl
 from aind_behavior_services.calibration.aind_manipulator import (
     AindManipulatorCalibration,
     AindManipulatorCalibrationInput,
@@ -19,9 +18,11 @@ from aind_behavior_services.calibration.water_valve import (
     WaterValveCalibrationOutput,
 )
 from aind_behavior_services.session import AindBehaviorSessionModel
+
+import aind_behavior_telekinesis.task_logic as tl
 from aind_behavior_telekinesis.rig import (
-    AindManipulatorDevice,
     AindBehaviorTelekinesisRig,
+    AindManipulatorDevice,
     Networking,
     RigCalibration,
     ZmqConnection,
