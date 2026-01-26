@@ -7,9 +7,10 @@ from typing import Generic, List, Optional, TypeVar, Union
 
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import run_bonsai_process
+from pydantic import ValidationError
+
 from aind_behavior_telekinesis.rig import AindTelekinesisRig
 from aind_behavior_telekinesis.task_logic import AindTelekinesisTaskLogic
-from pydantic import ValidationError
 
 sys.path.append(".")
 from examples import example  # isort:skip # pylint: disable=wrong-import-position

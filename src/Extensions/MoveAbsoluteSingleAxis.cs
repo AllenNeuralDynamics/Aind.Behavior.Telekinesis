@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using AindTelekinesisDataSchema.Rig;
+using AindTelekinesisDataSchema;
 using Harp.StepperDriver;
 using Bonsai.Harp;
 

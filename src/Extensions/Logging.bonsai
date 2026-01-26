@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
@@ -14,9 +14,9 @@
                  xmlns:p8="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:p9="clr-namespace:;assembly=Extensions"
-                 xmlns:p10="clr-namespace:AindTelekinesisDataSchema.Session;assembly=Extensions"
-                 xmlns:p11="clr-namespace:AindTelekinesisDataSchema.TaskLogic;assembly=Extensions"
-                 xmlns:p12="clr-namespace:AindTelekinesisDataSchema.Rig;assembly=Extensions"
+                 xmlns:p10="clr-namespace:AindTelekinesisDataSchema;assembly=Extensions"
+                 xmlns:p11="clr-namespace:AindTelekinesisDataSchema;assembly=Extensions"
+                 xmlns:p12="clr-namespace:AindTelekinesisDataSchema;assembly=Extensions"
                  xmlns:p13="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -1285,7 +1285,9 @@
                                 <Combinator xsi:type="p1:TimestampSoftwareEvent" />
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p13:SerializeToJson" />
+                                <Combinator xsi:type="p13:SerializeToJson">
+                                  <p13:Formatting>None</p13:Formatting>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Modality</Name>
