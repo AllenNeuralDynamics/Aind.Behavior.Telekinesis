@@ -10,13 +10,13 @@ import aind_behavior_telekinesis.task_logic
 
 SCHEMA_ROOT = Path("./src/DataSchemas/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
-NAMESPACE_PREFIX = "AindTelekinesisDataSchema"
+NAMESPACE_PREFIX = "AindBehaviorTelekinesisDataSchema"
 
 
 def main():
     models = [
-        aind_behavior_telekinesis.task_logic.AindTelekinesisTaskLogic,
-        aind_behavior_telekinesis.rig.AindTelekinesisRig,
+        aind_behavior_telekinesis.task_logic.AindBehaviorTelekinesisTaskLogic,
+        aind_behavior_telekinesis.rig.AindBehaviorTelekinesisRig,
         AindBehaviorSessionModel,
     ]
     model = pydantic.RootModel[Union[tuple(models)]]

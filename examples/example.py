@@ -22,8 +22,8 @@ from aind_behavior_services.session import AindBehaviorSessionModel
 
 import aind_behavior_telekinesis.task_logic as tl
 from aind_behavior_telekinesis.rig import (
+    AindBehaviorTelekinesisRig,
     AindManipulatorDevice,
-    AindTelekinesisRig,
     Networking,
     RigCalibration,
     ZmqConnection,
@@ -45,7 +45,7 @@ def mock_session() -> AindBehaviorSessionModel:
     )
 
 
-def mock_rig() -> AindTelekinesisRig:
+def mock_rig() -> AindBehaviorTelekinesisRig:
     """Generates a mock AindVrForagingRig model"""
 
     manipulator_calibration = AindManipulatorCalibration(
@@ -85,7 +85,7 @@ def mock_rig() -> AindTelekinesisRig:
         input=lcc.LoadCellsCalibrationInput(),
         date=datetime.datetime.now(),
     )
-    return AindTelekinesisRig(
+    return AindBehaviorTelekinesisRig(
         rig_name="BCI_Bonsai_i",
         triggered_camera_controller=rig.cameras.CameraController[rig.cameras.SpinnakerCamera](
             frame_rate=25,
@@ -113,7 +113,7 @@ def mock_rig() -> AindTelekinesisRig:
     )
 
 
-def mock_task_logic() -> tl.AindTelekinesisTaskLogic:
+def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
     prototype_trial = tl.Action(
         reward_probability=tl.scalar_value(1),
         reward_amount=tl.scalar_value(1),
@@ -125,7 +125,7 @@ def mock_task_logic() -> tl.AindTelekinesisTaskLogic:
         upper_action_threshold=tl.scalar_value(20000),
         continuous_feedback=tl.ManipulatorFeedback(converter_lut_input=[0, 1], converter_lut_output=[1, 10]),
     )
-    return tl.AindTelekinesisTaskLogic(
+    return tl.AindBehaviorTelekinesisTaskLogic(
         task_parameters=tl.AindTelekinesisTaskParameters(
             rng_seed=None,
             environment=tl.Environment(

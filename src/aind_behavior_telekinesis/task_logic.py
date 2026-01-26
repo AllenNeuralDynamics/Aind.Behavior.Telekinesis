@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from enum import Enum
 from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
@@ -9,7 +7,7 @@ from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskPa
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
 
-from aind_behavior_telekinesis import __version__
+from aind_behavior_telekinesis import __semver__
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -41,7 +39,7 @@ def uniform_distribution_value(min: float, max: float) -> distributions.UniformD
     )
 
 
-def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
+def normal_distribution_value(mean: float, std: float) -> distributions.NormalDistribution:
     """
     Helper function to create a normal distribution for a given range.
 
@@ -50,7 +48,7 @@ def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
         std (float): The standard deviation of the normal distribution.
 
     Returns:
-        distributions.Normal: The normal distribution type.
+        distributions.NormalDistribution: The normal distribution type.
     """
     return distributions.NormalDistribution(
         distribution_parameters=distributions.NormalDistributionParameters(mean=mean, std=std)
@@ -314,7 +312,7 @@ class AindTelekinesisTaskParameters(TaskParameters):
         return self
 
 
-class AindTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
-    version: Literal[__version__] = __version__
+class AindBehaviorTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
+    version: Literal[__semver__] = __semver__
     name: Literal["AindTelekinesis"] = Field(default="AindTelekinesis", description="Name of the task logic")
     task_parameters: AindTelekinesisTaskParameters = Field(..., description="Parameters of the task logic")
