@@ -5,7 +5,7 @@
 //----------------------
 
 
-namespace AindTelekinesisDataSchema
+namespace AindBehaviorTelekinesisDataSchema
 {
     #pragma warning disable // Disable all warnings
 
@@ -538,9 +538,10 @@ namespace AindTelekinesisDataSchema
     
         public AindBehaviorSessionModel()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.0";
-            _version = "0.3.1";
+            _aindBehaviorServicesPkgVersion = "0.12.5";
+            _version = "0.12.5";
             _experimenter = new System.Collections.Generic.List<string>();
+            _experimentVersion = "";
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
         }
@@ -591,7 +592,7 @@ namespace AindTelekinesisDataSchema
         /// <summary>
         /// Name of the experiment
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment")]
         [System.ComponentModel.DescriptionAttribute("Name of the experiment")]
         public string Experiment
         {
@@ -659,10 +660,11 @@ namespace AindTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Name of the session. This will be used to create a folder in the root path.
+        /// Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path.")]
+        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path. If no" +
+            "t provided, it will be generated using subject and date.")]
         public string SessionName
         {
             get
@@ -695,7 +697,7 @@ namespace AindTelekinesisDataSchema
         /// <summary>
         /// Version of the experiment
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment_version", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment_version")]
         [System.ComponentModel.DescriptionAttribute("Version of the experiment")]
         public string ExperimentVersion
         {
@@ -820,6 +822,527 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class AindBehaviorTelekinesisRig
+    {
+    
+        private string _aindBehaviorServicesPkgVersion;
+    
+        private string _version;
+    
+        private string _computerName;
+    
+        private string _rigName;
+    
+        private CameraControllerSpinnakerCamera _triggeredCameraController;
+    
+        private HarpBehavior _harpBehavior;
+    
+        private HarpLicketySplit _harpLickometer;
+    
+        private LoadCells _harpLoadCells;
+    
+        private HarpWhiteRabbit _harpClockGenerator;
+    
+        private HarpAnalogInput _harpAnalogInput;
+    
+        private HarpEnvironmentSensor _harpEnvironmentSensor;
+    
+        private AindManipulatorDevice _manipulator;
+    
+        private RigCalibration _calibration;
+    
+        private Networking _networking;
+    
+        private OphysInterface _ophysInterface;
+    
+        public AindBehaviorTelekinesisRig()
+        {
+            _aindBehaviorServicesPkgVersion = "0.12.5";
+            _version = "0.2.0-rc0";
+            _triggeredCameraController = new CameraControllerSpinnakerCamera();
+            _harpBehavior = new HarpBehavior();
+            _harpLickometer = new HarpLicketySplit();
+            _harpClockGenerator = new HarpWhiteRabbit();
+            _manipulator = new AindManipulatorDevice();
+            _calibration = new RigCalibration();
+            _networking = new Networking();
+        }
+    
+        protected AindBehaviorTelekinesisRig(AindBehaviorTelekinesisRig other)
+        {
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
+            _version = other._version;
+            _computerName = other._computerName;
+            _rigName = other._rigName;
+            _triggeredCameraController = other._triggeredCameraController;
+            _harpBehavior = other._harpBehavior;
+            _harpLickometer = other._harpLickometer;
+            _harpLoadCells = other._harpLoadCells;
+            _harpClockGenerator = other._harpClockGenerator;
+            _harpAnalogInput = other._harpAnalogInput;
+            _harpEnvironmentSensor = other._harpEnvironmentSensor;
+            _manipulator = other._manipulator;
+            _calibration = other._calibration;
+            _networking = other._networking;
+            _ophysInterface = other._ophysInterface;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        /// <summary>
+        /// Computer name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("computer_name")]
+        [System.ComponentModel.DescriptionAttribute("Computer name")]
+        public string ComputerName
+        {
+            get
+            {
+                return _computerName;
+            }
+            set
+            {
+                _computerName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Rig name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rig_name", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Rig name")]
+        public string RigName
+        {
+            get
+            {
+                return _rigName;
+            }
+            set
+            {
+                _rigName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Required camera controller to triggered cameras.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("triggered_camera_controller", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Required camera controller to triggered cameras.")]
+        public CameraControllerSpinnakerCamera TriggeredCameraController
+        {
+            get
+            {
+                return _triggeredCameraController;
+            }
+            set
+            {
+                _triggeredCameraController = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp behavior
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_behavior", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Harp behavior")]
+        public HarpBehavior HarpBehavior
+        {
+            get
+            {
+                return _harpBehavior;
+            }
+            set
+            {
+                _harpBehavior = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp lickometer
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_lickometer", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Harp lickometer")]
+        public HarpLicketySplit HarpLickometer
+        {
+            get
+            {
+                return _harpLickometer;
+            }
+            set
+            {
+                _harpLickometer = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp load cells
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_load_cells")]
+        [System.ComponentModel.DescriptionAttribute("Harp load cells")]
+        public LoadCells HarpLoadCells
+        {
+            get
+            {
+                return _harpLoadCells;
+            }
+            set
+            {
+                _harpLoadCells = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp clock generator
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_generator", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Harp clock generator")]
+        public HarpWhiteRabbit HarpClockGenerator
+        {
+            get
+            {
+                return _harpClockGenerator;
+            }
+            set
+            {
+                _harpClockGenerator = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp analog input
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_analog_input")]
+        [System.ComponentModel.DescriptionAttribute("Harp analog input")]
+        public HarpAnalogInput HarpAnalogInput
+        {
+            get
+            {
+                return _harpAnalogInput;
+            }
+            set
+            {
+                _harpAnalogInput = value;
+            }
+        }
+    
+        /// <summary>
+        /// Harp environment sensor
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("harp_environment_sensor")]
+        [System.ComponentModel.DescriptionAttribute("Harp environment sensor")]
+        public HarpEnvironmentSensor HarpEnvironmentSensor
+        {
+            get
+            {
+                return _harpEnvironmentSensor;
+            }
+            set
+            {
+                _harpEnvironmentSensor = value;
+            }
+        }
+    
+        /// <summary>
+        /// Manipulator
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("manipulator", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Manipulator")]
+        public AindManipulatorDevice Manipulator
+        {
+            get
+            {
+                return _manipulator;
+            }
+            set
+            {
+                _manipulator = value;
+            }
+        }
+    
+        /// <summary>
+        /// General rig calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibration", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("General rig calibration")]
+        public RigCalibration Calibration
+        {
+            get
+            {
+                return _calibration;
+            }
+            set
+            {
+                _calibration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Networking settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("networking")]
+        [System.ComponentModel.DescriptionAttribute("Networking settings")]
+        public Networking Networking
+        {
+            get
+            {
+                return _networking;
+            }
+            set
+            {
+                _networking = value;
+            }
+        }
+    
+        /// <summary>
+        /// Ophys interface
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("ophys_interface")]
+        [System.ComponentModel.DescriptionAttribute("Ophys interface")]
+        public OphysInterface OphysInterface
+        {
+            get
+            {
+                return _ophysInterface;
+            }
+            set
+            {
+                _ophysInterface = value;
+            }
+        }
+    
+        public System.IObservable<AindBehaviorTelekinesisRig> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorTelekinesisRig(this)));
+        }
+    
+        public System.IObservable<AindBehaviorTelekinesisRig> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorTelekinesisRig(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
+            stringBuilder.Append("Version = " + _version + ", ");
+            stringBuilder.Append("ComputerName = " + _computerName + ", ");
+            stringBuilder.Append("RigName = " + _rigName + ", ");
+            stringBuilder.Append("TriggeredCameraController = " + _triggeredCameraController + ", ");
+            stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
+            stringBuilder.Append("HarpLickometer = " + _harpLickometer + ", ");
+            stringBuilder.Append("HarpLoadCells = " + _harpLoadCells + ", ");
+            stringBuilder.Append("HarpClockGenerator = " + _harpClockGenerator + ", ");
+            stringBuilder.Append("HarpAnalogInput = " + _harpAnalogInput + ", ");
+            stringBuilder.Append("HarpEnvironmentSensor = " + _harpEnvironmentSensor + ", ");
+            stringBuilder.Append("Manipulator = " + _manipulator + ", ");
+            stringBuilder.Append("Calibration = " + _calibration + ", ");
+            stringBuilder.Append("Networking = " + _networking + ", ");
+            stringBuilder.Append("OphysInterface = " + _ophysInterface);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class AindBehaviorTelekinesisTaskLogic
+    {
+    
+        private string _name;
+    
+        private string _description;
+    
+        private AindTelekinesisTaskParameters _taskParameters;
+    
+        private string _version;
+    
+        private string _stageName;
+    
+        public AindBehaviorTelekinesisTaskLogic()
+        {
+            _name = "AindTelekinesis";
+            _description = "";
+            _taskParameters = new AindTelekinesisTaskParameters();
+            _version = "0.2.0-rc0";
+        }
+    
+        protected AindBehaviorTelekinesisTaskLogic(AindBehaviorTelekinesisTaskLogic other)
+        {
+            _name = other._name;
+            _description = other._description;
+            _taskParameters = other._taskParameters;
+            _version = other._version;
+            _stageName = other._stageName;
+        }
+    
+        /// <summary>
+        /// Name of the task logic
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the task logic")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+    
+        /// <summary>
+        /// Description of the task.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        [System.ComponentModel.DescriptionAttribute("Description of the task.")]
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+            }
+        }
+    
+        /// <summary>
+        /// Parameters of the task logic
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("task_parameters", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
+        public AindTelekinesisTaskParameters TaskParameters
+        {
+            get
+            {
+                return _taskParameters;
+            }
+            set
+            {
+                _taskParameters = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        /// <summary>
+        /// Optional stage name the `Task` object instance represents.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("stage_name")]
+        [System.ComponentModel.DescriptionAttribute("Optional stage name the `Task` object instance represents.")]
+        public string StageName
+        {
+            get
+            {
+                return _stageName;
+            }
+            set
+            {
+                _stageName = value;
+            }
+        }
+    
+        public System.IObservable<AindBehaviorTelekinesisTaskLogic> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorTelekinesisTaskLogic(this)));
+        }
+    
+        public System.IObservable<AindBehaviorTelekinesisTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorTelekinesisTaskLogic(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Name = " + _name + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("TaskParameters = " + _taskParameters + ", ");
+            stringBuilder.Append("Version = " + _version + ", ");
+            stringBuilder.Append("StageName = " + _stageName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
     /// <summary>
     /// Additional settings for the manipulator device
     /// </summary>
@@ -834,7 +1357,7 @@ namespace AindTelekinesisDataSchema
     
         public AindManipulatorAdditionalSettings()
         {
-            _spoutAxis = AindTelekinesisDataSchema.Axis.Y1;
+            _spoutAxis = AindBehaviorTelekinesisDataSchema.Axis.Y1;
         }
     
         protected AindManipulatorAdditionalSettings(AindManipulatorAdditionalSettings other)
@@ -1408,527 +1931,6 @@ namespace AindTelekinesisDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindTelekinesisRig
-    {
-    
-        private string _aindBehaviorServicesPkgVersion;
-    
-        private string _version;
-    
-        private string _computerName;
-    
-        private string _rigName;
-    
-        private CameraControllerSpinnakerCamera _triggeredCameraController;
-    
-        private HarpBehavior _harpBehavior;
-    
-        private HarpLicketySplit _harpLickometer;
-    
-        private LoadCells _harpLoadCells;
-    
-        private HarpWhiteRabbit _harpClockGenerator;
-    
-        private HarpAnalogInput _harpAnalogInput;
-    
-        private HarpEnvironmentSensor _harpEnvironmentSensor;
-    
-        private AindManipulatorDevice _manipulator;
-    
-        private RigCalibration _calibration;
-    
-        private Networking _networking;
-    
-        private OphysInterface _ophysInterface;
-    
-        public AindTelekinesisRig()
-        {
-            _aindBehaviorServicesPkgVersion = "0.12.0";
-            _version = "0.3.0";
-            _triggeredCameraController = new CameraControllerSpinnakerCamera();
-            _harpBehavior = new HarpBehavior();
-            _harpLickometer = new HarpLicketySplit();
-            _harpClockGenerator = new HarpWhiteRabbit();
-            _manipulator = new AindManipulatorDevice();
-            _calibration = new RigCalibration();
-            _networking = new Networking();
-        }
-    
-        protected AindTelekinesisRig(AindTelekinesisRig other)
-        {
-            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
-            _version = other._version;
-            _computerName = other._computerName;
-            _rigName = other._rigName;
-            _triggeredCameraController = other._triggeredCameraController;
-            _harpBehavior = other._harpBehavior;
-            _harpLickometer = other._harpLickometer;
-            _harpLoadCells = other._harpLoadCells;
-            _harpClockGenerator = other._harpClockGenerator;
-            _harpAnalogInput = other._harpAnalogInput;
-            _harpEnvironmentSensor = other._harpEnvironmentSensor;
-            _manipulator = other._manipulator;
-            _calibration = other._calibration;
-            _networking = other._networking;
-            _ophysInterface = other._ophysInterface;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
-        public string AindBehaviorServicesPkgVersion
-        {
-            get
-            {
-                return _aindBehaviorServicesPkgVersion;
-            }
-            set
-            {
-                _aindBehaviorServicesPkgVersion = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        /// <summary>
-        /// Computer name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("computer_name")]
-        [System.ComponentModel.DescriptionAttribute("Computer name")]
-        public string ComputerName
-        {
-            get
-            {
-                return _computerName;
-            }
-            set
-            {
-                _computerName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Rig name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("rig_name", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Rig name")]
-        public string RigName
-        {
-            get
-            {
-                return _rigName;
-            }
-            set
-            {
-                _rigName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Required camera controller to triggered cameras.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("triggered_camera_controller", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Required camera controller to triggered cameras.")]
-        public CameraControllerSpinnakerCamera TriggeredCameraController
-        {
-            get
-            {
-                return _triggeredCameraController;
-            }
-            set
-            {
-                _triggeredCameraController = value;
-            }
-        }
-    
-        /// <summary>
-        /// Harp behavior
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_behavior", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Harp behavior")]
-        public HarpBehavior HarpBehavior
-        {
-            get
-            {
-                return _harpBehavior;
-            }
-            set
-            {
-                _harpBehavior = value;
-            }
-        }
-    
-        /// <summary>
-        /// Harp lickometer
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_lickometer", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Harp lickometer")]
-        public HarpLicketySplit HarpLickometer
-        {
-            get
-            {
-                return _harpLickometer;
-            }
-            set
-            {
-                _harpLickometer = value;
-            }
-        }
-    
-        /// <summary>
-        /// Harp load cells
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_load_cells")]
-        [System.ComponentModel.DescriptionAttribute("Harp load cells")]
-        public LoadCells HarpLoadCells
-        {
-            get
-            {
-                return _harpLoadCells;
-            }
-            set
-            {
-                _harpLoadCells = value;
-            }
-        }
-    
-        /// <summary>
-        /// Harp clock generator
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_generator", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Harp clock generator")]
-        public HarpWhiteRabbit HarpClockGenerator
-        {
-            get
-            {
-                return _harpClockGenerator;
-            }
-            set
-            {
-                _harpClockGenerator = value;
-            }
-        }
-    
-        /// <summary>
-        /// Harp analog input
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_analog_input")]
-        [System.ComponentModel.DescriptionAttribute("Harp analog input")]
-        public HarpAnalogInput HarpAnalogInput
-        {
-            get
-            {
-                return _harpAnalogInput;
-            }
-            set
-            {
-                _harpAnalogInput = value;
-            }
-        }
-    
-        /// <summary>
-        /// Harp environment sensor
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("harp_environment_sensor")]
-        [System.ComponentModel.DescriptionAttribute("Harp environment sensor")]
-        public HarpEnvironmentSensor HarpEnvironmentSensor
-        {
-            get
-            {
-                return _harpEnvironmentSensor;
-            }
-            set
-            {
-                _harpEnvironmentSensor = value;
-            }
-        }
-    
-        /// <summary>
-        /// Manipulator
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("manipulator", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Manipulator")]
-        public AindManipulatorDevice Manipulator
-        {
-            get
-            {
-                return _manipulator;
-            }
-            set
-            {
-                _manipulator = value;
-            }
-        }
-    
-        /// <summary>
-        /// General rig calibration
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("calibration", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("General rig calibration")]
-        public RigCalibration Calibration
-        {
-            get
-            {
-                return _calibration;
-            }
-            set
-            {
-                _calibration = value;
-            }
-        }
-    
-        /// <summary>
-        /// Networking settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("networking")]
-        [System.ComponentModel.DescriptionAttribute("Networking settings")]
-        public Networking Networking
-        {
-            get
-            {
-                return _networking;
-            }
-            set
-            {
-                _networking = value;
-            }
-        }
-    
-        /// <summary>
-        /// Ophys interface
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("ophys_interface")]
-        [System.ComponentModel.DescriptionAttribute("Ophys interface")]
-        public OphysInterface OphysInterface
-        {
-            get
-            {
-                return _ophysInterface;
-            }
-            set
-            {
-                _ophysInterface = value;
-            }
-        }
-    
-        public System.IObservable<AindTelekinesisRig> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindTelekinesisRig(this)));
-        }
-    
-        public System.IObservable<AindTelekinesisRig> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindTelekinesisRig(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
-            stringBuilder.Append("Version = " + _version + ", ");
-            stringBuilder.Append("ComputerName = " + _computerName + ", ");
-            stringBuilder.Append("RigName = " + _rigName + ", ");
-            stringBuilder.Append("TriggeredCameraController = " + _triggeredCameraController + ", ");
-            stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
-            stringBuilder.Append("HarpLickometer = " + _harpLickometer + ", ");
-            stringBuilder.Append("HarpLoadCells = " + _harpLoadCells + ", ");
-            stringBuilder.Append("HarpClockGenerator = " + _harpClockGenerator + ", ");
-            stringBuilder.Append("HarpAnalogInput = " + _harpAnalogInput + ", ");
-            stringBuilder.Append("HarpEnvironmentSensor = " + _harpEnvironmentSensor + ", ");
-            stringBuilder.Append("Manipulator = " + _manipulator + ", ");
-            stringBuilder.Append("Calibration = " + _calibration + ", ");
-            stringBuilder.Append("Networking = " + _networking + ", ");
-            stringBuilder.Append("OphysInterface = " + _ophysInterface);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindTelekinesisTaskLogic
-    {
-    
-        private string _name;
-    
-        private string _description;
-    
-        private AindTelekinesisTaskParameters _taskParameters;
-    
-        private string _version;
-    
-        private string _stageName;
-    
-        public AindTelekinesisTaskLogic()
-        {
-            _name = "AindTelekinesis";
-            _description = "";
-            _taskParameters = new AindTelekinesisTaskParameters();
-            _version = "0.3.0";
-        }
-    
-        protected AindTelekinesisTaskLogic(AindTelekinesisTaskLogic other)
-        {
-            _name = other._name;
-            _description = other._description;
-            _taskParameters = other._taskParameters;
-            _version = other._version;
-            _stageName = other._stageName;
-        }
-    
-        /// <summary>
-        /// Name of the task logic
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the task logic")]
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        }
-    
-        /// <summary>
-        /// Description of the task.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("description")]
-        [System.ComponentModel.DescriptionAttribute("Description of the task.")]
-        public string Description
-        {
-            get
-            {
-                return _description;
-            }
-            set
-            {
-                _description = value;
-            }
-        }
-    
-        /// <summary>
-        /// Parameters of the task logic
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("task_parameters", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
-        public AindTelekinesisTaskParameters TaskParameters
-        {
-            get
-            {
-                return _taskParameters;
-            }
-            set
-            {
-                _taskParameters = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        /// <summary>
-        /// Optional stage name the `Task` object instance represents.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("stage_name")]
-        [System.ComponentModel.DescriptionAttribute("Optional stage name the `Task` object instance represents.")]
-        public string StageName
-        {
-            get
-            {
-                return _stageName;
-            }
-            set
-            {
-                _stageName = value;
-            }
-        }
-    
-        public System.IObservable<AindTelekinesisTaskLogic> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindTelekinesisTaskLogic(this)));
-        }
-    
-        public System.IObservable<AindTelekinesisTaskLogic> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindTelekinesisTaskLogic(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Name = " + _name + ", ");
-            stringBuilder.Append("Description = " + _description + ", ");
-            stringBuilder.Append("TaskParameters = " + _taskParameters + ", ");
-            stringBuilder.Append("Version = " + _version + ", ");
-            stringBuilder.Append("StageName = " + _stageName);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindTelekinesisTaskParameters
     {
     
@@ -1942,7 +1944,7 @@ namespace AindTelekinesisDataSchema
     
         public AindTelekinesisTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.0";
+            _aindBehaviorServicesPkgVersion = "0.12.5";
             _environment = new Environment();
             _operationControl = new OperationControl();
         }
@@ -2192,9 +2194,9 @@ namespace AindTelekinesisDataSchema
         {
             _stepAccelerationInterval = 100;
             _stepInterval = 100;
-            _microstepResolution = AindTelekinesisDataSchema.MicrostepResolution.Microstep8;
+            _microstepResolution = AindBehaviorTelekinesisDataSchema.MicrostepResolution.Microstep8;
             _maximumStepInterval = 2000;
-            _motorOperationMode = AindTelekinesisDataSchema.MotorOperationMode.Quiet;
+            _motorOperationMode = AindBehaviorTelekinesisDataSchema.MotorOperationMode.Quiet;
             _maxLimit = 25D;
             _minLimit = -0.01D;
         }
@@ -2524,7 +2526,15 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A beta probability distribution.
+    ///
+    ///Continuous distribution bounded between 0 and 1. Commonly used
+    ///for modeling probabilities and proportions.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A beta probability distribution.\n\nContinuous distribution bounded between 0 and 1" +
+        ". Commonly used\nfor modeling probabilities and proportions.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BetaDistribution : Distribution
@@ -2627,7 +2637,13 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a beta distribution.
+    ///
+    ///Defined by alpha and beta shape parameters.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a beta distribution.\n\nDefined by alpha and beta shape parameters.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BetaDistributionParameters
@@ -2733,7 +2749,15 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A binomial probability distribution.
+    ///
+    ///Models the number of successes in a fixed number of independent
+    ///Bernoulli trials with constant success probability.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A binomial probability distribution.\n\nModels the number of successes in a fixed n" +
+        "umber of independent\nBernoulli trials with constant success probability.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BinomialDistribution : Distribution
@@ -2836,7 +2860,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a binomial distribution.
+    ///
+    ///Defined by number of trials (n) and success probability (p).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a binomial distribution.\n\nDefined by number of trials (n) and succ" +
+        "ess probability (p).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BinomialDistributionParameters
@@ -3647,7 +3678,15 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// An exponential probability distribution.
+    ///
+    ///Models time between events in a Poisson process. Commonly used
+    ///for wait times and inter-event intervals.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("An exponential probability distribution.\n\nModels time between events in a Poisson" +
+        " process. Commonly used\nfor wait times and inter-event intervals.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExponentialDistribution : Distribution
@@ -3750,7 +3789,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for an exponential distribution.
+    ///
+    ///Defined by the rate parameter (inverse of mean).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for an exponential distribution.\n\nDefined by the rate parameter (inver" +
+        "se of mean).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ExponentialDistributionParameters
@@ -3834,7 +3880,15 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A gamma probability distribution.
+    ///
+    ///Generalizes the exponential distribution. Used for modeling
+    ///positive continuous variables with right-skewed distributions.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A gamma probability distribution.\n\nGeneralizes the exponential distribution. Used" +
+        " for modeling\npositive continuous variables with right-skewed distributions.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class GammaDistribution : Distribution
@@ -3937,7 +3991,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a gamma distribution.
+    ///
+    ///Defined by shape (k) and rate (θ⁻¹) parameters.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a gamma distribution.\n\nDefined by shape (k) and rate (θ⁻¹) paramet" +
+        "ers.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class GammaDistributionParameters
@@ -5774,7 +5835,16 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A log-normal probability distribution.
+    ///
+    ///Distribution where the logarithm of the variable is normally distributed.
+    ///Always produces positive values and is right-skewed.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A log-normal probability distribution.\n\nDistribution where the logarithm of the v" +
+        "ariable is normally distributed.\nAlways produces positive values and is right-sk" +
+        "ewed.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LogNormalDistribution : Distribution
@@ -5877,7 +5947,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a log-normal distribution.
+    ///
+    ///Defined by the mean and standard deviation of the underlying normal distribution.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a log-normal distribution.\n\nDefined by the mean and standard devia" +
+        "tion of the underlying normal distribution.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LogNormalDistributionParameters
@@ -6594,7 +6671,16 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A normal (Gaussian) probability distribution.
+    ///
+    ///Bell-shaped distribution symmetric around the mean, commonly used
+    ///for modeling naturally occurring random variables.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A normal (Gaussian) probability distribution.\n\nBell-shaped distribution symmetric" +
+        " around the mean, commonly used\nfor modeling naturally occurring random variable" +
+        "s.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NormalDistribution : Distribution
@@ -6697,7 +6783,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a normal (Gaussian) distribution.
+    ///
+    ///Defined by mean (center) and standard deviation (spread).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a normal (Gaussian) distribution.\n\nDefined by mean (center) and st" +
+        "andard deviation (spread).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class NormalDistributionParameters
@@ -6940,7 +7033,16 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A custom probability density function distribution.
+    ///
+    ///Allows defining arbitrary discrete distributions by specifying
+    ///probability values and their corresponding indices.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A custom probability density function distribution.\n\nAllows defining arbitrary di" +
+        "screte distributions by specifying\nprobability values and their corresponding in" +
+        "dices.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PdfDistribution : Distribution
@@ -7043,7 +7145,16 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a custom probability density function distribution.
+    ///
+    ///Defined by explicit probability values and their corresponding indices.
+    ///Probabilities are automatically normalized to sum to 1.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a custom probability density function distribution.\n\nDefined by ex" +
+        "plicit probability values and their corresponding indices.\nProbabilities are aut" +
+        "omatically normalized to sum to 1.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PdfDistributionParameters
@@ -7151,7 +7262,16 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A Poisson probability distribution.
+    ///
+    ///Models the number of events occurring in a fixed interval of time or space
+    ///when events occur independently at a constant rate.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A Poisson probability distribution.\n\nModels the number of events occurring in a f" +
+        "ixed interval of time or space\nwhen events occur independently at a constant rat" +
+        "e.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PoissonDistribution : Distribution
@@ -7254,7 +7374,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a Poisson distribution.
+    ///
+    ///Defined by the rate parameter (average number of events).
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a Poisson distribution.\n\nDefined by the rate parameter (average nu" +
+        "mber of events).")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PoissonDistributionParameters
@@ -7768,7 +7895,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A scalar distribution that returns a constant value.
+    ///
+    ///Useful for fixed parameters that don't vary across trials or samples.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A scalar distribution that returns a constant value.\n\nUseful for fixed parameters" +
+        " that don\'t vary across trials or samples.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Scalar : Distribution
@@ -7863,7 +7997,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a scalar (constant) distribution.
+    ///
+    ///Represents a deterministic value that always returns the same number.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a scalar (constant) distribution.\n\nRepresents a deterministic valu" +
+        "e that always returns the same number.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalarDistributionParameter
@@ -7947,7 +8088,16 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for scaling and offsetting sampled distribution values.
+    ///Scaling is applied as (value * scale + offset).
+    ///
+    ///Applies linear transformation: result = (value * scale) + offset.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for scaling and offsetting sampled distribution values.\nScaling is app" +
+        "lied as (value * scale + offset).\n\nApplies linear transformation: result = (valu" +
+        "e * scale) + offset.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScalingParameters
@@ -8176,11 +8326,11 @@ namespace AindTelekinesisDataSchema
         {
             _deviceType = "SpinnakerCamera";
             _binning = 1;
-            _colorProcessing = AindTelekinesisDataSchema.SpinnakerCameraColorProcessing.Default;
+            _colorProcessing = AindBehaviorTelekinesisDataSchema.SpinnakerCameraColorProcessing.Default;
             _exposure = 1000;
             _gain = 0D;
-            _adcBitDepth = AindTelekinesisDataSchema.SpinnakerCameraAdcBitDepth.Adc8bit;
-            _pixelFormat = AindTelekinesisDataSchema.SpinnakerCameraPixelFormat.Mono8;
+            _adcBitDepth = AindBehaviorTelekinesisDataSchema.SpinnakerCameraAdcBitDepth.Adc8bit;
+            _pixelFormat = AindBehaviorTelekinesisDataSchema.SpinnakerCameraPixelFormat.Mono8;
             _regionOfInterest = new Rect();
         }
     
@@ -9238,13 +9388,33 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for truncating a distribution to a specified range. Truncation should
+    ///be applied after sampling and scaling.
+    ///
+    ///The truncation_mode determines how out-of-bounds values are handled:
+    ///- "exclude": Resample until a value within [min, max] is obtained.
+    ///If after a certain number of attempts no valid value is found, it
+    ///will use the average of sampled values and pick the closest bound.
+    ///- "clamp": Clamp values to the nearest bound within [min, max].
+    ///Used to constrain sampled values within minimum and maximum bounds.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"Parameters for truncating a distribution to a specified range. Truncation should
+    be applied after sampling and scaling.
+
+    The truncation_mode determines how out-of-bounds values are handled:
+    - ""exclude"": Resample until a value within [min, max] is obtained.
+    If after a certain number of attempts no valid value is found, it
+    will use the average of sampled values and pick the closest bound.
+    - ""clamp"": Clamp values to the nearest bound within [min, max].
+    Used to constrain sampled values within minimum and maximum bounds.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TruncationParameters
     {
     
-        private bool _isTruncated;
+        private TruncationParametersTruncationMode _truncationMode;
     
         private double _min;
     
@@ -9252,32 +9422,33 @@ namespace AindTelekinesisDataSchema
     
         public TruncationParameters()
         {
-            _isTruncated = false;
+            _truncationMode = AindBehaviorTelekinesisDataSchema.TruncationParametersTruncationMode.Exclude;
             _min = 0D;
             _max = 0D;
         }
     
         protected TruncationParameters(TruncationParameters other)
         {
-            _isTruncated = other._isTruncated;
+            _truncationMode = other._truncationMode;
             _min = other._min;
             _max = other._max;
         }
     
         /// <summary>
-        /// Whether the distribution is truncated
+        /// Mode of truncation to apply
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("is_truncated")]
-        [System.ComponentModel.DescriptionAttribute("Whether the distribution is truncated")]
-        public bool IsTruncated
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncation_mode")]
+        [System.ComponentModel.DescriptionAttribute("Mode of truncation to apply")]
+        public TruncationParametersTruncationMode TruncationMode
         {
             get
             {
-                return _isTruncated;
+                return _truncationMode;
             }
             set
             {
-                _isTruncated = value;
+                _truncationMode = value;
             }
         }
     
@@ -9327,7 +9498,7 @@ namespace AindTelekinesisDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("IsTruncated = " + _isTruncated + ", ");
+            stringBuilder.Append("TruncationMode = " + _truncationMode + ", ");
             stringBuilder.Append("Min = " + _min + ", ");
             stringBuilder.Append("Max = " + _max);
             return true;
@@ -9348,7 +9519,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A uniform probability distribution.
+    ///
+    ///All values between min and max have equal probability of being sampled.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A uniform probability distribution.\n\nAll values between min and max have equal pr" +
+        "obability of being sampled.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UniformDistribution : Distribution
@@ -9451,7 +9629,14 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Parameters for a uniform distribution.
+    ///
+    ///Defined by minimum and maximum bounds of the distribution.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of " +
+        "the distribution.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UniformDistributionParameters
@@ -10845,6 +11030,19 @@ namespace AindTelekinesisDataSchema
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum TruncationParametersTruncationMode
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="exclude")]
+        Exclude = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="clamp")]
+        Clamp = 1,
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
     internal class JsonInheritanceAttribute : System.Attribute
@@ -11625,6 +11823,16 @@ namespace AindTelekinesisDataSchema
             return Process<AindBehaviorSessionModel>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<AindBehaviorTelekinesisRig> source)
+        {
+            return Process<AindBehaviorTelekinesisRig>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<AindBehaviorTelekinesisTaskLogic> source)
+        {
+            return Process<AindBehaviorTelekinesisTaskLogic>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<AindManipulatorAdditionalSettings> source)
         {
             return Process<AindManipulatorAdditionalSettings>(source);
@@ -11648,16 +11856,6 @@ namespace AindTelekinesisDataSchema
         public System.IObservable<string> Process(System.IObservable<AindManipulatorDevice> source)
         {
             return Process<AindManipulatorDevice>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindTelekinesisRig> source)
-        {
-            return Process<AindTelekinesisRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindTelekinesisTaskLogic> source)
-        {
-            return Process<AindTelekinesisTaskLogic>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<AindTelekinesisTaskParameters> source)
@@ -12088,13 +12286,13 @@ namespace AindTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionLookUpTableFactory>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionSource>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorTelekinesisRig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorTelekinesisTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorAdditionalSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibrationInput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorDevice>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioFeedback>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AxisConfiguration>))]

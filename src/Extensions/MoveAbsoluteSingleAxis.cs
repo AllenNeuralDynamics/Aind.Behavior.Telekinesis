@@ -1,9 +1,9 @@
-using Bonsai;
+﻿using Bonsai;
 using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using AindTelekinesisDataSchema;
+using AindBehaviorTelekinesisDataSchema;
 using Harp.StepperDriver;
 using Bonsai.Harp;
 
