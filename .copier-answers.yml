@@ -1,0 +1,7 @@
+_commit: bed074d
+_src_path: gh:AllenNeuralDynamics/Aind.Behavior.CopierTemplate
+author_email: bruno.cruz@alleninstitute.org
+author_name: Bruno Cruz
+prefix: aind-behavior
+project_description: A library with a SDK for the Telekinesis behavior task
+project_name: telekinesis
