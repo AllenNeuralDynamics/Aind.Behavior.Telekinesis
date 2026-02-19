@@ -16,9 +16,7 @@ sys.path.append(".")
 from examples import example  # isort:skip # pylint: disable=wrong-import-position
 from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-position
 
-TModel = TypeVar(
-    "TModel", bound=Union[AindBehaviorTelekinesisRig, AindBehaviorTelekinesisTaskLogic, Session]
-)
+TModel = TypeVar("TModel", bound=Union[AindBehaviorTelekinesisRig, AindBehaviorTelekinesisTaskLogic, Session])
 
 
 class BonsaiTests(unittest.TestCase):
