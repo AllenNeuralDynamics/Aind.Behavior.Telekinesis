@@ -1,32 +1,23 @@
 from typing import Annotated, Literal, Optional, Union
 
-import aind_behavior_services.calibration.load_cells as lcc
-import aind_behavior_services.calibration.water_valve as wvc
-import aind_behavior_services.rig as rig
-from aind_behavior_services.calibration import aind_manipulator
-from aind_behavior_services.rig import AindBehaviorRigModel
+import aind_behavior_services.rig.load_cells as lcc
+import aind_behavior_services.rig.water_valve as wvc
+from aind_behavior_services.rig import Rig, cameras, harp
+from aind_behavior_services.rig import aind_manipulator as man
 from pydantic import BaseModel, Field
 from typing_extensions import TypeAliasType
 
 from aind_behavior_telekinesis import __semver__
 
 
-class AindManipulatorAdditionalSettings(BaseModel):
-    """Additional settings for the manipulator device"""
+class AindManipulatorDevice(man.AindManipulator):
+    """Appends a task specific configuration to the base manipulator model."""
 
-    spout_axis: aind_manipulator.Axis = Field(default=aind_manipulator.Axis.Y1, description="Spout axis")
-
-
-class AindManipulatorDevice(aind_manipulator.AindManipulatorDevice):
-    """Overrides the default settings for the manipulator device by spec'ing additional_settings field"""
-
-    additional_settings: AindManipulatorAdditionalSettings = Field(
-        default=AindManipulatorAdditionalSettings(), description="Additional settings"
-    )
+    spout_axis: man.Axis = Field(default=man.Axis.Y1, description="Spout axis")
 
 
 class RigCalibration(BaseModel):
-    water_valve: wvc.WaterValveCalibration = Field(default=..., description="Water valve calibration")
+    water_valve: wvc.WaterValveCalibration = Field(description="Water valve calibration")
 
 
 class ZmqConnection(BaseModel):
@@ -38,7 +29,6 @@ class Networking(BaseModel):
     zmq_publisher: ZmqConnection = Field(
         default=ZmqConnection(connection_string="@tcp://localhost:5556", topic="telekinesis"), validate_default=True
     )
-    zmq_subscriber: Literal[None] = Field(default=None)
 
 
 class _OphysInterfaceBase(BaseModel):
@@ -69,20 +59,20 @@ OphysInterface = TypeAliasType(
 )
 
 
-class AindBehaviorTelekinesisRig(AindBehaviorRigModel):
+class AindBehaviorTelekinesisRig(Rig):
     version: Literal[__semver__] = __semver__
-    triggered_camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera] = Field(
-        ..., description="Required camera controller to triggered cameras."
+    triggered_camera_controller: cameras.CameraController[cameras.SpinnakerCamera] = Field(
+        description="Required camera controller to triggered cameras."
     )
-    harp_behavior: rig.harp.HarpBehavior = Field(..., description="Harp behavior")
-    harp_lickometer: rig.harp.HarpLicketySplit = Field(..., description="Harp lickometer")
+    harp_behavior: harp.HarpBehavior = Field(description="Harp behavior")
+    harp_lickometer: harp.HarpLicketySplit = Field(description="Harp lickometer")
     harp_load_cells: Optional[lcc.LoadCells] = Field(default=None, description="Harp load cells")
-    harp_clock_generator: rig.harp.HarpWhiteRabbit = Field(..., description="Harp clock generator")
-    harp_analog_input: Optional[rig.harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    harp_environment_sensor: Optional[rig.harp.HarpEnvironmentSensor] = Field(
+    harp_clock_generator: harp.HarpWhiteRabbit = Field(description="Harp clock generator")
+    harp_analog_input: Optional[harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
+    harp_environment_sensor: Optional[harp.HarpEnvironmentSensor] = Field(
         default=None, description="Harp environment sensor"
     )
-    manipulator: AindManipulatorDevice = Field(..., description="Manipulator")
-    calibration: RigCalibration = Field(default=..., description="General rig calibration")
+    manipulator: AindManipulatorDevice = Field(description="Manipulator")
+    calibration: RigCalibration = Field(description="General rig calibration")
     networking: Networking = Field(default=Networking(), description="Networking settings", validate_default=True)
     ophys_interface: Optional[OphysInterface] = Field(default=None, description="Ophys interface")
