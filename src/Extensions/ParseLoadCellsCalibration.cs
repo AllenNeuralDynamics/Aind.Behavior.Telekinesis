@@ -1,4 +1,4 @@
-using Bonsai;
+﻿using Bonsai;
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -48,7 +48,7 @@ public class ParseLoadCellsCalibration
             return calibrations;
         });
     }
-    public IObservable<LoadCellsCalibrations> Process(IObservable<IEnumerable<LoadCellCalibrationOutput>> source)
+    public IObservable<LoadCellsCalibrations> Process(IObservable<IEnumerable<LoadCellChannelCalibration>> source)
     {
         return source.Select(value => {
             var calibrations = new LoadCellsCalibrations();
