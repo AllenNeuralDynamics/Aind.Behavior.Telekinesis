@@ -1,8 +1,8 @@
 import os
 
-from example_w_luts import mock_rig, mock_session
-
 import aind_behavior_telekinesis.task_logic as tl
+
+from .example_w_luts import mock_rig, mock_session
 
 
 def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
