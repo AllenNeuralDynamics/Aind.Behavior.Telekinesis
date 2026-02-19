@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.session import Session
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
 )
@@ -31,7 +31,7 @@ async def experiment(launcher: Launcher) -> None:
     )
 
     # Pick and register session
-    session = picker.pick_session(AindBehaviorSessionModel)
+    session = picker.pick_session(Session)
     launcher.register_session(session)
 
     # Fetch the task settings

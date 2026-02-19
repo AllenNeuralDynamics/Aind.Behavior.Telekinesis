@@ -18,7 +18,7 @@ from aind_behavior_services.calibration.water_valve import (
     WaterValveCalibrationInput,
     WaterValveCalibrationOutput,
 )
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.session import Session
 
 import aind_behavior_telekinesis.task_logic as tl
 from aind_behavior_telekinesis.rig import (
@@ -30,9 +30,9 @@ from aind_behavior_telekinesis.rig import (
 )
 
 
-def mock_session() -> AindBehaviorSessionModel:
-    """Generates a mock AindBehaviorSessionModel model"""
-    return AindBehaviorSessionModel(
+def mock_session() -> Session:
+    """Generates a mock Session model"""
+    return Session(
         date=datetime.datetime.now(tz=datetime.timezone.utc),
         experiment="Telekinesis",
         root_path="c://",

@@ -507,324 +507,6 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindBehaviorSessionModel
-    {
-    
-        private string _aindBehaviorServicesPkgVersion;
-    
-        private string _version;
-    
-        private string _experiment;
-    
-        private System.Collections.Generic.List<string> _experimenter;
-    
-        private System.DateTimeOffset _date;
-    
-        private string _rootPath;
-    
-        private string _sessionName;
-    
-        private string _subject;
-    
-        private string _experimentVersion;
-    
-        private string _notes;
-    
-        private string _commitHash;
-    
-        private bool _allowDirtyRepo;
-    
-        private bool _skipHardwareValidation;
-    
-        public AindBehaviorSessionModel()
-        {
-            _aindBehaviorServicesPkgVersion = "0.12.5";
-            _version = "0.12.5";
-            _experimenter = new System.Collections.Generic.List<string>();
-            _experimentVersion = "";
-            _allowDirtyRepo = false;
-            _skipHardwareValidation = false;
-        }
-    
-        protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
-        {
-            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
-            _version = other._version;
-            _experiment = other._experiment;
-            _experimenter = other._experimenter;
-            _date = other._date;
-            _rootPath = other._rootPath;
-            _sessionName = other._sessionName;
-            _subject = other._subject;
-            _experimentVersion = other._experimentVersion;
-            _notes = other._notes;
-            _commitHash = other._commitHash;
-            _allowDirtyRepo = other._allowDirtyRepo;
-            _skipHardwareValidation = other._skipHardwareValidation;
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
-        public string AindBehaviorServicesPkgVersion
-        {
-            get
-            {
-                return _aindBehaviorServicesPkgVersion;
-            }
-            set
-            {
-                _aindBehaviorServicesPkgVersion = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("version")]
-        public string Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-    
-        /// <summary>
-        /// Name of the experiment
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment")]
-        [System.ComponentModel.DescriptionAttribute("Name of the experiment")]
-        public string Experiment
-        {
-            get
-            {
-                return _experiment;
-            }
-            set
-            {
-                _experiment = value;
-            }
-        }
-    
-        /// <summary>
-        /// Name of the experimenter
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("experimenter")]
-        [System.ComponentModel.DescriptionAttribute("Name of the experimenter")]
-        public System.Collections.Generic.List<string> Experimenter
-        {
-            get
-            {
-                return _experimenter;
-            }
-            set
-            {
-                _experimenter = value;
-            }
-        }
-    
-        /// <summary>
-        /// Date of the experiment
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("date")]
-        [System.ComponentModel.DescriptionAttribute("Date of the experiment")]
-        public System.DateTimeOffset Date
-        {
-            get
-            {
-                return _date;
-            }
-            set
-            {
-                _date = value;
-            }
-        }
-    
-        /// <summary>
-        /// Root path where data will be logged
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("root_path", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Root path where data will be logged")]
-        public string RootPath
-        {
-            get
-            {
-                return _rootPath;
-            }
-            set
-            {
-                _rootPath = value;
-            }
-        }
-    
-        /// <summary>
-        /// Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path. If no" +
-            "t provided, it will be generated using subject and date.")]
-        public string SessionName
-        {
-            get
-            {
-                return _sessionName;
-            }
-            set
-            {
-                _sessionName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Name of the subject
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Name of the subject")]
-        public string Subject
-        {
-            get
-            {
-                return _subject;
-            }
-            set
-            {
-                _subject = value;
-            }
-        }
-    
-        /// <summary>
-        /// Version of the experiment
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("experiment_version")]
-        [System.ComponentModel.DescriptionAttribute("Version of the experiment")]
-        public string ExperimentVersion
-        {
-            get
-            {
-                return _experimentVersion;
-            }
-            set
-            {
-                _experimentVersion = value;
-            }
-        }
-    
-        /// <summary>
-        /// Notes about the experiment
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        [System.ComponentModel.DescriptionAttribute("Notes about the experiment")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
-            }
-        }
-    
-        /// <summary>
-        /// Commit hash of the repository
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("commit_hash")]
-        [System.ComponentModel.DescriptionAttribute("Commit hash of the repository")]
-        public string CommitHash
-        {
-            get
-            {
-                return _commitHash;
-            }
-            set
-            {
-                _commitHash = value;
-            }
-        }
-    
-        /// <summary>
-        /// Allow running from a dirty repository
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("allow_dirty_repo")]
-        [System.ComponentModel.DescriptionAttribute("Allow running from a dirty repository")]
-        public bool AllowDirtyRepo
-        {
-            get
-            {
-                return _allowDirtyRepo;
-            }
-            set
-            {
-                _allowDirtyRepo = value;
-            }
-        }
-    
-        /// <summary>
-        /// Skip hardware validation
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("skip_hardware_validation")]
-        [System.ComponentModel.DescriptionAttribute("Skip hardware validation")]
-        public bool SkipHardwareValidation
-        {
-            get
-            {
-                return _skipHardwareValidation;
-            }
-            set
-            {
-                _skipHardwareValidation = value;
-            }
-        }
-    
-        public System.IObservable<AindBehaviorSessionModel> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorSessionModel(this)));
-        }
-    
-        public System.IObservable<AindBehaviorSessionModel> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorSessionModel(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
-            stringBuilder.Append("Version = " + _version + ", ");
-            stringBuilder.Append("Experiment = " + _experiment + ", ");
-            stringBuilder.Append("Experimenter = " + _experimenter + ", ");
-            stringBuilder.Append("Date = " + _date + ", ");
-            stringBuilder.Append("RootPath = " + _rootPath + ", ");
-            stringBuilder.Append("SessionName = " + _sessionName + ", ");
-            stringBuilder.Append("Subject = " + _subject + ", ");
-            stringBuilder.Append("ExperimentVersion = " + _experimentVersion + ", ");
-            stringBuilder.Append("Notes = " + _notes + ", ");
-            stringBuilder.Append("CommitHash = " + _commitHash + ", ");
-            stringBuilder.Append("AllowDirtyRepo = " + _allowDirtyRepo + ", ");
-            stringBuilder.Append("SkipHardwareValidation = " + _skipHardwareValidation);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindBehaviorTelekinesisRig
     {
     
@@ -835,6 +517,8 @@ namespace AindBehaviorTelekinesisDataSchema
         private string _computerName;
     
         private string _rigName;
+    
+        private string _dataDirectory;
     
         private CameraControllerSpinnakerCamera _triggeredCameraController;
     
@@ -860,7 +544,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public AindBehaviorTelekinesisRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.5";
+            _aindBehaviorServicesPkgVersion = "0.13.0";
             _version = "0.2.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -877,6 +561,7 @@ namespace AindBehaviorTelekinesisDataSchema
             _version = other._version;
             _computerName = other._computerName;
             _rigName = other._rigName;
+            _dataDirectory = other._dataDirectory;
             _triggeredCameraController = other._triggeredCameraController;
             _harpBehavior = other._harpBehavior;
             _harpLickometer = other._harpLickometer;
@@ -919,7 +604,7 @@ namespace AindBehaviorTelekinesisDataSchema
         /// <summary>
         /// Computer name
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("computer_name")]
+        [Newtonsoft.Json.JsonPropertyAttribute("computer_name", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Computer name")]
         public string ComputerName
         {
@@ -947,6 +632,23 @@ namespace AindBehaviorTelekinesisDataSchema
             set
             {
                 _rigName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Directory where data will be saved to
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("data_directory", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Directory where data will be saved to")]
+        public string DataDirectory
+        {
+            get
+            {
+                return _dataDirectory;
+            }
+            set
+            {
+                _dataDirectory = value;
             }
         }
     
@@ -1164,6 +866,7 @@ namespace AindBehaviorTelekinesisDataSchema
             stringBuilder.Append("Version = " + _version + ", ");
             stringBuilder.Append("ComputerName = " + _computerName + ", ");
             stringBuilder.Append("RigName = " + _rigName + ", ");
+            stringBuilder.Append("DataDirectory = " + _dataDirectory + ", ");
             stringBuilder.Append("TriggeredCameraController = " + _triggeredCameraController + ", ");
             stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
             stringBuilder.Append("HarpLickometer = " + _harpLickometer + ", ");
@@ -1344,173 +1047,41 @@ namespace AindBehaviorTelekinesisDataSchema
 
 
     /// <summary>
-    /// Additional settings for the manipulator device
+    /// AindManipulator calibration class
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Additional settings for the manipulator device")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindManipulatorAdditionalSettings
-    {
-    
-        private Axis _spoutAxis;
-    
-        public AindManipulatorAdditionalSettings()
-        {
-            _spoutAxis = AindBehaviorTelekinesisDataSchema.Axis.Y1;
-        }
-    
-        protected AindManipulatorAdditionalSettings(AindManipulatorAdditionalSettings other)
-        {
-            _spoutAxis = other._spoutAxis;
-        }
-    
-        /// <summary>
-        /// Spout axis
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("spout_axis")]
-        [System.ComponentModel.DescriptionAttribute("Spout axis")]
-        public Axis SpoutAxis
-        {
-            get
-            {
-                return _spoutAxis;
-            }
-            set
-            {
-                _spoutAxis = value;
-            }
-        }
-    
-        public System.IObservable<AindManipulatorAdditionalSettings> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorAdditionalSettings(this)));
-        }
-    
-        public System.IObservable<AindManipulatorAdditionalSettings> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorAdditionalSettings(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("SpoutAxis = " + _spoutAxis);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Aind manipulator calibration class
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Aind manipulator calibration class")]
+    [System.ComponentModel.DescriptionAttribute("AindManipulator calibration class")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorCalibration
     {
     
-        private string _deviceName;
-    
-        private AindManipulatorCalibrationInput _input;
-    
-        private AindManipulatorCalibrationOutput _output;
-    
-        private System.DateTimeOffset? _date;
-    
         private string _description;
     
-        private string _notes;
+        private ManipulatorPosition _fullStepToMm;
+    
+        private System.Collections.Generic.List<AxisConfiguration> _axisConfiguration;
+    
+        private System.Collections.Generic.List<Axis> _homingOrder;
+    
+        private ManipulatorPosition _initialPosition;
     
         public AindManipulatorCalibration()
         {
-            _deviceName = "AindManipulator";
-            _input = new AindManipulatorCalibrationInput();
-            _output = new AindManipulatorCalibrationOutput();
-            _description = "Calibration of the load cells system";
+            _description = "AindManipulator calibration and settings";
+            _fullStepToMm = new ManipulatorPosition();
+            _axisConfiguration = new System.Collections.Generic.List<AxisConfiguration>();
+            _homingOrder = new System.Collections.Generic.List<Axis>();
+            _initialPosition = new ManipulatorPosition();
         }
     
         protected AindManipulatorCalibration(AindManipulatorCalibration other)
         {
-            _deviceName = other._deviceName;
-            _input = other._input;
-            _output = other._output;
-            _date = other._date;
             _description = other._description;
-            _notes = other._notes;
-        }
-    
-        /// <summary>
-        /// Must match a device name in rig/instrument
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Must match a device name in rig/instrument")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("input", Required=Newtonsoft.Json.Required.Always)]
-        public AindManipulatorCalibrationInput Input
-        {
-            get
-            {
-                return _input;
-            }
-            set
-            {
-                _input = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("output", Required=Newtonsoft.Json.Required.Always)]
-        public AindManipulatorCalibrationOutput Output
-        {
-            get
-            {
-                return _output;
-            }
-            set
-            {
-                _output = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("date")]
-        public System.DateTimeOffset? Date
-        {
-            get
-            {
-                return _date;
-            }
-            set
-            {
-                _date = value;
-            }
+            _fullStepToMm = other._fullStepToMm;
+            _axisConfiguration = other._axisConfiguration;
+            _homingOrder = other._homingOrder;
+            _initialPosition = other._initialPosition;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("description")]
@@ -1524,85 +1095,6 @@ namespace AindBehaviorTelekinesisDataSchema
             {
                 _description = value;
             }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
-            }
-        }
-    
-        public System.IObservable<AindManipulatorCalibration> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibration(this)));
-        }
-    
-        public System.IObservable<AindManipulatorCalibration> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("Input = " + _input + ", ");
-            stringBuilder.Append("Output = " + _output + ", ");
-            stringBuilder.Append("Date = " + _date + ", ");
-            stringBuilder.Append("Description = " + _description + ", ");
-            stringBuilder.Append("Notes = " + _notes);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindManipulatorCalibrationInput
-    {
-    
-        private ManipulatorPosition _fullStepToMm;
-    
-        private System.Collections.Generic.List<AxisConfiguration> _axisConfiguration;
-    
-        private System.Collections.Generic.List<Axis> _homingOrder;
-    
-        private ManipulatorPosition _initialPosition;
-    
-        public AindManipulatorCalibrationInput()
-        {
-            _fullStepToMm = new ManipulatorPosition();
-            _axisConfiguration = new System.Collections.Generic.List<AxisConfiguration>();
-            _homingOrder = new System.Collections.Generic.List<Axis>();
-            _initialPosition = new ManipulatorPosition();
-        }
-    
-        protected AindManipulatorCalibrationInput(AindManipulatorCalibrationInput other)
-        {
-            _fullStepToMm = other._fullStepToMm;
-            _axisConfiguration = other._axisConfiguration;
-            _homingOrder = other._homingOrder;
-            _initialPosition = other._initialPosition;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -1661,18 +1153,19 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
-        public System.IObservable<AindManipulatorCalibrationInput> Generate()
+        public System.IObservable<AindManipulatorCalibration> Generate()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibrationInput(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibration(this)));
         }
     
-        public System.IObservable<AindManipulatorCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindManipulatorCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibrationInput(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("Description = " + _description + ", ");
             stringBuilder.Append("FullStepToMm = " + _fullStepToMm + ", ");
             stringBuilder.Append("AxisConfiguration = " + _axisConfiguration + ", ");
             stringBuilder.Append("HomingOrder = " + _homingOrder + ", ");
@@ -1695,66 +1188,17 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class AindManipulatorCalibrationOutput
-    {
-    
-        public AindManipulatorCalibrationOutput()
-        {
-        }
-    
-        protected AindManipulatorCalibrationOutput(AindManipulatorCalibrationOutput other)
-        {
-        }
-    
-        public System.IObservable<AindManipulatorCalibrationOutput> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorCalibrationOutput(this)));
-        }
-    
-        public System.IObservable<AindManipulatorCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new AindManipulatorCalibrationOutput(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
     /// <summary>
-    /// Overrides the default settings for the manipulator device by spec'ing additional_settings field
+    /// Appends a task specific configuration to the base manipulator model.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Overrides the default settings for the manipulator device by spec\'ing additional_" +
-        "settings field")]
+    [System.ComponentModel.DescriptionAttribute("Appends a task specific configuration to the base manipulator model.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindManipulatorDevice
     {
     
         private string _deviceType;
-    
-        private string _deviceName;
-    
-        private AindManipulatorAdditionalSettings _additionalSettings;
     
         private AindManipulatorCalibration _calibration;
     
@@ -1764,22 +1208,24 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _portName;
     
+        private Axis _spoutAxis;
+    
         public AindManipulatorDevice()
         {
             _deviceType = "StepperDriver";
-            _additionalSettings = new AindManipulatorAdditionalSettings();
+            _calibration = new AindManipulatorCalibration();
             _whoAmI = 1130;
+            _spoutAxis = AindBehaviorTelekinesisDataSchema.Axis.Y1;
         }
     
         protected AindManipulatorDevice(AindManipulatorDevice other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
             _portName = other._portName;
+            _spoutAxis = other._spoutAxis;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
@@ -1796,42 +1242,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
+        /// Calibration for the device.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public AindManipulatorAdditionalSettings AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public AindManipulatorCalibration Calibration
         {
             get
@@ -1891,6 +1306,24 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
+        /// <summary>
+        /// Spout axis
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("spout_axis")]
+        [System.ComponentModel.DescriptionAttribute("Spout axis")]
+        public Axis SpoutAxis
+        {
+            get
+            {
+                return _spoutAxis;
+            }
+            set
+            {
+                _spoutAxis = value;
+            }
+        }
+    
         public System.IObservable<AindManipulatorDevice> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindManipulatorDevice(this)));
@@ -1904,12 +1337,11 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
-            stringBuilder.Append("PortName = " + _portName);
+            stringBuilder.Append("PortName = " + _portName + ", ");
+            stringBuilder.Append("SpoutAxis = " + _spoutAxis);
             return true;
         }
     
@@ -1944,7 +1376,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public AindTelekinesisTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.12.5";
+            _aindBehaviorServicesPkgVersion = "0.13.0";
             _environment = new Environment();
             _operationControl = new OperationControl();
         }
@@ -3214,10 +2646,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _deviceType;
     
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
-    
         private BaseModel _calibration;
     
         private System.Collections.Generic.Dictionary<string, SpinnakerCamera> _cameras;
@@ -3233,8 +2661,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected CameraControllerSpinnakerCamera(CameraControllerSpinnakerCamera other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _cameras = other._cameras;
             _frameRate = other._frameRate;
@@ -3254,46 +2680,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -3355,8 +2746,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("Cameras = " + _cameras + ", ");
             stringBuilder.Append("FrameRate = " + _frameRate);
@@ -4112,10 +3501,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _deviceType;
     
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
-    
         private BaseModel _calibration;
     
         private int _whoAmI;
@@ -4133,8 +3518,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected HarpAnalogInput(HarpAnalogInput other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
@@ -4155,46 +3538,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -4267,8 +3615,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -4299,10 +3645,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _deviceType;
     
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
-    
         private BaseModel _calibration;
     
         private int _whoAmI;
@@ -4320,8 +3662,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected HarpBehavior(HarpBehavior other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
@@ -4342,46 +3682,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -4454,8 +3759,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -4486,10 +3789,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _deviceType;
     
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
-    
         private BaseModel _calibration;
     
         private int _whoAmI;
@@ -4507,8 +3806,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected HarpEnvironmentSensor(HarpEnvironmentSensor other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
@@ -4529,46 +3826,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -4641,8 +3903,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -4673,10 +3933,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _deviceType;
     
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
-    
         private BaseModel _calibration;
     
         private int _whoAmI;
@@ -4694,8 +3950,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected HarpLicketySplit(HarpLicketySplit other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
@@ -4716,46 +3970,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -4828,8 +4047,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -4860,10 +4077,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private string _deviceType;
     
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
-    
         private BaseModel _calibration;
     
         private int _whoAmI;
@@ -4884,8 +4097,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected HarpWhiteRabbit(HarpWhiteRabbit other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
@@ -4907,46 +4118,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -5037,8 +4213,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -5120,113 +4294,17 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Load cell channel calibration
+    ///Calibration will be applied as:
+    ///    weight (g) = slope * (adc_units_corrected_by_offset_resistor - adc_units_baseline)
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Load cell channel calibration\nCalibration will be applied as:\n    weight (g) = sl" +
+        "ope * (adc_units_corrected_by_offset_resistor - adc_units_baseline)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class LoadCellCalibrationInput
-    {
-    
-        private int _channel;
-    
-        private System.Collections.Generic.List<MeasuredOffset> _offsetMeasurement;
-    
-        private System.Collections.Generic.List<MeasuredWeight> _weightMeasurement;
-    
-        public LoadCellCalibrationInput()
-        {
-            _offsetMeasurement = new System.Collections.Generic.List<MeasuredOffset>();
-            _weightMeasurement = new System.Collections.Generic.List<MeasuredWeight>();
-        }
-    
-        protected LoadCellCalibrationInput(LoadCellCalibrationInput other)
-        {
-            _channel = other._channel;
-            _offsetMeasurement = other._offsetMeasurement;
-            _weightMeasurement = other._weightMeasurement;
-        }
-    
-        /// <summary>
-        /// Load cell channel number available
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("channel", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Load cell channel number available")]
-        public int Channel
-        {
-            get
-            {
-                return _channel;
-            }
-            set
-            {
-                _channel = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("offset_measurement")]
-        public System.Collections.Generic.List<MeasuredOffset> OffsetMeasurement
-        {
-            get
-            {
-                return _offsetMeasurement;
-            }
-            set
-            {
-                _offsetMeasurement = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("weight_measurement")]
-        public System.Collections.Generic.List<MeasuredWeight> WeightMeasurement
-        {
-            get
-            {
-                return _weightMeasurement;
-            }
-            set
-            {
-                _weightMeasurement = value;
-            }
-        }
-    
-        public System.IObservable<LoadCellCalibrationInput> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoadCellCalibrationInput(this)));
-        }
-    
-        public System.IObservable<LoadCellCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new LoadCellCalibrationInput(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Channel = " + _channel + ", ");
-            stringBuilder.Append("OffsetMeasurement = " + _offsetMeasurement + ", ");
-            stringBuilder.Append("WeightMeasurement = " + _weightMeasurement);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class LoadCellCalibrationOutput
+    public partial class LoadCellChannelCalibration
     {
     
         private int _channel;
@@ -5237,23 +4315,19 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private double _slope;
     
-        private System.Collections.Generic.List<MeasuredWeight> _weightLookup;
-    
-        public LoadCellCalibrationOutput()
+        public LoadCellChannelCalibration()
         {
             _offset = 0;
             _baseline = 0D;
             _slope = 1D;
-            _weightLookup = new System.Collections.Generic.List<MeasuredWeight>();
         }
     
-        protected LoadCellCalibrationOutput(LoadCellCalibrationOutput other)
+        protected LoadCellChannelCalibration(LoadCellChannelCalibration other)
         {
             _channel = other._channel;
             _offset = other._offset;
             _baseline = other._baseline;
             _slope = other._slope;
-            _weightLookup = other._weightLookup;
         }
     
         /// <summary>
@@ -5316,28 +4390,14 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("weight_lookup")]
-        public System.Collections.Generic.List<MeasuredWeight> WeightLookup
+        public System.IObservable<LoadCellChannelCalibration> Generate()
         {
-            get
-            {
-                return _weightLookup;
-            }
-            set
-            {
-                _weightLookup = value;
-            }
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoadCellChannelCalibration(this)));
         }
     
-        public System.IObservable<LoadCellCalibrationOutput> Generate()
+        public System.IObservable<LoadCellChannelCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoadCellCalibrationOutput(this)));
-        }
-    
-        public System.IObservable<LoadCellCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new LoadCellCalibrationOutput(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new LoadCellChannelCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -5345,8 +4405,7 @@ namespace AindBehaviorTelekinesisDataSchema
             stringBuilder.Append("Channel = " + _channel + ", ");
             stringBuilder.Append("Offset = " + _offset + ", ");
             stringBuilder.Append("Baseline = " + _baseline + ", ");
-            stringBuilder.Append("Slope = " + _slope + ", ");
-            stringBuilder.Append("WeightLookup = " + _weightLookup);
+            stringBuilder.Append("Slope = " + _slope);
             return true;
         }
     
@@ -5365,17 +4424,17 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Load cells device
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Load cells device")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LoadCells
     {
     
         private string _deviceType;
-    
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
     
         private LoadCellsCalibration _calibration;
     
@@ -5388,14 +4447,13 @@ namespace AindBehaviorTelekinesisDataSchema
         public LoadCells()
         {
             _deviceType = "LoadCells";
+            _calibration = new LoadCellsCalibration();
             _whoAmI = 1232;
         }
     
         protected LoadCells(LoadCells other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _whoAmI = other._whoAmI;
             _serialNumber = other._serialNumber;
@@ -5416,42 +4474,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
+        /// Calibration for the device.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public LoadCellsCalibration Calibration
         {
             get
@@ -5524,8 +4551,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("WhoAmI = " + _whoAmI + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -5549,93 +4574,37 @@ namespace AindBehaviorTelekinesisDataSchema
 
 
     /// <summary>
-    /// Load cells calibration class
+    /// Load cells calibration
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Load cells calibration class")]
+    [System.ComponentModel.DescriptionAttribute("Load cells calibration")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LoadCellsCalibration
     {
     
-        private string _deviceName;
+        private System.DateTimeOffset _date;
     
-        private LoadCellsCalibrationInput _input;
-    
-        private LoadCellsCalibrationOutput _output;
-    
-        private System.DateTimeOffset? _date;
-    
-        private string _description;
-    
-        private string _notes;
+        private System.Collections.Generic.List<LoadCellChannelCalibration> _channels;
     
         public LoadCellsCalibration()
         {
-            _deviceName = "LoadCells";
-            _input = new LoadCellsCalibrationInput();
-            _output = new LoadCellsCalibrationOutput();
-            _description = "Calibration of the load cells system";
+            _channels = new System.Collections.Generic.List<LoadCellChannelCalibration>();
         }
     
         protected LoadCellsCalibration(LoadCellsCalibration other)
         {
-            _deviceName = other._deviceName;
-            _input = other._input;
-            _output = other._output;
             _date = other._date;
-            _description = other._description;
-            _notes = other._notes;
+            _channels = other._channels;
         }
     
         /// <summary>
-        /// Must match a device name in rig/instrument
+        /// Date of the calibration
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Must match a device name in rig/instrument")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("input", Required=Newtonsoft.Json.Required.Always)]
-        public LoadCellsCalibrationInput Input
-        {
-            get
-            {
-                return _input;
-            }
-            set
-            {
-                _input = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("output", Required=Newtonsoft.Json.Required.Always)]
-        public LoadCellsCalibrationOutput Output
-        {
-            get
-            {
-                return _output;
-            }
-            set
-            {
-                _output = value;
-            }
-        }
-    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
-        public System.DateTimeOffset? Date
+        [System.ComponentModel.DescriptionAttribute("Date of the calibration")]
+        public System.DateTimeOffset Date
         {
             get
             {
@@ -5647,29 +4616,17 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("description")]
-        public string Description
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("channels")]
+        public System.Collections.Generic.List<LoadCellChannelCalibration> Channels
         {
             get
             {
-                return _description;
+                return _channels;
             }
             set
             {
-                _description = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
+                _channels = value;
             }
         }
     
@@ -5685,137 +4642,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("Input = " + _input + ", ");
-            stringBuilder.Append("Output = " + _output + ", ");
             stringBuilder.Append("Date = " + _date + ", ");
-            stringBuilder.Append("Description = " + _description + ", ");
-            stringBuilder.Append("Notes = " + _notes);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class LoadCellsCalibrationInput
-    {
-    
-        private System.Collections.Generic.List<LoadCellCalibrationInput> _channels;
-    
-        public LoadCellsCalibrationInput()
-        {
-            _channels = new System.Collections.Generic.List<LoadCellCalibrationInput>();
-        }
-    
-        protected LoadCellsCalibrationInput(LoadCellsCalibrationInput other)
-        {
-            _channels = other._channels;
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("channels")]
-        public System.Collections.Generic.List<LoadCellCalibrationInput> Channels
-        {
-            get
-            {
-                return _channels;
-            }
-            set
-            {
-                _channels = value;
-            }
-        }
-    
-        public System.IObservable<LoadCellsCalibrationInput> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoadCellsCalibrationInput(this)));
-        }
-    
-        public System.IObservable<LoadCellsCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new LoadCellsCalibrationInput(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Channels = " + _channels);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class LoadCellsCalibrationOutput
-    {
-    
-        private System.Collections.Generic.List<LoadCellCalibrationOutput> _channels;
-    
-        public LoadCellsCalibrationOutput()
-        {
-            _channels = new System.Collections.Generic.List<LoadCellCalibrationOutput>();
-        }
-    
-        protected LoadCellsCalibrationOutput(LoadCellsCalibrationOutput other)
-        {
-            _channels = other._channels;
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("channels")]
-        public System.Collections.Generic.List<LoadCellCalibrationOutput> Channels
-        {
-            get
-            {
-                return _channels;
-            }
-            set
-            {
-                _channels = value;
-            }
-        }
-    
-        public System.IObservable<LoadCellsCalibrationOutput> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoadCellsCalibrationOutput(this)));
-        }
-    
-        public System.IObservable<LoadCellsCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new LoadCellsCalibrationOutput(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
             stringBuilder.Append("Channels = " + _channels);
             return true;
         }
@@ -6142,7 +4969,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Represents a position in the manipulator coordinate system
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a position in the manipulator coordinate system")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ManipulatorPosition
@@ -6236,178 +5067,6 @@ namespace AindBehaviorTelekinesisDataSchema
             stringBuilder.Append("Y1 = " + _y1 + ", ");
             stringBuilder.Append("Y2 = " + _y2 + ", ");
             stringBuilder.Append("Z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class MeasuredOffset
-    {
-    
-        private int _offset;
-    
-        private double _baseline;
-    
-        public MeasuredOffset()
-        {
-        }
-    
-        protected MeasuredOffset(MeasuredOffset other)
-        {
-            _offset = other._offset;
-            _baseline = other._baseline;
-        }
-    
-        /// <summary>
-        /// The applied offset resistor value[-255, 255]
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("offset", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The applied offset resistor value[-255, 255]")]
-        public int Offset
-        {
-            get
-            {
-                return _offset;
-            }
-            set
-            {
-                _offset = value;
-            }
-        }
-    
-        /// <summary>
-        /// The measured baseline value
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("baseline", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The measured baseline value")]
-        public double Baseline
-        {
-            get
-            {
-                return _baseline;
-            }
-            set
-            {
-                _baseline = value;
-            }
-        }
-    
-        public System.IObservable<MeasuredOffset> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MeasuredOffset(this)));
-        }
-    
-        public System.IObservable<MeasuredOffset> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new MeasuredOffset(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Offset = " + _offset + ", ");
-            stringBuilder.Append("Baseline = " + _baseline);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class MeasuredWeight
-    {
-    
-        private double _weight;
-    
-        private double _baseline;
-    
-        public MeasuredWeight()
-        {
-        }
-    
-        protected MeasuredWeight(MeasuredWeight other)
-        {
-            _weight = other._weight;
-            _baseline = other._baseline;
-        }
-    
-        /// <summary>
-        /// The applied weight in grams
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("weight", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The applied weight in grams")]
-        public double Weight
-        {
-            get
-            {
-                return _weight;
-            }
-            set
-            {
-                _weight = value;
-            }
-        }
-    
-        /// <summary>
-        /// The measured baseline value
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("baseline", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The measured baseline value")]
-        public double Baseline
-        {
-            get
-            {
-                return _baseline;
-            }
-            set
-            {
-                _baseline = value;
-            }
-        }
-    
-        public System.IObservable<MeasuredWeight> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new MeasuredWeight(this)));
-        }
-    
-        public System.IObservable<MeasuredWeight> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new MeasuredWeight(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Weight = " + _weight + ", ");
-            stringBuilder.Append("Baseline = " + _baseline);
             return true;
         }
     
@@ -6560,6 +5219,9 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Microstep resolution available
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum MicrostepResolution
     {
@@ -6578,6 +5240,9 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Motor operation mode
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum MotorOperationMode
     {
@@ -6598,8 +5263,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private ZmqConnection _zmqPublisher;
     
-        private ZmqSubscriber _zmqSubscriber;
-    
         public Networking()
         {
             _zmqPublisher = new ZmqConnection();
@@ -6608,7 +5271,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected Networking(Networking other)
         {
             _zmqPublisher = other._zmqPublisher;
-            _zmqSubscriber = other._zmqSubscriber;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -6625,20 +5287,6 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("zmq_subscriber")]
-        public ZmqSubscriber ZmqSubscriber
-        {
-            get
-            {
-                return _zmqSubscriber;
-            }
-            set
-            {
-                _zmqSubscriber = value;
-            }
-        }
-    
         public System.IObservable<Networking> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Networking(this)));
@@ -6651,8 +5299,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("ZmqPublisher = " + _zmqPublisher + ", ");
-            stringBuilder.Append("ZmqSubscriber = " + _zmqSubscriber);
+            stringBuilder.Append("ZmqPublisher = " + _zmqPublisher);
             return true;
         }
     
@@ -7580,7 +6227,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Represents a rectangle defined by its top-left corner, width, and height.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a rectangle defined by its top-left corner, width, and height.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Rect
@@ -8188,6 +6839,281 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Session
+    {
+    
+        private string _aindBehaviorServicesPkgVersion;
+    
+        private string _version;
+    
+        private string _experiment;
+    
+        private System.Collections.Generic.List<string> _experimenter;
+    
+        private System.DateTimeOffset _date;
+    
+        private string _sessionName;
+    
+        private string _subject;
+    
+        private string _notes;
+    
+        private string _commitHash;
+    
+        private bool _allowDirtyRepo;
+    
+        private bool _skipHardwareValidation;
+    
+        public Session()
+        {
+            _aindBehaviorServicesPkgVersion = "0.13.0";
+            _version = "0.13.0";
+            _experimenter = new System.Collections.Generic.List<string>();
+            _allowDirtyRepo = false;
+            _skipHardwareValidation = false;
+        }
+    
+        protected Session(Session other)
+        {
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
+            _version = other._version;
+            _experiment = other._experiment;
+            _experimenter = other._experimenter;
+            _date = other._date;
+            _sessionName = other._sessionName;
+            _subject = other._subject;
+            _notes = other._notes;
+            _commitHash = other._commitHash;
+            _allowDirtyRepo = other._allowDirtyRepo;
+            _skipHardwareValidation = other._skipHardwareValidation;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the experiment
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("experiment")]
+        [System.ComponentModel.DescriptionAttribute("Name of the experiment")]
+        public string Experiment
+        {
+            get
+            {
+                return _experiment;
+            }
+            set
+            {
+                _experiment = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the experimenter
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("experimenter")]
+        [System.ComponentModel.DescriptionAttribute("Name of the experimenter")]
+        public System.Collections.Generic.List<string> Experimenter
+        {
+            get
+            {
+                return _experimenter;
+            }
+            set
+            {
+                _experimenter = value;
+            }
+        }
+    
+        /// <summary>
+        /// Date of the experiment
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("date")]
+        [System.ComponentModel.DescriptionAttribute("Date of the experiment")]
+        public System.DateTimeOffset Date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                _date = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("session_name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the session. This will be used to create a folder in the root path. If no" +
+            "t provided, it will be generated using subject and date.")]
+        public string SessionName
+        {
+            get
+            {
+                return _sessionName;
+            }
+            set
+            {
+                _sessionName = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the subject
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Name of the subject")]
+        public string Subject
+        {
+            get
+            {
+                return _subject;
+            }
+            set
+            {
+                _subject = value;
+            }
+        }
+    
+        /// <summary>
+        /// Notes about the experiment
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
+        [System.ComponentModel.DescriptionAttribute("Notes about the experiment")]
+        public string Notes
+        {
+            get
+            {
+                return _notes;
+            }
+            set
+            {
+                _notes = value;
+            }
+        }
+    
+        /// <summary>
+        /// Commit hash of the repository
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commit_hash")]
+        [System.ComponentModel.DescriptionAttribute("Commit hash of the repository")]
+        public string CommitHash
+        {
+            get
+            {
+                return _commitHash;
+            }
+            set
+            {
+                _commitHash = value;
+            }
+        }
+    
+        /// <summary>
+        /// Allow running from a dirty repository
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("allow_dirty_repo")]
+        [System.ComponentModel.DescriptionAttribute("Allow running from a dirty repository")]
+        public bool AllowDirtyRepo
+        {
+            get
+            {
+                return _allowDirtyRepo;
+            }
+            set
+            {
+                _allowDirtyRepo = value;
+            }
+        }
+    
+        /// <summary>
+        /// Skip hardware validation
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("skip_hardware_validation")]
+        [System.ComponentModel.DescriptionAttribute("Skip hardware validation")]
+        public bool SkipHardwareValidation
+        {
+            get
+            {
+                return _skipHardwareValidation;
+            }
+            set
+            {
+                _skipHardwareValidation = value;
+            }
+        }
+    
+        public System.IObservable<Session> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Session(this)));
+        }
+    
+        public System.IObservable<Session> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Session(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
+            stringBuilder.Append("Version = " + _version + ", ");
+            stringBuilder.Append("Experiment = " + _experiment + ", ");
+            stringBuilder.Append("Experimenter = " + _experimenter + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("SessionName = " + _sessionName + ", ");
+            stringBuilder.Append("Subject = " + _subject + ", ");
+            stringBuilder.Append("Notes = " + _notes + ", ");
+            stringBuilder.Append("CommitHash = " + _commitHash + ", ");
+            stringBuilder.Append("AllowDirtyRepo = " + _allowDirtyRepo + ", ");
+            stringBuilder.Append("SkipHardwareValidation = " + _skipHardwareValidation);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Slap2pInterface : OphysInterface
     {
     
@@ -8288,17 +7214,17 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Spinnaker camera device configuration.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Spinnaker camera device configuration.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SpinnakerCamera
     {
     
         private string _deviceType;
-    
-        private string _deviceName;
-    
-        private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
     
@@ -8337,8 +7263,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected SpinnakerCamera(SpinnakerCamera other)
         {
             _deviceType = other._deviceType;
-            _deviceName = other._deviceName;
-            _additionalSettings = other._additionalSettings;
             _calibration = other._calibration;
             _serialNumber = other._serialNumber;
             _binning = other._binning;
@@ -8352,11 +7276,7 @@ namespace AindBehaviorTelekinesisDataSchema
             _videoWriter = other._videoWriter;
         }
     
-        /// <summary>
-        /// Device type
-        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("device_type")]
-        [System.ComponentModel.DescriptionAttribute("Device type")]
         public string DeviceType
         {
             get
@@ -8370,46 +7290,11 @@ namespace AindBehaviorTelekinesisDataSchema
         }
     
         /// <summary>
-        /// Device name
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Device name")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        /// <summary>
-        /// Additional settings
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("additional_settings")]
-        [System.ComponentModel.DescriptionAttribute("Additional settings")]
-        public BaseModel AdditionalSettings
-        {
-            get
-            {
-                return _additionalSettings;
-            }
-            set
-            {
-                _additionalSettings = value;
-            }
-        }
-    
-        /// <summary>
-        /// Calibration
+        /// Calibration for the device.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("calibration")]
-        [System.ComponentModel.DescriptionAttribute("Calibration")]
+        [System.ComponentModel.DescriptionAttribute("Calibration for the device.")]
         public BaseModel Calibration
         {
             get
@@ -8611,8 +7496,6 @@ namespace AindBehaviorTelekinesisDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("DeviceType = " + _deviceType + ", ");
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("AdditionalSettings = " + _additionalSettings + ", ");
             stringBuilder.Append("Calibration = " + _calibration + ", ");
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
             stringBuilder.Append("Binning = " + _binning + ", ");
@@ -8642,6 +7525,9 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// ADC bit depth options for Spinnaker cameras.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum SpinnakerCameraAdcBitDepth
     {
@@ -8657,6 +7543,9 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Pixel format options for Spinnaker cameras.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     public enum SpinnakerCameraPixelFormat
     {
@@ -9742,10 +8631,14 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// FFMPEG video writer configuration.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "video_writer_type")]
     [JsonInheritanceAttribute("FFMPEG", typeof(VideoWriterFfmpeg))]
     [JsonInheritanceAttribute("OPENCV", typeof(VideoWriterOpenCv))]
+    [System.ComponentModel.DescriptionAttribute("FFMPEG video writer configuration.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriter
@@ -9789,7 +8682,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// FFMPEG video writer configuration.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("FFMPEG video writer configuration.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriterFfmpeg : VideoWriter
@@ -9913,7 +8810,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// OpenCV video writer configuration.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("OpenCV video writer configuration.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class VideoWriterOpenCv : VideoWriter
@@ -10016,93 +8917,52 @@ namespace AindBehaviorTelekinesisDataSchema
 
 
     /// <summary>
-    /// Water valve calibration class
+    /// Represents a water valve calibration.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Water valve calibration class")]
+    [System.ComponentModel.DescriptionAttribute("Represents a water valve calibration.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WaterValveCalibration
     {
     
-        private string _deviceName;
+        private System.DateTimeOffset _date;
     
-        private WaterValveCalibrationInput _input;
+        private System.Collections.Generic.List<Measurement> _measurements;
     
-        private WaterValveCalibrationOutput _output;
+        private System.Collections.Generic.Dictionary<string, double> _intervalAverage;
     
-        private System.DateTimeOffset? _date;
+        private double _slope;
     
-        private string _description;
+        private double _offset;
     
-        private string _notes;
+        private double? _r2;
+    
+        private System.Collections.Generic.List<double> _validDomain;
     
         public WaterValveCalibration()
         {
-            _deviceName = "WaterValve";
-            _input = new WaterValveCalibrationInput();
-            _output = new WaterValveCalibrationOutput();
-            _description = "Calibration of the water valve delivery system";
+            _measurements = new System.Collections.Generic.List<Measurement>();
         }
     
         protected WaterValveCalibration(WaterValveCalibration other)
         {
-            _deviceName = other._deviceName;
-            _input = other._input;
-            _output = other._output;
             _date = other._date;
-            _description = other._description;
-            _notes = other._notes;
+            _measurements = other._measurements;
+            _intervalAverage = other._intervalAverage;
+            _slope = other._slope;
+            _offset = other._offset;
+            _r2 = other._r2;
+            _validDomain = other._validDomain;
         }
     
         /// <summary>
-        /// Name of the device being calibrated
+        /// Date of the calibration
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
-        [System.ComponentModel.DescriptionAttribute("Name of the device being calibrated")]
-        public string DeviceName
-        {
-            get
-            {
-                return _deviceName;
-            }
-            set
-            {
-                _deviceName = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("input", Required=Newtonsoft.Json.Required.Always)]
-        public WaterValveCalibrationInput Input
-        {
-            get
-            {
-                return _input;
-            }
-            set
-            {
-                _input = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("output", Required=Newtonsoft.Json.Required.Always)]
-        public WaterValveCalibrationOutput Output
-        {
-            get
-            {
-                return _output;
-            }
-            set
-            {
-                _output = value;
-            }
-        }
-    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("date")]
-        public System.DateTimeOffset? Date
+        [System.ComponentModel.DescriptionAttribute("Date of the calibration")]
+        public System.DateTimeOffset Date
         {
             get
             {
@@ -10112,86 +8972,6 @@ namespace AindBehaviorTelekinesisDataSchema
             {
                 _date = value;
             }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("description")]
-        public string Description
-        {
-            get
-            {
-                return _description;
-            }
-            set
-            {
-                _description = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
-            }
-        }
-    
-        public System.IObservable<WaterValveCalibration> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibration(this)));
-        }
-    
-        public System.IObservable<WaterValveCalibration> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibration(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
-            stringBuilder.Append("Input = " + _input + ", ");
-            stringBuilder.Append("Output = " + _output + ", ");
-            stringBuilder.Append("Date = " + _date + ", ");
-            stringBuilder.Append("Description = " + _description + ", ");
-            stringBuilder.Append("Notes = " + _notes);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class WaterValveCalibrationInput
-    {
-    
-        private System.Collections.Generic.List<Measurement> _measurements;
-    
-        public WaterValveCalibrationInput()
-        {
-            _measurements = new System.Collections.Generic.List<Measurement>();
-        }
-    
-        protected WaterValveCalibrationInput(WaterValveCalibrationInput other)
-        {
-            _measurements = other._measurements;
         }
     
         /// <summary>
@@ -10210,70 +8990,6 @@ namespace AindBehaviorTelekinesisDataSchema
             {
                 _measurements = value;
             }
-        }
-    
-        public System.IObservable<WaterValveCalibrationInput> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibrationInput(this)));
-        }
-    
-        public System.IObservable<WaterValveCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibrationInput(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Measurements = " + _measurements);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    /// <summary>
-    /// Output for water valve calibration class
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Output for water valve calibration class")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class WaterValveCalibrationOutput
-    {
-    
-        private System.Collections.Generic.Dictionary<string, double> _intervalAverage;
-    
-        private double _slope;
-    
-        private double _offset;
-    
-        private double? _r2;
-    
-        private System.Collections.Generic.List<double> _validDomain;
-    
-        public WaterValveCalibrationOutput()
-        {
-        }
-    
-        protected WaterValveCalibrationOutput(WaterValveCalibrationOutput other)
-        {
-            _intervalAverage = other._intervalAverage;
-            _slope = other._slope;
-            _offset = other._offset;
-            _r2 = other._r2;
-            _validDomain = other._validDomain;
         }
     
         /// <summary>
@@ -10365,18 +9081,20 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
-        public System.IObservable<WaterValveCalibrationOutput> Generate()
+        public System.IObservable<WaterValveCalibration> Generate()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibrationOutput(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibration(this)));
         }
     
-        public System.IObservable<WaterValveCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<WaterValveCalibration> Generate<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibrationOutput(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibration(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("Measurements = " + _measurements + ", ");
             stringBuilder.Append("IntervalAverage = " + _intervalAverage + ", ");
             stringBuilder.Append("Slope = " + _slope + ", ");
             stringBuilder.Append("Offset = " + _offset + ", ");
@@ -10863,50 +9581,6 @@ namespace AindBehaviorTelekinesisDataSchema
         public System.IObservable<ActionSource0> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ActionSource0(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            return false;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class ZmqSubscriber
-    {
-    
-        public ZmqSubscriber()
-        {
-        }
-    
-        protected ZmqSubscriber(ZmqSubscriber other)
-        {
-        }
-    
-        public System.IObservable<ZmqSubscriber> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZmqSubscriber(this)));
-        }
-    
-        public System.IObservable<ZmqSubscriber> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new ZmqSubscriber(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -11818,11 +10492,6 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<ActionSource>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindBehaviorSessionModel> source)
-        {
-            return Process<AindBehaviorSessionModel>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<AindBehaviorTelekinesisRig> source)
         {
             return Process<AindBehaviorTelekinesisRig>(source);
@@ -11833,24 +10502,9 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<AindBehaviorTelekinesisTaskLogic>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindManipulatorAdditionalSettings> source)
-        {
-            return Process<AindManipulatorAdditionalSettings>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<AindManipulatorCalibration> source)
         {
             return Process<AindManipulatorCalibration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindManipulatorCalibrationInput> source)
-        {
-            return Process<AindManipulatorCalibrationInput>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<AindManipulatorCalibrationOutput> source)
-        {
-            return Process<AindManipulatorCalibrationOutput>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<AindManipulatorDevice> source)
@@ -11998,14 +10652,9 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<LoadCellActionSource>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<LoadCellCalibrationInput> source)
+        public System.IObservable<string> Process(System.IObservable<LoadCellChannelCalibration> source)
         {
-            return Process<LoadCellCalibrationInput>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<LoadCellCalibrationOutput> source)
-        {
-            return Process<LoadCellCalibrationOutput>(source);
+            return Process<LoadCellChannelCalibration>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<LoadCells> source)
@@ -12016,16 +10665,6 @@ namespace AindBehaviorTelekinesisDataSchema
         public System.IObservable<string> Process(System.IObservable<LoadCellsCalibration> source)
         {
             return Process<LoadCellsCalibration>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<LoadCellsCalibrationInput> source)
-        {
-            return Process<LoadCellsCalibrationInput>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<LoadCellsCalibrationOutput> source)
-        {
-            return Process<LoadCellsCalibrationOutput>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<LogNormalDistribution> source)
@@ -12046,16 +10685,6 @@ namespace AindBehaviorTelekinesisDataSchema
         public System.IObservable<string> Process(System.IObservable<ManipulatorPosition> source)
         {
             return Process<ManipulatorPosition>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<MeasuredOffset> source)
-        {
-            return Process<MeasuredOffset>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<MeasuredWeight> source)
-        {
-            return Process<MeasuredWeight>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Measurement> source)
@@ -12143,6 +10772,11 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<ScalingParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Session> source)
+        {
+            return Process<Session>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Slap2pInterface> source)
         {
             return Process<Slap2pInterface>(source);
@@ -12198,16 +10832,6 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<WaterValveCalibration>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<WaterValveCalibrationInput> source)
-        {
-            return Process<WaterValveCalibrationInput>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<WaterValveCalibrationOutput> source)
-        {
-            return Process<WaterValveCalibrationOutput>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<ZmqConnection> source)
         {
             return Process<ZmqConnection>(source);
@@ -12258,11 +10882,6 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<ActionSource0>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZmqSubscriber> source)
-        {
-            return Process<ZmqSubscriber>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<TruncationParameters2> source)
         {
             return Process<TruncationParameters2>(source);
@@ -12285,13 +10904,9 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Action>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionLookUpTableFactory>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionSource>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorTelekinesisRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorTelekinesisTaskLogic>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorAdditionalSettings>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibrationInput>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindManipulatorDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindTelekinesisTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioFeedback>))]
@@ -12321,18 +10936,13 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLicketySplit>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpWhiteRabbit>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellActionSource>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibrationInput>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibrationOutput>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellChannelCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCells>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellsCalibration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellsCalibrationInput>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellsCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LogNormalDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorFeedback>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorPosition>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MeasuredOffset>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<MeasuredWeight>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<NormalDistribution>))]
@@ -12350,6 +10960,7 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Scalar>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalarDistributionParameter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Session>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Slap2pInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpoutOperationControl>))]
@@ -12361,8 +10972,6 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationInput>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardAmount>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RewardDelay>))]
@@ -12373,7 +10982,6 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<InterTrialInterval>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Duration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActionSource0>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters2>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters2>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
