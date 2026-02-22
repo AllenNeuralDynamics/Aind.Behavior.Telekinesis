@@ -545,7 +545,7 @@ namespace AindBehaviorTelekinesisDataSchema
         public AindBehaviorTelekinesisRig()
         {
             _aindBehaviorServicesPkgVersion = "0.13.0";
-            _version = "0.2.0-rc0";
+            _version = "0.4.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
             _harpLickometer = new HarpLicketySplit();
@@ -917,7 +917,7 @@ namespace AindBehaviorTelekinesisDataSchema
             _name = "AindTelekinesis";
             _description = "";
             _taskParameters = new AindTelekinesisTaskParameters();
-            _version = "0.2.0-rc0";
+            _version = "0.4.0-rc0";
         }
     
         protected AindBehaviorTelekinesisTaskLogic(AindBehaviorTelekinesisTaskLogic other)

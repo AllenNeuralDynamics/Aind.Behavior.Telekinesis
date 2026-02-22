@@ -191,8 +191,8 @@
           "type": "string"
         },
         "version": {
-          "const": "0.2.0-rc0",
-          "default": "0.2.0-rc0",
+          "const": "0.4.0-rc0",
+          "default": "0.4.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -330,8 +330,8 @@
           "description": "Parameters of the task logic"
         },
         "version": {
-          "const": "0.2.0-rc0",
-          "default": "0.2.0-rc0",
+          "const": "0.4.0-rc0",
+          "default": "0.4.0-rc0",
           "title": "Version",
           "type": "string"
         },
@@ -1646,7 +1646,7 @@
         "calibration": {
           "$ref": "#/$defs/LoadCellsCalibration",
           "default": {
-            "date": "2026-02-19T18:36:52.495517Z",
+            "date": "2026-02-22T19:48:16.849663Z",
             "channels": []
           },
           "description": "Calibration for the device."
