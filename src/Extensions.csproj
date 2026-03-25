@@ -10,5 +10,8 @@
     <PackageReference Include="Harp.Behavior" Version="0.1.0" />
     <PackageReference Include="Harp.StepperDriver" Version="0.3.0" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices" Version="0.13.4" />
+    <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices.Distributions" Version="0.2.0" />
+    <PackageReference Include="AllenNeuralDynamics.AindManipulator" Version="0.3.0" />
   </ItemGroup>
 </Project>

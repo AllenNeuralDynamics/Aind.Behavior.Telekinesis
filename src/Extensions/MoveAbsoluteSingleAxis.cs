@@ -3,12 +3,11 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using AindBehaviorTelekinesisDataSchema;
 using Harp.StepperDriver;
 using Bonsai.Harp;
-
+using AllenNeuralDynamics.AindManipulator;
 [Combinator]
-[Description("")]
+[Description("Moves the specified axis to an absolute position.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class MoveAbsoluteSingleAxis
 {

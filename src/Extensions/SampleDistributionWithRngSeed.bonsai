@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
+                 xmlns:p1="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.Distributions;assembly=AllenNeuralDynamics.AindBehaviorServices.Distributions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
