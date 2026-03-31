@@ -544,7 +544,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public AindBehaviorTelekinesisRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
             _version = "0.4.0-rc0";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -1233,7 +1233,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public AindTelekinesisTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
             _environment = new Environment();
             _operationControl = new OperationControl();
         }
@@ -4244,8 +4244,8 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.5";
-            _version = "0.13.5";
+            _aindBehaviorServicesPkgVersion = "0.13.6";
+            _version = "0.13.6";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
