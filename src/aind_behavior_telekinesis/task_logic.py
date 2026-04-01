@@ -200,6 +200,63 @@ ActionSource = TypeAliasType(
 )
 
 
+class LutSampler2D(BaseModel):
+    sampler_type: Literal["LUT"] = "LUT"
+    lut_reference: str = Field(
+        description="Reference to the look up table image. Should be a key in the action_luts dictionary"
+    )
+
+
+class Sampler1D(BaseModel):
+    sampler_type: Literal["1D"] = "1D"
+    min_from: float = Field(
+        description="The lower bound of the input value used to linearly scale the input coordinate to."
+    )
+    max_from: float = Field(
+        description="The upper bound of the input value used to linearly scale the input coordinate to."
+    )
+    min_to: float = Field(
+        description="The lower bound of the output value used to linearly scale the input coordinate to."
+    )
+    max_to: float = Field(
+        description="The upper bound of the output value used to linearly scale the input coordinate to."
+    )
+
+
+class Sampler2D(BaseModel):
+    sampler_type: Literal["2D"] = "2D"
+    min_from_0: float = Field(
+        description="The lower bound of the input value used to linearly scale the input coordinate to."
+    )
+    max_from_0: float = Field(
+        description="The upper bound of the input value used to linearly scale the input coordinate to."
+    )
+    min_from_1: float = Field(
+        description="The lower bound of the input value used to linearly scale the input coordinate to."
+    )
+    max_from_1: float = Field(
+        description="The upper bound of the input value used to linearly scale the input coordinate to."
+    )
+    min_to_0: float = Field(
+        description="The lower bound of the output value used to linearly scale the input coordinate to."
+    )
+    max_to_0: float = Field(
+        description="The upper bound of the output value used to linearly scale the input coordinate to."
+    )
+    min_to_1: float = Field(
+        description="The lower bound of the output value used to linearly scale the input coordinate to."
+    )
+    max_to_1: float = Field(
+        description="The upper bound of the output value used to linearly scale the input coordinate to."
+    )
+
+
+Sampler = TypeAliasType(
+    "Sampler",
+    Annotated[Union[LutSampler2D, Sampler1D, Sampler2D], Field(discriminator="sampler_type")],
+)
+
+
 class Trial(BaseModel):
     """Defines a trial
     Action values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached
@@ -217,7 +274,7 @@ class Trial(BaseModel):
         default=None,
         description="Action source for the second axis to be sample from the LUT. If None, LUT will be sampled from [action_source_0, 0]",
     )
-    lut_reference: str = Field(
+    sampler: Sampler = Field(
         description="Reference to the look up table image. Should be a key in the action_luts dictionary"
     )
 
@@ -301,7 +358,7 @@ class OperationControl(BaseModel):
     """Top-level operational settings including LUT registry and spout control"""
 
     action_luts: Dict[str, ActionLookUpTableFactory] = Field(
-        validate_default=True, description="Look up tables to derive action output from."
+        default_factory=dict, description="Look up tables to derive action output from."
     )
     spout: SpoutOperationControl = Field(
         default=SpoutOperationControl(), validate_default=True, description="Operation control for spout"
@@ -319,14 +376,19 @@ class AindTelekinesisTaskParameters(TaskParameters):
         action_luts = self.operation_control.action_luts  # pylint: disable=no-member
         for block in self.environment.block_statistics:  # pylint: disable=no-member
             if isinstance(block, BlockGenerator):
-                if block.trial_statistics.lut_reference not in action_luts:
+                if (
+                    isinstance(block.trial_statistics.sampler, LutSampler2D)
+                    and block.trial_statistics.sampler.lut_reference not in action_luts
+                ):
                     raise ValueError(
-                        f"Look up table reference '{block.trial_statistics.lut_reference}' not found in action_luts"
+                        f"Look up table reference '{block.trial_statistics.sampler.lut_reference}' not found in action_luts"
                     )
             elif isinstance(block, Block):
                 for trial in block.trials:
-                    if trial.lut_reference not in action_luts:
-                        raise ValueError(f"Look up table reference '{trial.lut_reference}' not found in action_luts")
+                    if isinstance(trial.sampler, LutSampler2D) and trial.sampler.lut_reference not in action_luts:
+                        raise ValueError(
+                            f"Look up table reference '{trial.sampler.lut_reference}' not found in action_luts"
+                        )
             else:  # guard clause
                 raise ValueError(f"Block statistics mode '{block.mode}' not recognized")
         return self

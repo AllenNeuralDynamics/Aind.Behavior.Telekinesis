@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 using System.ComponentModel;
 using OpenCV.Net;
 
-public class ParseAction : Transform<Timestamped<ActionVector>, Timestamped<ActionVectorFromLut<ActionVector>>>
+public class ParseAction : Transform<Timestamped<ActionVector>, Timestamped<ParsedAction>>
 {
 
     public ActionLookUpTableFactory LutSettings { get; set; }
@@ -17,13 +17,13 @@ public class ParseAction : Transform<Timestamped<ActionVector>, Timestamped<Acti
     [TypeConverter("Bonsai.Dsp.MatConverter, Bonsai.Dsp")]
     public Mat LookUpTable { get; set; }
 
-    public IObservable<Timestamped<ActionVectorFromLut<ActionVector>>> Process(IObservable<Timestamped<Tuple<double, double>>> source)
+    public IObservable<Timestamped<ParsedAction>> Process(IObservable<Timestamped<Tuple<double, double>>> source)
     {
         return Process(source.Select(value => Timestamped.Create(new ActionVector(value.Value), value.Seconds)));
     }
 
 
-    public override IObservable<Timestamped<ActionVectorFromLut<ActionVector>>> Process(IObservable<Timestamped<ActionVector>> source)
+    public override IObservable<Timestamped<ParsedAction>> Process(IObservable<Timestamped<ActionVector>> source)
     {
         Mat lookUpTable;
         ActionLookUpTableFactory lutSettings = LutSettings;
@@ -37,7 +37,16 @@ public class ParseAction : Transform<Timestamped<ActionVector>, Timestamped<Acti
         interpolator.Validate();
         return source.Select(value =>
         {
-            return Timestamped.Create(interpolator.LookUp(value.Value), value.Seconds);
+            var result = interpolator.LookUp(value.Value);
+            var parsedAction = new ParsedAction
+            {
+                Action0 = result.ActionVector.Action0,
+                Action1 = result.ActionVector.Action1,
+                ProjectedAction = result.ProjectedAction,
+                SampledCoordinate0 = result.LookUpIndex.Action0,
+                SampledCoordinate1 = result.LookUpIndex.Action1
+            };
+            return Timestamped.Create(parsedAction, value.Seconds);
         });
     }
 }

@@ -1805,6 +1805,26 @@
       "type": "object",
       "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.LogNormalDistributionParameters"
     },
+    "LutSampler2D": {
+      "properties": {
+        "sampler_type": {
+          "const": "LUT",
+          "default": "LUT",
+          "title": "Sampler Type",
+          "type": "string"
+        },
+        "lut_reference": {
+          "description": "Reference to the look up table image. Should be a key in the action_luts dictionary",
+          "title": "Lut Reference",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lut_reference"
+      ],
+      "title": "LutSampler2D",
+      "type": "object"
+    },
     "ManipulatorFeedback": {
       "description": "Continuous feedback delivered via manipulator position",
       "properties": {
@@ -2056,9 +2076,6 @@
           "description": "Operation control for spout"
         }
       },
-      "required": [
-        "action_luts"
-      ],
       "title": "OperationControl",
       "type": "object"
     },
@@ -2401,6 +2418,127 @@
         "water_valve"
       ],
       "title": "RigCalibration",
+      "type": "object"
+    },
+    "Sampler": {
+      "discriminator": {
+        "mapping": {
+          "1D": "#/$defs/Sampler1D",
+          "2D": "#/$defs/Sampler2D",
+          "LUT": "#/$defs/LutSampler2D"
+        },
+        "propertyName": "sampler_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/LutSampler2D"
+        },
+        {
+          "$ref": "#/$defs/Sampler1D"
+        },
+        {
+          "$ref": "#/$defs/Sampler2D"
+        }
+      ]
+    },
+    "Sampler1D": {
+      "properties": {
+        "sampler_type": {
+          "const": "1D",
+          "default": "1D",
+          "title": "Sampler Type",
+          "type": "string"
+        },
+        "min_from": {
+          "description": "The lower bound of the input value used to linearly scale the input coordinate to.",
+          "title": "Min From",
+          "type": "number"
+        },
+        "max_from": {
+          "description": "The upper bound of the input value used to linearly scale the input coordinate to.",
+          "title": "Max From",
+          "type": "number"
+        },
+        "min_to": {
+          "description": "The lower bound of the output value used to linearly scale the input coordinate to.",
+          "title": "Min To",
+          "type": "number"
+        },
+        "max_to": {
+          "description": "The upper bound of the output value used to linearly scale the input coordinate to.",
+          "title": "Max To",
+          "type": "number"
+        }
+      },
+      "required": [
+        "min_from",
+        "max_from",
+        "min_to",
+        "max_to"
+      ],
+      "title": "Sampler1D",
+      "type": "object"
+    },
+    "Sampler2D": {
+      "properties": {
+        "sampler_type": {
+          "const": "2D",
+          "default": "2D",
+          "title": "Sampler Type",
+          "type": "string"
+        },
+        "min_from_0": {
+          "description": "The lower bound of the input value used to linearly scale the input coordinate to.",
+          "title": "Min From 0",
+          "type": "number"
+        },
+        "max_from_0": {
+          "description": "The upper bound of the input value used to linearly scale the input coordinate to.",
+          "title": "Max From 0",
+          "type": "number"
+        },
+        "min_from_1": {
+          "description": "The lower bound of the input value used to linearly scale the input coordinate to.",
+          "title": "Min From 1",
+          "type": "number"
+        },
+        "max_from_1": {
+          "description": "The upper bound of the input value used to linearly scale the input coordinate to.",
+          "title": "Max From 1",
+          "type": "number"
+        },
+        "min_to_0": {
+          "description": "The lower bound of the output value used to linearly scale the input coordinate to.",
+          "title": "Min To 0",
+          "type": "number"
+        },
+        "max_to_0": {
+          "description": "The upper bound of the output value used to linearly scale the input coordinate to.",
+          "title": "Max To 0",
+          "type": "number"
+        },
+        "min_to_1": {
+          "description": "The lower bound of the output value used to linearly scale the input coordinate to.",
+          "title": "Min To 1",
+          "type": "number"
+        },
+        "max_to_1": {
+          "description": "The upper bound of the output value used to linearly scale the input coordinate to.",
+          "title": "Max To 1",
+          "type": "number"
+        }
+      },
+      "required": [
+        "min_from_0",
+        "max_from_0",
+        "min_from_1",
+        "max_from_1",
+        "min_to_0",
+        "max_to_0",
+        "min_to_1",
+        "max_to_1"
+      ],
+      "title": "Sampler2D",
       "type": "object"
     },
     "Scalar": {
@@ -3207,15 +3345,14 @@
             }
           ]
         },
-        "lut_reference": {
-          "description": "Reference to the look up table image. Should be a key in the action_luts dictionary",
-          "title": "Lut Reference",
-          "type": "string"
+        "sampler": {
+          "$ref": "#/$defs/Sampler",
+          "description": "Reference to the look up table image. Should be a key in the action_luts dictionary"
         }
       },
       "required": [
         "action_source_0",
-        "lut_reference"
+        "sampler"
       ],
       "title": "Trial",
       "type": "object"

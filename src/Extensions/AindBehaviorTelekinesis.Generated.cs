@@ -3409,6 +3409,64 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class LutSampler2D : Sampler
+    {
+    
+        private string _lutReference;
+    
+        public LutSampler2D()
+        {
+        }
+    
+        protected LutSampler2D(LutSampler2D other) : 
+                base(other)
+        {
+            _lutReference = other._lutReference;
+        }
+    
+        /// <summary>
+        /// Reference to the look up table image. Should be a key in the action_luts dictionary
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("lut_reference", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Reference to the look up table image. Should be a key in the action_luts dictiona" +
+            "ry")]
+        public string LutReference
+        {
+            get
+            {
+                return _lutReference;
+            }
+            set
+            {
+                _lutReference = value;
+            }
+        }
+    
+        public System.IObservable<LutSampler2D> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LutSampler2D(this)));
+        }
+    
+        public System.IObservable<LutSampler2D> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new LutSampler2D(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("LutReference = " + _lutReference);
+            return true;
+        }
+    }
+
+
     /// <summary>
     /// Continuous feedback delivered via manipulator position
     /// </summary>
@@ -3708,7 +3766,6 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public OperationControl()
         {
-            _actionLuts = new System.Collections.Generic.Dictionary<string, ActionLookUpTableFactory>();
             _spout = new SpoutOperationControl();
         }
     
@@ -3722,7 +3779,7 @@ namespace AindBehaviorTelekinesisDataSchema
         /// Look up tables to derive action output from.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("action_luts", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("action_luts")]
         [System.ComponentModel.DescriptionAttribute("Look up tables to derive action output from.")]
         public System.Collections.Generic.Dictionary<string, ActionLookUpTableFactory> ActionLuts
         {
@@ -4263,6 +4320,390 @@ namespace AindBehaviorTelekinesisDataSchema
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "sampler_type")]
+    [JsonInheritanceAttribute("LUT", typeof(LutSampler2D))]
+    [JsonInheritanceAttribute("1D", typeof(Sampler1D))]
+    [JsonInheritanceAttribute("2D", typeof(Sampler2D))]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Sampler
+    {
+    
+        public Sampler()
+        {
+        }
+    
+        protected Sampler(Sampler other)
+        {
+        }
+    
+        public System.IObservable<Sampler> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Sampler(this)));
+        }
+    
+        public System.IObservable<Sampler> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Sampler(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Sampler1D : Sampler
+    {
+    
+        private double _minFrom;
+    
+        private double _maxFrom;
+    
+        private double _minTo;
+    
+        private double _maxTo;
+    
+        public Sampler1D()
+        {
+        }
+    
+        protected Sampler1D(Sampler1D other) : 
+                base(other)
+        {
+            _minFrom = other._minFrom;
+            _maxFrom = other._maxFrom;
+            _minTo = other._minTo;
+            _maxTo = other._maxTo;
+        }
+    
+        /// <summary>
+        /// The lower bound of the input value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min_from", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower bound of the input value used to linearly scale the input coordinate to" +
+            ".")]
+        public double MinFrom
+        {
+            get
+            {
+                return _minFrom;
+            }
+            set
+            {
+                _minFrom = value;
+            }
+        }
+    
+        /// <summary>
+        /// The upper bound of the input value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max_from", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper bound of the input value used to linearly scale the input coordinate to" +
+            ".")]
+        public double MaxFrom
+        {
+            get
+            {
+                return _maxFrom;
+            }
+            set
+            {
+                _maxFrom = value;
+            }
+        }
+    
+        /// <summary>
+        /// The lower bound of the output value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min_to", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower bound of the output value used to linearly scale the input coordinate t" +
+            "o.")]
+        public double MinTo
+        {
+            get
+            {
+                return _minTo;
+            }
+            set
+            {
+                _minTo = value;
+            }
+        }
+    
+        /// <summary>
+        /// The upper bound of the output value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max_to", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper bound of the output value used to linearly scale the input coordinate t" +
+            "o.")]
+        public double MaxTo
+        {
+            get
+            {
+                return _maxTo;
+            }
+            set
+            {
+                _maxTo = value;
+            }
+        }
+    
+        public System.IObservable<Sampler1D> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Sampler1D(this)));
+        }
+    
+        public System.IObservable<Sampler1D> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Sampler1D(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("MinFrom = " + _minFrom + ", ");
+            stringBuilder.Append("MaxFrom = " + _maxFrom + ", ");
+            stringBuilder.Append("MinTo = " + _minTo + ", ");
+            stringBuilder.Append("MaxTo = " + _maxTo);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Sampler2D : Sampler
+    {
+    
+        private double _minFrom0;
+    
+        private double _maxFrom0;
+    
+        private double _minFrom1;
+    
+        private double _maxFrom1;
+    
+        private double _minTo0;
+    
+        private double _maxTo0;
+    
+        private double _minTo1;
+    
+        private double _maxTo1;
+    
+        public Sampler2D()
+        {
+        }
+    
+        protected Sampler2D(Sampler2D other) : 
+                base(other)
+        {
+            _minFrom0 = other._minFrom0;
+            _maxFrom0 = other._maxFrom0;
+            _minFrom1 = other._minFrom1;
+            _maxFrom1 = other._maxFrom1;
+            _minTo0 = other._minTo0;
+            _maxTo0 = other._maxTo0;
+            _minTo1 = other._minTo1;
+            _maxTo1 = other._maxTo1;
+        }
+    
+        /// <summary>
+        /// The lower bound of the input value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min_from_0", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower bound of the input value used to linearly scale the input coordinate to" +
+            ".")]
+        public double MinFrom0
+        {
+            get
+            {
+                return _minFrom0;
+            }
+            set
+            {
+                _minFrom0 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The upper bound of the input value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max_from_0", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper bound of the input value used to linearly scale the input coordinate to" +
+            ".")]
+        public double MaxFrom0
+        {
+            get
+            {
+                return _maxFrom0;
+            }
+            set
+            {
+                _maxFrom0 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The lower bound of the input value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min_from_1", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower bound of the input value used to linearly scale the input coordinate to" +
+            ".")]
+        public double MinFrom1
+        {
+            get
+            {
+                return _minFrom1;
+            }
+            set
+            {
+                _minFrom1 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The upper bound of the input value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max_from_1", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper bound of the input value used to linearly scale the input coordinate to" +
+            ".")]
+        public double MaxFrom1
+        {
+            get
+            {
+                return _maxFrom1;
+            }
+            set
+            {
+                _maxFrom1 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The lower bound of the output value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min_to_0", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower bound of the output value used to linearly scale the input coordinate t" +
+            "o.")]
+        public double MinTo0
+        {
+            get
+            {
+                return _minTo0;
+            }
+            set
+            {
+                _minTo0 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The upper bound of the output value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max_to_0", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper bound of the output value used to linearly scale the input coordinate t" +
+            "o.")]
+        public double MaxTo0
+        {
+            get
+            {
+                return _maxTo0;
+            }
+            set
+            {
+                _maxTo0 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The lower bound of the output value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min_to_1", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The lower bound of the output value used to linearly scale the input coordinate t" +
+            "o.")]
+        public double MinTo1
+        {
+            get
+            {
+                return _minTo1;
+            }
+            set
+            {
+                _minTo1 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The upper bound of the output value used to linearly scale the input coordinate to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max_to_1", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The upper bound of the output value used to linearly scale the input coordinate t" +
+            "o.")]
+        public double MaxTo1
+        {
+            get
+            {
+                return _maxTo1;
+            }
+            set
+            {
+                _maxTo1 = value;
+            }
+        }
+    
+        public System.IObservable<Sampler2D> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Sampler2D(this)));
+        }
+    
+        public System.IObservable<Sampler2D> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Sampler2D(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("MinFrom0 = " + _minFrom0 + ", ");
+            stringBuilder.Append("MaxFrom0 = " + _maxFrom0 + ", ");
+            stringBuilder.Append("MinFrom1 = " + _minFrom1 + ", ");
+            stringBuilder.Append("MaxFrom1 = " + _maxFrom1 + ", ");
+            stringBuilder.Append("MinTo0 = " + _minTo0 + ", ");
+            stringBuilder.Append("MaxTo0 = " + _maxTo0 + ", ");
+            stringBuilder.Append("MinTo1 = " + _minTo1 + ", ");
+            stringBuilder.Append("MaxTo1 = " + _maxTo1);
+            return true;
         }
     }
 
@@ -5563,7 +6004,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private ActionSource _actionSource1;
     
-        private string _lutReference;
+        private Sampler _sampler;
     
         public Trial()
         {
@@ -5578,7 +6019,7 @@ namespace AindBehaviorTelekinesisDataSchema
             _responsePeriod = other._responsePeriod;
             _actionSource0 = other._actionSource0;
             _actionSource1 = other._actionSource1;
-            _lutReference = other._lutReference;
+            _sampler = other._sampler;
         }
     
         /// <summary>
@@ -5675,18 +6116,19 @@ namespace AindBehaviorTelekinesisDataSchema
         /// <summary>
         /// Reference to the look up table image. Should be a key in the action_luts dictionary
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("lut_reference", Required=Newtonsoft.Json.Required.Always)]
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("sampler", Required=Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DescriptionAttribute("Reference to the look up table image. Should be a key in the action_luts dictiona" +
             "ry")]
-        public string LutReference
+        public Sampler Sampler
         {
             get
             {
-                return _lutReference;
+                return _sampler;
             }
             set
             {
-                _lutReference = value;
+                _sampler = value;
             }
         }
     
@@ -5707,7 +6149,7 @@ namespace AindBehaviorTelekinesisDataSchema
             stringBuilder.Append("ResponsePeriod = " + _responsePeriod + ", ");
             stringBuilder.Append("ActionSource0 = " + _actionSource0 + ", ");
             stringBuilder.Append("ActionSource1 = " + _actionSource1 + ", ");
-            stringBuilder.Append("LutReference = " + _lutReference);
+            stringBuilder.Append("Sampler = " + _sampler);
             return true;
         }
     
@@ -6654,6 +7096,48 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LutSampler2D>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Sampler1D>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Sampler2D>))]
+    public partial class MatchSampler : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Sampler);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchSampler),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Sampler> source)
+            where TResult : Sampler
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Sampler>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
     public partial class MatchVideoWriter : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -6884,6 +7368,11 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<LoadCellsCalibration>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<LutSampler2D> source)
+        {
+            return Process<LutSampler2D>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<ManipulatorFeedback> source)
         {
             return Process<ManipulatorFeedback>(source);
@@ -6927,6 +7416,21 @@ namespace AindBehaviorTelekinesisDataSchema
         public System.IObservable<string> Process(System.IObservable<RigCalibration> source)
         {
             return Process<RigCalibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Sampler> source)
+        {
+            return Process<Sampler>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Sampler1D> source)
+        {
+            return Process<Sampler1D>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Sampler2D> source)
+        {
+            return Process<Sampler2D>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Session> source)
@@ -7020,6 +7524,7 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellChannelCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCells>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellsCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LutSampler2D>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorFeedback>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
@@ -7029,6 +7534,9 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rect>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ResponsePeriod>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Sampler>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Sampler1D>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Sampler2D>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Session>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Slap2pInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
