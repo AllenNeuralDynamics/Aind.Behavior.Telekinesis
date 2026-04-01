@@ -263,7 +263,12 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Factory for loading and configuring a look-up table image used to map action inputs to output values
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Factory for loading and configuring a look-up table image used to map action inpu" +
+        "ts to output values")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ActionLookUpTableFactory
@@ -457,10 +462,14 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Action source read from a load cell channel
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "action_source")]
     [JsonInheritanceAttribute("LoadCell", typeof(LoadCellActionSource))]
     [JsonInheritanceAttribute("BehaviorAnalogInput", typeof(BehaviorAnalogInputActionSource))]
+    [System.ComponentModel.DescriptionAttribute("Action source read from a load cell channel")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ActionSource
@@ -896,7 +905,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Task logic definition for the Telekinesis behavior task
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Task logic definition for the Telekinesis behavior task")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindBehaviorTelekinesisTaskLogic
@@ -1217,7 +1230,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Task parameters for the Telekinesis task
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Task parameters for the Telekinesis task")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AindTelekinesisTaskParameters
@@ -1346,7 +1363,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Continuous feedback delivered via audio
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Continuous feedback delivered via audio")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class AudioFeedback : ContinuousFeedback
@@ -1472,7 +1493,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Action source read from a behavior board analog input channel
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Action source read from a behavior board analog input channel")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BehaviorAnalogInputActionSource : ActionSource
@@ -1588,7 +1613,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// A fixed list of trials to run in sequence
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A fixed list of trials to run in sequence")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Block : BlockStatistics
@@ -1692,7 +1721,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Generates blocks of trials by sampling from a trial statistics template
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Generates blocks of trials by sampling from a trial statistics template")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlockGenerator : BlockStatistics
@@ -2036,10 +2069,14 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Continuous feedback delivered via manipulator position
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "continuous_feedback_mode")]
     [JsonInheritanceAttribute("Manipulator", typeof(ManipulatorFeedback))]
     [JsonInheritanceAttribute("Audio", typeof(AudioFeedback))]
+    [System.ComponentModel.DescriptionAttribute("Continuous feedback delivered via manipulator position")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ContinuousFeedback
@@ -2083,7 +2120,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Defines the structure of the behavioral environment as a sequence of blocks
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Defines the structure of the behavioral environment as a sequence of blocks")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Environment
@@ -2938,7 +2979,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Action source read from a load cell channel
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Action source read from a load cell channel")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LoadCellActionSource : ActionSource
@@ -3364,7 +3409,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Continuous feedback delivered via manipulator position
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Continuous feedback delivered via manipulator position")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ManipulatorFeedback : ContinuousFeedback
@@ -3643,7 +3692,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Top-level operational settings including LUT registry and spout control
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Top-level operational settings including LUT registry and spout control")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class OperationControl
@@ -5374,7 +5427,11 @@ namespace AindBehaviorTelekinesisDataSchema
     }
 
 
+    /// <summary>
+    /// Control settings for the reward spout
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Control settings for the reward spout")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class SpoutOperationControl
@@ -5486,9 +5543,11 @@ namespace AindBehaviorTelekinesisDataSchema
 
     /// <summary>
     /// Defines a trial
+    ///Action values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [System.ComponentModel.DescriptionAttribute("Defines a trial")]
+    [System.ComponentModel.DescriptionAttribute("Defines a trial\nAction values are accumulated and normalized per second. E.g: Vol" +
+        "tage/s -> LUT units/s -> Accumulate until threshold is reached")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Trial

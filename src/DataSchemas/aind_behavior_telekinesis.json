@@ -116,6 +116,7 @@
       "type": "object"
     },
     "ActionLookUpTableFactory": {
+      "description": "Factory for loading and configuring a look-up table image used to map action inputs to output values",
       "properties": {
         "path": {
           "description": "Reference to the look up table image. Should be a 1 channel image. Value = LUT[Left, Right]",
@@ -311,6 +312,7 @@
     },
     "AindBehaviorTelekinesisTaskLogic": {
       "additionalProperties": false,
+      "description": "Task logic definition for the Telekinesis behavior task",
       "properties": {
         "name": {
           "const": "AindTelekinesis",
@@ -564,6 +566,7 @@
     },
     "AindTelekinesisTaskParameters": {
       "additionalProperties": true,
+      "description": "Task parameters for the Telekinesis task",
       "properties": {
         "rng_seed": {
           "default": null,
@@ -601,6 +604,7 @@
       "type": "object"
     },
     "AudioFeedback": {
+      "description": "Continuous feedback delivered via audio",
       "properties": {
         "continuous_feedback_mode": {
           "const": "Audio",
@@ -724,6 +728,7 @@
       "type": "object"
     },
     "BehaviorAnalogInputActionSource": {
+      "description": "Action source read from a behavior board analog input channel",
       "properties": {
         "action_source": {
           "const": "BehaviorAnalogInput",
@@ -914,6 +919,7 @@
       "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.BinomialDistributionParameters"
     },
     "Block": {
+      "description": "A fixed list of trials to run in sequence",
       "properties": {
         "mode": {
           "const": "Block",
@@ -954,6 +960,7 @@
       "type": "object"
     },
     "BlockGenerator": {
+      "description": "Generates blocks of trials by sampling from a trial statistics template",
       "properties": {
         "mode": {
           "const": "BlockGenerator",
@@ -1150,6 +1157,7 @@
       "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution"
     },
     "Environment": {
+      "description": "Defines the structure of the behavioral environment as a sequence of blocks",
       "properties": {
         "block_statistics": {
           "description": "Statistics of the environment",
@@ -1592,6 +1600,7 @@
       "type": "object"
     },
     "LoadCellActionSource": {
+      "description": "Action source read from a load cell channel",
       "properties": {
         "action_source": {
           "const": "LoadCell",
@@ -1797,6 +1806,7 @@
       "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.LogNormalDistributionParameters"
     },
     "ManipulatorFeedback": {
+      "description": "Continuous feedback delivered via manipulator position",
       "properties": {
         "continuous_feedback_mode": {
           "const": "Manipulator",
@@ -2026,6 +2036,7 @@
       "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.NormalDistributionParameters"
     },
     "OperationControl": {
+      "description": "Top-level operational settings including LUT registry and spout control",
       "properties": {
         "action_luts": {
           "additionalProperties": {
@@ -3053,6 +3064,7 @@
       ]
     },
     "SpoutOperationControl": {
+      "description": "Control settings for the reward spout",
       "properties": {
         "default_retracted_position": {
           "default": 0,
@@ -3077,7 +3089,7 @@
       "type": "object"
     },
     "Trial": {
-      "description": "Defines a trial",
+      "description": "Defines a trial\nAction values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached",
       "properties": {
         "inter_trial_interval": {
           "$ref": "#/$defs/Distribution",
