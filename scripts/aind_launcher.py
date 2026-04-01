@@ -24,8 +24,9 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
     picker = DefaultBehaviorPicker(
         launcher=launcher,
         settings=DefaultBehaviorPickerSettings(
-            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis"
+            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis",
         ),
+        experimenter_validator=None,
     )
 
     session = picker.pick_session(Session)
@@ -37,7 +38,7 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
 
     clabe.resource_monitor.ResourceMonitor(
         constrains=[
-            clabe.resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e11),
+            clabe.resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e10),
         ]
     ).run()
 
@@ -46,7 +47,7 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
         temp_directory=launcher.temp_dir,
         rig=rig,
         session=session,
-        task_logic=task_logic,
+        task=task_logic,
     )
     await bonsai_app.run_async()
 
