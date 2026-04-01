@@ -113,7 +113,7 @@ def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
             ),
         ),
         action_source_0=tl.BehaviorAnalogInputActionSource(channel=1),
-        lut_reference="linear_normalized_to_1",
+        sampler=tl.LutSampler2D(lut_reference="linear_normalized_to_1"),
     )
 
     return tl.AindBehaviorTelekinesisTaskLogic(

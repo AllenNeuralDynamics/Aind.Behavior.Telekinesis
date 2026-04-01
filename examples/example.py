@@ -32,7 +32,7 @@ def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
                             ),
                             action_source_0=tl.LoadCellActionSource(channel=0),
                             action_source_1=tl.BehaviorAnalogInputActionSource(channel=0),
-                            lut_reference="amazing_lut",
+                            sampler=tl.Sampler1D(min_from=0, max_from=3.3, min_to=0, max_to=10),
                         ),
                     )
                 ],
