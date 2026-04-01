@@ -115,35 +115,48 @@ public class SubPixelBilinearInterpolator
         {
             throw new InvalidOperationException("LUT Settings must be specified.");
         }
-        if (Settings.Action0Min >= Settings.Action0Max || Settings.Action1Min >= Settings.Action1Max)
-        {
-            throw new ArgumentException("Minimum must be strictly lower than maximum.");
-        }
         if (LookUpTable.Channels > 1)
         {
             throw new ArgumentException("Input matrix must have a single channel");
+        }
+        if (LookUpTable.Rows < 2)
+        {
+            throw new ArgumentException("LUT must have at least 2 rows.");
+        }
+        if (LookUpTable.Cols < 1)
+        {
+            throw new ArgumentException("LUT must have at least 1 column.");
+        }
+        if (Settings.Action0Min >= Settings.Action0Max)
+        {
+            throw new ArgumentException("Action0: Minimum must be strictly lower than maximum.");
+        }
+        if (LookUpTable.Cols > 1 && Settings.Action1Min >= Settings.Action1Max)
+        {
+            throw new ArgumentException("Action1: Minimum must be strictly lower than maximum.");
         }
     }
 
     public ActionVectorFromLut<ActionVector> LookUp(ActionVector value)
     {
-        var rescaled_action0Value = Rescale(value.Action0, Settings.Action0Min, Settings.Action0Max, 0, LookUpTable.Size.Height);
-        var clamped_action0Value = ClampValue(rescaled_action0Value, 0, LookUpTable.Size.Height);
-        if (double.IsNaN(value.Action1))
+        var h = LookUpTable.Rows;
+        var w = LookUpTable.Cols;
+
+        var a0 = Rescale(value.Action0, Settings.Action0Min, Settings.Action0Max, 0, h - 1);
+        a0 = ClampValue(a0, 0, h - 1);
+
+        if (w == 1)
         {
-            return new ActionVectorFromLut<ActionVector>(
-                value,
-                GetSubPixel(LookUpTable, clamped_action0Value, double.NaN),
-                new ActionVector(clamped_action0Value, double.NaN));
+            var result = GetSubPixel1D(LookUpTable, a0);
+            return new ActionVectorFromLut<ActionVector>(value, result, new ActionVector(a0, double.NaN));
         }
-        else{
-            var rescaled_action1Value = Rescale(value.Action1, Settings.Action1Min, Settings.Action1Max, 0, LookUpTable.Size.Width);
-            var clamped_action1Value = ClampValue(rescaled_action1Value, 0, LookUpTable.Size.Width);
-            return new ActionVectorFromLut<ActionVector>(
-                value,
-                GetSubPixel(LookUpTable, clamped_action0Value, clamped_action1Value),
-                new ActionVector(clamped_action0Value, clamped_action1Value));
-            }
+        else
+        {
+            var a1 = Rescale(value.Action1, Settings.Action1Min, Settings.Action1Max, 0, w - 1);
+            a1 = ClampValue(a1, 0, w - 1);
+            var result = GetSubPixel2D(LookUpTable, a0, a1);
+            return new ActionVectorFromLut<ActionVector>(value, result, new ActionVector(a0, a1));
+        }
     }
 
     private static double Rescale(double value, double minFrom, double maxFrom, double minTo, double maxTo)
@@ -156,29 +169,31 @@ public class SubPixelBilinearInterpolator
         return Math.Min(Math.Max(value, MinBoundTo), MaxBoundTo);
     }
 
-    private static double GetSubPixel(Mat src, double action0Value, double action1Value)
+    private static double GetSubPixel1D(Mat src, double y)
     {
-        var idx0 = (int)action0Value;
-        var d0 = action0Value - idx0;
-        idx0 = Math.Min(idx0, src.Size.Height - 2);
+        var idx = (int)y;
+        var d = y - idx;
+        idx = Math.Min(idx, src.Rows - 2);
+        var p0 = src[idx, 0];
+        var p1 = src[idx + 1, 0];
+        return p0.Val0 * (1 - d) + p1.Val0 * d;
+    }
 
-        if (!double.IsNaN(action1Value)){
-            var idx1 = (int)action1Value;
-            var d1 = action1Value - idx1;
-            idx1 = Math.Min(idx1, src.Size.Width - 2);
-
-            var p00 = src[idx0, idx1];
-            var p01 = src[idx0, idx1 + 1];
-            var p10 = src[idx0 + 1, idx1];
-            var p11 = src[idx0 + 1, idx1 + 1];
-            return (double)(p00.Val0 * (1 - d1) * (1 - d0) + p01.Val0 * d1 * (1 - d0) + p10.Val0 * (1 - d1) * d0 + p11.Val0 * d1 * d0);
-        }
-        else
-        {
-            var p00 = src[idx0, 0];
-            var p10 = src[idx0 + 1, 0];
-            return (double)(p00.Val0 * (1 - d0) + p10.Val0 * d0);
-        }
-
+    private static double GetSubPixel2D(Mat src, double y, double x)
+    {
+        var y0 = (int)y;
+        var x0 = (int)x;
+        var dy = y - y0;
+        var dx = x - x0;
+        y0 = Math.Min(y0, src.Rows - 2);
+        x0 = Math.Min(x0, src.Cols - 2);
+        var p00 = src[y0, x0];
+        var p01 = src[y0, x0 + 1];
+        var p10 = src[y0 + 1, x0];
+        var p11 = src[y0 + 1, x0 + 1];
+        return p00.Val0 * (1 - dx) * (1 - dy)
+             + p01.Val0 * dx * (1 - dy)
+             + p10.Val0 * (1 - dx) * dy
+             + p11.Val0 * dx * dy;
     }
 }

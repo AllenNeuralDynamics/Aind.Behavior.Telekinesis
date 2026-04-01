@@ -64,6 +64,8 @@ class ContinuousFeedbackMode(str, Enum):
 
 
 class _ContinuousFeedbackBase(BaseModel):
+    """Base class for continuous feedback settings"""
+
     continuous_feedback_mode: ContinuousFeedbackMode = Field(
         default=ContinuousFeedbackMode.NONE, description="Continuous feedback mode"
     )
@@ -84,10 +86,14 @@ class _ContinuousFeedbackBase(BaseModel):
 
 
 class ManipulatorFeedback(_ContinuousFeedbackBase):
+    """Continuous feedback delivered via manipulator position"""
+
     continuous_feedback_mode: Literal[ContinuousFeedbackMode.MANIPULATOR] = ContinuousFeedbackMode.MANIPULATOR
 
 
 class AudioFeedback(_ContinuousFeedbackBase):
+    """Continuous feedback delivered via audio"""
+
     continuous_feedback_mode: Literal[ContinuousFeedbackMode.AUDIO] = ContinuousFeedbackMode.AUDIO
 
 
@@ -167,17 +173,23 @@ class ActionSourceType(str, Enum):
 
 
 class _ActionSource(BaseModel):
+    """Base class for action sources"""
+
     action_source: ActionSourceType = Field(
         default=ActionSourceType.LOADCELL, description="Source of the data to use in the action"
     )
 
 
 class LoadCellActionSource(_ActionSource):
+    """Action source read from a load cell channel"""
+
     action_source: Literal[ActionSourceType.LOADCELL] = ActionSourceType.LOADCELL
     channel: LoadCellChannel = Field(default=0, description="Index of the load cell channel to use")
 
 
 class BehaviorAnalogInputActionSource(_ActionSource):
+    """Action source read from a behavior board analog input channel"""
+
     action_source: Literal[ActionSourceType.BEHAVIOR_ANALOG_INPUT] = ActionSourceType.BEHAVIOR_ANALOG_INPUT
     channel: int = Field(default=0, ge=0, le=1, description="Index of the behavior analog input channel to use")
 
@@ -189,7 +201,9 @@ ActionSource = TypeAliasType(
 
 
 class Trial(BaseModel):
-    """Defines a trial"""
+    """Defines a trial
+        Action values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached
+    """
 
     inter_trial_interval: distributions.Distribution = Field(
         default=scalar_value(0.5), description="Time between trials", validate_default=True
@@ -204,7 +218,7 @@ class Trial(BaseModel):
         description="Action source for the second axis to be sample from the LUT. If None, LUT will be sampled from [action_source_0, 0]",
     )
     lut_reference: str = Field(
-        ..., description="Reference to the look up table image. Should be a key in the action_luts dictionary"
+        description="Reference to the look up table image. Should be a key in the action_luts dictionary"
     )
 
 
@@ -216,6 +230,8 @@ class BlockStatisticsMode(str, Enum):
 
 
 class Block(BaseModel):
+    """A fixed list of trials to run in sequence"""
+
     mode: Literal[BlockStatisticsMode.BLOCK] = BlockStatisticsMode.BLOCK
     trials: List[Trial] = Field(default=[], description="List of trials in the block")
     shuffle: bool = Field(default=False, description="Whether to shuffle the trials in the block")
@@ -225,6 +241,8 @@ class Block(BaseModel):
 
 
 class BlockGenerator(BaseModel):
+    """Generates blocks of trials by sampling from a trial statistics template"""
+
     mode: Literal[BlockStatisticsMode.BLOCK_GENERATOR] = BlockStatisticsMode.BLOCK_GENERATOR
     block_size: distributions.Distribution = Field(
         default=uniform_distribution_value(min=50, max=60), validate_default=True, description="Size of the block"
@@ -236,6 +254,8 @@ BlockStatistics = TypeAliasType("BlockStatistics", Annotated[Union[Block, BlockG
 
 
 class Environment(BaseModel):
+    """Defines the structure of the behavioral environment as a sequence of blocks"""
+
     block_statistics: List[BlockStatistics] = Field(description="Statistics of the environment")
     shuffle: bool = Field(default=False, description="Whether to shuffle the blocks")
     repeat_count: Optional[int] = Field(
@@ -245,8 +265,10 @@ class Environment(BaseModel):
 
 
 class ActionLookUpTableFactory(BaseModel):
+    """Factory for loading and configuring a look-up table image used to map action inputs to output values"""
+
     path: str = Field(
-        ..., description="Reference to the look up table image. Should be a 1 channel image. Value = LUT[Left, Right]"
+        description="Reference to the look up table image. Should be a 1 channel image. Value = LUT[Left, Right]"
     )
 
     offset: float = Field(default=0, description="Offset to add to the look up table value")
@@ -254,16 +276,16 @@ class ActionLookUpTableFactory(BaseModel):
     scale: float = Field(default=1, description="Scale to multiply the look up table value")
 
     action0_min: float = Field(
-        ..., description="The lower value of Action0 used to linearly scale the input coordinate to."
+        description="The lower value of Action0 used to linearly scale the input coordinate to."
     )
     action0_max: float = Field(
-        ..., description="The upper value of Action0 used to linearly scale the input coordinate to."
+        description="The upper value of Action0 used to linearly scale the input coordinate to."
     )
     action1_min: float = Field(
-        ..., description="The lower value of Action1 used to linearly scale the input coordinate to."
+        description="The lower value of Action1 used to linearly scale the input coordinate to."
     )
     action1_max: float = Field(
-        ..., description="The upper value of Action1 used to linearly scale the input coordinate to."
+        description="The upper value of Action1 used to linearly scale the input coordinate to."
     )
 
     @model_validator(mode="after")
@@ -276,14 +298,18 @@ class ActionLookUpTableFactory(BaseModel):
 
 
 class SpoutOperationControl(BaseModel):
+    """Control settings for the reward spout"""
+
     default_retracted_position: float = Field(default=0, description="Default retracted position (mm)")
     default_extended_position: float = Field(default=0, description="Default extended position (mm)")
     enabled: bool = Field(default=True, description="Whether the spout control is enabled")
 
 
 class OperationControl(BaseModel):
+    """Top-level operational settings including LUT registry and spout control"""
+
     action_luts: Dict[str, ActionLookUpTableFactory] = Field(
-        ..., validate_default=True, description="Look up tables to derive action output from."
+        validate_default=True, description="Look up tables to derive action output from."
     )
     spout: SpoutOperationControl = Field(
         default=SpoutOperationControl(), validate_default=True, description="Operation control for spout"
@@ -291,8 +317,10 @@ class OperationControl(BaseModel):
 
 
 class AindTelekinesisTaskParameters(TaskParameters):
+    """Task parameters for the Telekinesis task"""
+
     environment: Environment = Field(description="Environment settings")
-    operation_control: OperationControl = Field(default=..., validate_default=True, description="Operation control")
+    operation_control: OperationControl = Field(validate_default=True, description="Operation control")
 
     @model_validator(mode="after")
     def _check_valid_lut_reference(self) -> Self:
@@ -313,6 +341,8 @@ class AindTelekinesisTaskParameters(TaskParameters):
 
 
 class AindBehaviorTelekinesisTaskLogic(Task):
+    """Task logic definition for the Telekinesis behavior task"""
+
     version: Literal[__semver__] = __semver__
     name: Literal["AindTelekinesis"] = Field(default="AindTelekinesis", description="Name of the task logic")
     task_parameters: AindTelekinesisTaskParameters = Field(description="Parameters of the task logic")
