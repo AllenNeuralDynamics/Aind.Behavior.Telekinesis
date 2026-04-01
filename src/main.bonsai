@@ -4354,7 +4354,7 @@ Item2.Item3 as LowerThr)]]></Text>
                     <Selector>Value.SampledCoordinate0,Value.SampledCoordinate1</Selector>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(double.IsNaN(Item1.value) ? 0 : Item1 as Action0, double.IsNaN(Item2.value) ? 0 : Item2 as Action1)</scr:Expression>
+                    <scr:Expression>new(double.IsNaN(Item1.HasValue ? Item1.Value : double.NaN) ? 0 : Item1.Value as Action0, double.IsNaN(Item2.HasValue ? Item2.Value : double.NaN) ? 0 : Item2.Value as Action1)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
@@ -4403,9 +4403,24 @@ Item2.Item3 as LowerThr)]]></Text>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>CurrentActionVector</Name>
                   </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.Action0</Selector>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.Action1</Selector>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>it.HasValue ? it.Value : double.NaN</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Seconds</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
                   <Expression xsi:type="zg:RollingGraphBuilder">
-                    <zg:IndexSelector>Seconds</zg:IndexSelector>
-                    <zg:ValueSelector>Value.Action0,Value.Action1</zg:ValueSelector>
+                    <zg:IndexSelector>Item3</zg:IndexSelector>
+                    <zg:ValueSelector>Item1, Item2</zg:ValueSelector>
                     <zg:SymbolType>None</zg:SymbolType>
                     <zg:LineWidth>2</zg:LineWidth>
                     <zg:CurveSettings>
@@ -4580,30 +4595,37 @@ Item2.Item3 as LowerThr)</scr:Expression>
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="37" Label="Source1" />
+                  <Edge From="14" To="42" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="20" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="15" To="17" Label="Source1" />
+                  <Edge From="15" To="19" Label="Source1" />
+                  <Edge From="16" To="20" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="20" Label="Source2" />
+                  <Edge From="19" To="20" Label="Source3" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="37" Label="Source2" />
-                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="25" Label="Source1" />
                   <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="27" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source2" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="26" To="42" Label="Source2" />
                   <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="28" To="37" Label="Source3" />
-                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="32" Label="Source1" />
                   <Edge From="30" To="31" Label="Source1" />
-                  <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="35" Label="Source1" />
-                  <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
+                  <Edge From="31" To="32" Label="Source2" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="33" To="42" Label="Source3" />
+                  <Edge From="34" To="35" Label="Source1" />
                   <Edge From="35" To="36" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source4" />
-                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source1" />
+                  <Edge From="37" To="40" Label="Source1" />
+                  <Edge From="38" To="39" Label="Source1" />
+                  <Edge From="39" To="40" Label="Source2" />
+                  <Edge From="40" To="41" Label="Source1" />
+                  <Edge From="41" To="42" Label="Source4" />
+                  <Edge From="42" To="43" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
