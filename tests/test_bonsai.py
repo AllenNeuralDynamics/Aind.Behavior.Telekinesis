@@ -5,18 +5,18 @@ import warnings
 from pathlib import Path
 from typing import Generic, List, Optional, TypeVar, Union
 
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.session import Session
 from aind_behavior_services.utils import run_bonsai_process
 from pydantic import ValidationError
 
-from aind_behavior_telekinesis.rig import AindTelekinesisRig
-from aind_behavior_telekinesis.task_logic import AindTelekinesisTaskLogic
+from aind_behavior_telekinesis.rig import AindBehaviorTelekinesisRig
+from aind_behavior_telekinesis.task_logic import AindBehaviorTelekinesisTaskLogic
 
 sys.path.append(".")
 from examples import example  # isort:skip # pylint: disable=wrong-import-position
 from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-position
 
-TModel = TypeVar("TModel", bound=Union[AindTelekinesisRig, AindTelekinesisTaskLogic, AindBehaviorSessionModel])
+TModel = TypeVar("TModel", bound=Union[AindBehaviorTelekinesisRig, AindBehaviorTelekinesisTaskLogic, Session])
 
 
 class BonsaiTests(unittest.TestCase):
@@ -28,9 +28,9 @@ class BonsaiTests(unittest.TestCase):
         example.main("./local/{schema}.json")
 
         models_to_test = [
-            TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=AindBehaviorSessionModel),
-            TestModel(bonsai_property="RigPath", json_root=JSON_ROOT, model=AindTelekinesisRig),
-            TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindTelekinesisTaskLogic),
+            TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=Session),
+            TestModel(bonsai_property="RigPath", json_root=JSON_ROOT, model=AindBehaviorTelekinesisRig),
+            TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindBehaviorTelekinesisTaskLogic),
         ]
 
         workflow_props = {

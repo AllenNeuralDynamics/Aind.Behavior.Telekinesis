@@ -1,15 +1,13 @@
-from __future__ import annotations
-
 from enum import Enum
 from typing import Annotated, Dict, List, Literal, Optional, Self, Union
 
-import aind_behavior_services.task_logic.distributions as distributions
-from aind_behavior_services.calibration.load_cells import LoadCellChannel
-from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
+import aind_behavior_services.task.distributions as distributions
+from aind_behavior_services.rig.load_cells import LoadCellChannel
+from aind_behavior_services.task import Task, TaskParameters
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
 
-from aind_behavior_telekinesis import __version__
+from aind_behavior_telekinesis import __semver__
 
 
 def scalar_value(value: float) -> distributions.Scalar:
@@ -41,7 +39,7 @@ def uniform_distribution_value(min: float, max: float) -> distributions.UniformD
     )
 
 
-def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
+def normal_distribution_value(mean: float, std: float) -> distributions.NormalDistribution:
     """
     Helper function to create a normal distribution for a given range.
 
@@ -50,7 +48,7 @@ def normal_distribution_value(mean: float, std: float) -> distributions.Normal:
         std (float): The standard deviation of the normal distribution.
 
     Returns:
-        distributions.Normal: The normal distribution type.
+        distributions.NormalDistribution: The normal distribution type.
     """
     return distributions.NormalDistribution(
         distribution_parameters=distributions.NormalDistributionParameters(mean=mean, std=std)
@@ -200,7 +198,7 @@ class Trial(BaseModel):
     response_period: ResponsePeriod = Field(
         default=ResponsePeriod(), validate_default=True, description="Response settings"
     )
-    action_source_0: ActionSource = Field(..., description="Action source for the first axis to be sample from the LUT")
+    action_source_0: ActionSource = Field(description="Action source for the first axis to be sample from the LUT")
     action_source_1: Optional[ActionSource] = Field(
         default=None,
         description="Action source for the second axis to be sample from the LUT. If None, LUT will be sampled from [action_source_0, 0]",
@@ -231,14 +229,14 @@ class BlockGenerator(BaseModel):
     block_size: distributions.Distribution = Field(
         default=uniform_distribution_value(min=50, max=60), validate_default=True, description="Size of the block"
     )
-    trial_statistics: Trial = Field(..., description="Statistics of the trials in the block")
+    trial_statistics: Trial = Field(description="Statistics of the trials in the block")
 
 
 BlockStatistics = TypeAliasType("BlockStatistics", Annotated[Union[Block, BlockGenerator], Field(discriminator="mode")])
 
 
 class Environment(BaseModel):
-    block_statistics: List[BlockStatistics] = Field(..., description="Statistics of the environment")
+    block_statistics: List[BlockStatistics] = Field(description="Statistics of the environment")
     shuffle: bool = Field(default=False, description="Whether to shuffle the blocks")
     repeat_count: Optional[int] = Field(
         default=0,
@@ -293,7 +291,7 @@ class OperationControl(BaseModel):
 
 
 class AindTelekinesisTaskParameters(TaskParameters):
-    environment: Environment = Field(..., description="Environment settings")
+    environment: Environment = Field(description="Environment settings")
     operation_control: OperationControl = Field(default=..., validate_default=True, description="Operation control")
 
     @model_validator(mode="after")
@@ -314,7 +312,7 @@ class AindTelekinesisTaskParameters(TaskParameters):
         return self
 
 
-class AindTelekinesisTaskLogic(AindBehaviorTaskLogicModel):
-    version: Literal[__version__] = __version__
+class AindBehaviorTelekinesisTaskLogic(Task):
+    version: Literal[__semver__] = __semver__
     name: Literal["AindTelekinesis"] = Field(default="AindTelekinesis", description="Name of the task logic")
-    task_parameters: AindTelekinesisTaskParameters = Field(..., description="Parameters of the task logic")
+    task_parameters: AindTelekinesisTaskParameters = Field(description="Parameters of the task logic")
