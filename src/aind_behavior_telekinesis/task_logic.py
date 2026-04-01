@@ -202,7 +202,7 @@ ActionSource = TypeAliasType(
 
 class Trial(BaseModel):
     """Defines a trial
-        Action values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached
+    Action values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached
     """
 
     inter_trial_interval: distributions.Distribution = Field(
@@ -275,18 +275,10 @@ class ActionLookUpTableFactory(BaseModel):
 
     scale: float = Field(default=1, description="Scale to multiply the look up table value")
 
-    action0_min: float = Field(
-        description="The lower value of Action0 used to linearly scale the input coordinate to."
-    )
-    action0_max: float = Field(
-        description="The upper value of Action0 used to linearly scale the input coordinate to."
-    )
-    action1_min: float = Field(
-        description="The lower value of Action1 used to linearly scale the input coordinate to."
-    )
-    action1_max: float = Field(
-        description="The upper value of Action1 used to linearly scale the input coordinate to."
-    )
+    action0_min: float = Field(description="The lower value of Action0 used to linearly scale the input coordinate to.")
+    action0_max: float = Field(description="The upper value of Action0 used to linearly scale the input coordinate to.")
+    action1_min: float = Field(description="The lower value of Action1 used to linearly scale the input coordinate to.")
+    action1_max: float = Field(description="The upper value of Action1 used to linearly scale the input coordinate to.")
 
     @model_validator(mode="after")
     def _validate_bounds(self) -> Self:

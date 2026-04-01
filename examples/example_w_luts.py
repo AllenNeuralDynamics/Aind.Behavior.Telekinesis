@@ -107,7 +107,9 @@ def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
                 time_to_collect=tl.scalar_value(1),
                 lower_action_threshold=tl.scalar_value(0),
                 upper_action_threshold=tl.scalar_value(10000),
-                continuous_feedback=tl.ManipulatorFeedback(converter_lut_input=[0, 1], converter_lut_output=[0, 15]),
+                continuous_feedback=tl.ManipulatorFeedback(
+                    converter_lut_input=[0, 1], converter_lut_output=[0, 15]
+                ),  # This is in real manipulator units
             ),
         ),
         action_source_0=tl.BehaviorAnalogInputActionSource(channel=1),
@@ -126,21 +128,39 @@ def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
             operation_control=tl.OperationControl(
                 action_luts={
                     "linear_normalized_to_1": tl.ActionLookUpTableFactory(
-                        path=f"../{LOCAL_ASSET_FOLDER}/1d_ramp.tiff",
+                        path="../examples/1d_ramp.tiff",
                         offset=0,
                         scale=1,
-                        action0_max=5,
+                        action0_max=5,  # Define input ranges here
                         action0_min=0,
                         action1_max=0,
                         action1_min=0,
                     ),
                     "linear_normalized_to_5": tl.ActionLookUpTableFactory(
-                        path=f"../{LOCAL_ASSET_FOLDER}/1d_ramp.tiff",
+                        path="../examples/1d_ramp.tiff",
                         offset=0,
                         scale=5,
                         action0_max=5,
                         action0_min=0,
                         action1_max=0,
+                        action1_min=0,
+                    ),
+                    "1d_sampler": tl.ActionLookUpTableFactory(
+                        path="../examples/minimal_2x1.tiff",
+                        offset=0,
+                        scale=5,
+                        action0_max=5,
+                        action0_min=0,
+                        action1_max=0,
+                        action1_min=0,
+                    ),
+                    "2d_sampler": tl.ActionLookUpTableFactory(
+                        path="../examples/minimal_2x2.tiff",
+                        offset=0,
+                        scale=5,
+                        action0_max=5,
+                        action0_min=0,
+                        action1_max=5,  # Define input ranges here
                         action1_min=0,
                     ),
                 },
@@ -168,6 +188,20 @@ def generate_luts() -> None:
     mat[idx_] = 1
     im = Image.fromarray(mat)
     im.save(f"{LOCAL_ASSET_FOLDER}/2d_outer_squares.tiff")
+
+    # Minimal 2x2 LUT: 2D bilinear interpolation (Action0 x Action1)
+    mat_2x2 = np.array(
+        [[0.0, 0.5], [0.5, 1.0]],
+        dtype=np.float32,
+    )
+    Image.fromarray(mat_2x2).save(f"{LOCAL_ASSET_FOLDER}/minimal_2x2.tiff")
+
+    # Minimal 2x1 LUT: 1D linear interpolation (Action0 only)
+    mat_2x1 = np.array(
+        [[0.0], [1.0]],
+        dtype=np.float32,
+    )
+    Image.fromarray(mat_2x1).save(f"{LOCAL_ASSET_FOLDER}/minimal_2x1.tiff")
 
 
 def main(path_seed: str = "{LOCAL_ASSET_FOLDER}/{schema}.json"):
