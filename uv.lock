@@ -57,7 +57,7 @@ wheels = [
 
 [[package]]
 name = "aind-behavior-telekinesis"
-version = "0.4.0rc3"
+version = "0.4.0rc4"
 source = { editable = "." }
 dependencies = [
     { name = "aind-behavior-services" },
