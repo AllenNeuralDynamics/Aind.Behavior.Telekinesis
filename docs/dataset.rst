@@ -1,6 +1,5 @@
 Data Contract
 -------------
 
-.. literalinclude:: /_static/dataset.txt
-   :language: text
-   :caption: Dataset
+.. raw:: html
+   :file: _static/dataset.html
