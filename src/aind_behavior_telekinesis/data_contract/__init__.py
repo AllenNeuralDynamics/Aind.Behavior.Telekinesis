@@ -345,6 +345,6 @@ def dataset(
 
 def render_dataset(version: str = __semver__) -> str:
     """Renders the dataset as a tree-like structure for visualization."""
-    from contraqctor.contract.utils import print_data_stream_tree
+    from contraqctor.contract.utils import print_data_stream_tree_html
 
-    return print_data_stream_tree(dataset(Path("<RootPath>")), show_missing_indicator=False, show_type=True)
+    return print_data_stream_tree_html(dataset(Path("<RootPath>")), show_missing_indicator=False, show_type=True)

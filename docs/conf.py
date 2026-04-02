@@ -90,5 +90,5 @@ export_model_diagram(aind_behavior_telekinesis.task_logic.AindBehaviorTelekinesi
 
 # -- Dataset rendering
 
-with open(f"{_static_path}/dataset.txt", "w", encoding="utf-8") as f:
-    f.write(contract.render_dataset())
+with open(f"{_static_path}/dataset.html", "w", encoding="utf-8") as f:
+    f.write(contract.render_dataset(version=aind_behavior_telekinesis.__semver__))
