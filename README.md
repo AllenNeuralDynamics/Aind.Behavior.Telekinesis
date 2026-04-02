@@ -9,19 +9,19 @@ A library with a SDK for the Telekinesis behavior task
 
 ---
 
-## General instructions
+## 📋 General instructions
 
 This repository follows the project structure laid out in the [Aind.Behavior.Services repository](https://github.com/AllenNeuralDynamics/Aind.Behavior.Services).
 
 ---
 
-## Prerequisites
+## 🔧 Prerequisites
 
 [Pre-requisites for running the project can be found here](https://allenneuraldynamics.github.io/Aind.Behavior.Services/articles/requirements.html).
 
 ---
 
-## Deployment
+## 🚀 Deployment
 
 For convenience, once third-party dependencies are installed, `Bonsai` and `python` virtual environments can be bootstrapped by running:
 
@@ -31,7 +31,7 @@ For convenience, once third-party dependencies are installed, `Bonsai` and `pyth
 
 from the root of the repository.
 
-## Generating settings files
+## ⚙️ Generating settings files
 
 The task is instantiated by a set of three settings files that strictly follow a DSL schema. These files are:
 
@@ -49,7 +49,9 @@ The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/d
 
 However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.
 
-## CLI tools
+## [> ] CLI tools
+
+### Task CLI
 
 The platform exposes a few CLI tools to facilitate various tasks. Tools are available via:
 
@@ -69,33 +71,36 @@ You may need to install optional dependencies depending on the sub-commands you 
 
 ## Experiment launcher (CLABE)
 
-To manage experiments and input files, this repository contains a launcher script that can be used to run the Telekinesis task. This script is located at `./examples/launcher.py`. It can be run from the command line as follows:
+To manage experiments and input files, this repository contains a launcher script that can be used to run the Telekinesis task. A default script is located at `./scripts/aind-launcher.py`. It can be run from the command line as follows:
 
 ```powershell
-uv run ./examples/launcher.py
+uv run clabe run ./scripts/aind-launcher.py
+# or uv run ./scripts/aind-launcher.py.py
 ```
 
-Additional arguments can be passed to the script as needed (see `-h` flag), or via a `./local/clabe.yml` file. (An example can be found in `./Examples/clabe.yml`)
+Additional arguments can be passed to the script as needed. For instance to allow the script to run with uncommitted changes in the repository, the `--allow-dirty` flag can be used:
 
-In order to run the launcher script, optional dependencies should be installed.
+```powershell
+uv run clabe run ./scripts/aind-launcher.py --allow-dirty
+```
 
-Additional custom launcher scripts can be created and used as needed.
+or via a `./local/clabe.yml` file. Additional custom launcher scripts can be created and used as needed. See documentation in the [`clabe` repository](https://allenneuraldynamics.github.io/clabe/) for more details.
 
 
-## Primary data quality-control
+## 🔍 Primary data quality-control
 
-Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launched using:
+Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launcher using:
 
 ```powershell
 uv run telekinesis data-qc <path-to-data-dir>
 ```
 
-## Regenerating schemas
+## 🔄 Regenerating schemas
 
 DSL schemas can be modified in `./src/aind_behavior_telekinesis/rig.py` (or `(...)/task_logic.py`).
 
 Once modified, changes to the DSL must be propagated to `json-schema` and `csharp` API. This can be done by running:
 
 ```powershell
-uv run telekinesis regenerate
+uv run dynamic-foraging regenerate
 ```

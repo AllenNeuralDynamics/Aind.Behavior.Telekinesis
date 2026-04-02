@@ -8,7 +8,7 @@ from aind_behavior_services.session import Session
 import aind_behavior_telekinesis.rig
 import aind_behavior_telekinesis.task_logic
 
-SCHEMA_ROOT = Path("./src/DataSchemas/")
+SCHEMA_ROOT = Path("./schema/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
 NAMESPACE_PREFIX = "AindBehaviorTelekinesisDataSchema"
 
