@@ -69,7 +69,7 @@ You may need to install optional dependencies depending on the sub-commands you 
 
 
 
-## Experiment launcher (CLABE)
+## 🎮 Experiment launcher (CLABE)
 
 To manage experiments and input files, this repository contains a launcher script that can be used to run the Telekinesis task. A default script is located at `./scripts/aind-launcher.py`. It can be run from the command line as follows:
 
