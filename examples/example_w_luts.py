@@ -1,95 +1,8 @@
-import datetime
 import os
 
-from aind_behavior_services.rig import cameras, harp
-from aind_behavior_services.rig.aind_manipulator import (
-    AindManipulatorCalibration,
-    Axis,
-    AxisConfiguration,
-    ManipulatorPosition,
-    MotorOperationMode,
-)
-from aind_behavior_services.rig.water_valve import Measurement, calibrate_water_valves
-from aind_behavior_services.session import Session
-
 import aind_behavior_telekinesis.task_logic as tl
-from aind_behavior_telekinesis.rig import (
-    AindBehaviorTelekinesisRig,
-    AindManipulatorDevice,
-    Networking,
-    RigCalibration,
-    ZmqConnection,
-)
 
 LOCAL_ASSET_FOLDER = "./local/"
-
-
-def mock_session() -> Session:
-    """Generates a mock Session model"""
-    return Session(
-        date=datetime.datetime.now(tz=datetime.timezone.utc),
-        experiment="Telekinesis",
-        subject="test",
-        notes="test session",
-        allow_dirty_repo=True,
-        skip_hardware_validation=False,
-        experimenter=["Foo", "Bar"],
-    )
-
-
-def mock_rig() -> AindBehaviorTelekinesisRig:
-    """Generates a mock AindVrForagingRig model"""
-
-    manipulator_calibration = AindManipulatorCalibration(
-        full_step_to_mm=(ManipulatorPosition(x=0.010, y1=0.010, y2=0.010, z=0.010)),
-        axis_configuration=[
-            AxisConfiguration(
-                axis=Axis.Y1, min_limit=-1, max_limit=18.5, motor_operation_mode=MotorOperationMode.QUIET
-            ),
-            AxisConfiguration(axis=Axis.X, min_limit=-1, max_limit=35),
-            AxisConfiguration(axis=Axis.Z, min_limit=-1, max_limit=35),
-        ],
-        homing_order=[Axis.Y1, Axis.X, Axis.Z],
-        initial_position=ManipulatorPosition(y1=0, y2=0, x=0, z=0),
-    )
-
-    measurements = [
-        Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
-        Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
-    ]
-    water_valve_calibration = calibrate_water_valves(measurements)
-
-    video_writer = cameras.VideoWriterFfmpeg()
-
-    return AindBehaviorTelekinesisRig(
-        rig_name="BCI_Bonsai_i",
-        computer_name="test_computer",
-        data_directory="C:/data",
-        triggered_camera_controller=cameras.CameraController[cameras.SpinnakerCamera](
-            frame_rate=25,
-            cameras={
-                "MainCamera": cameras.SpinnakerCamera(
-                    serial_number="23381093",
-                    binning=2,
-                    exposure=10000,
-                    gain=20,
-                    video_writer=video_writer,
-                    adc_bit_depth=None,
-                )
-            },
-        ),
-        harp_load_cells=None,
-        harp_behavior=harp.HarpBehavior(port_name="COM4"),
-        harp_lickometer=harp.HarpLicketySplit(port_name="COM6"),
-        harp_clock_generator=harp.HarpWhiteRabbit(port_name="COM7"),
-        harp_analog_input=None,
-        manipulator=AindManipulatorDevice(port_name="COM5", calibration=manipulator_calibration, spout_axis=Axis.Y1),
-        calibration=RigCalibration(water_valve=water_valve_calibration),
-        networking=Networking(
-            zmq_publisher=ZmqConnection(connection_string="@tcp://localhost:5556", topic="Telekinesis")
-        ),
-        ophys_interface=None,
-    )
 
 
 def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
@@ -205,13 +118,11 @@ def generate_luts() -> None:
 
 
 def main(path_seed: str = "{LOCAL_ASSET_FOLDER}/{schema}.json"):
-    example_session = mock_session()
-    example_rig = mock_rig()
     example_task_logic = mock_task_logic()
     os.makedirs(os.path.dirname(path_seed).format(LOCAL_ASSET_FOLDER=LOCAL_ASSET_FOLDER, schema=""), exist_ok=True)
     generate_luts()
 
-    models = [example_task_logic, example_session, example_rig]
+    models = [example_task_logic]
 
     for model in models:
         with open(
