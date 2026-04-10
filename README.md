@@ -89,7 +89,7 @@ or via a `./local/clabe.yml` file. Additional custom launcher scripts can be cre
 
 ## 🔍 Primary data quality-control
 
-Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launcher using:
+Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launched using:
 
 ```powershell
 uv run telekinesis data-qc <path-to-data-dir>
