@@ -105,11 +105,6 @@
                             <Value>0</Value>
                           </Operand>
                         </Expression>
-                        <Expression xsi:type="BitwiseOr">
-                          <Operand xsi:type="BooleanProperty">
-                            <Value>false</Value>
-                          </Operand>
-                        </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:DistinctUntilChanged" />
                         </Expression>
@@ -177,6 +172,11 @@
                               <Edge From="0" To="1" Label="Source1" />
                             </Edges>
                           </Workflow>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                         <Expression xsi:type="SubscribeSubject">
