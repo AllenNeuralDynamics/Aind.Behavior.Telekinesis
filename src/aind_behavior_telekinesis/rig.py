@@ -75,4 +75,6 @@ class AindBehaviorTelekinesisRig(Rig):
     manipulator: AindManipulatorDevice = Field(description="Manipulator")
     calibration: RigCalibration = Field(description="General rig calibration")
     networking: Networking = Field(default=Networking(), description="Networking settings", validate_default=True)
-    ophys_interface: Optional[OphysInterface] = Field(default=None, description="Ophys interface")
+    ophys_interface: Optional[OphysInterface] = Field(
+        default=BergamoInterface(), description="Ophys interface", validate_default=True
+    )
