@@ -284,7 +284,10 @@
           "description": "Networking settings"
         },
         "ophys_interface": {
-          "default": null,
+          "default": {
+            "interface": "bergamo",
+            "delay_trial": 0.0
+          },
           "description": "Ophys interface",
           "oneOf": [
             {
@@ -2069,8 +2072,7 @@
         "spout": {
           "$ref": "#/$defs/SpoutOperationControl",
           "default": {
-            "default_retracted_position": 0.0,
-            "default_extended_position": 0.0,
+            "default_retraction_offset": -7.0,
             "enabled": true
           },
           "description": "Operation control for spout"
@@ -3204,16 +3206,10 @@
     "SpoutOperationControl": {
       "description": "Control settings for the reward spout",
       "properties": {
-        "default_retracted_position": {
-          "default": 0,
-          "description": "Default retracted position (mm)",
-          "title": "Default Retracted Position",
-          "type": "number"
-        },
-        "default_extended_position": {
-          "default": 0,
-          "description": "Default extended position (mm)",
-          "title": "Default Extended Position",
+        "default_retraction_offset": {
+          "default": -7,
+          "description": "Default retracted offset summed to reference position (mm)",
+          "title": "Default Retraction Offset",
           "type": "number"
         },
         "enabled": {

@@ -562,6 +562,7 @@ namespace AindBehaviorTelekinesisDataSchema
             _manipulator = new AindManipulatorDevice();
             _calibration = new RigCalibration();
             _networking = new Networking();
+            _ophysInterface = new OphysInterface();
         }
     
         protected AindBehaviorTelekinesisRig(AindBehaviorTelekinesisRig other)
@@ -5878,57 +5879,36 @@ namespace AindBehaviorTelekinesisDataSchema
     public partial class SpoutOperationControl
     {
     
-        private double _defaultRetractedPosition;
-    
-        private double _defaultExtendedPosition;
+        private double _defaultRetractionOffset;
     
         private bool _enabled;
     
         public SpoutOperationControl()
         {
-            _defaultRetractedPosition = 0D;
-            _defaultExtendedPosition = 0D;
+            _defaultRetractionOffset = -7D;
             _enabled = true;
         }
     
         protected SpoutOperationControl(SpoutOperationControl other)
         {
-            _defaultRetractedPosition = other._defaultRetractedPosition;
-            _defaultExtendedPosition = other._defaultExtendedPosition;
+            _defaultRetractionOffset = other._defaultRetractionOffset;
             _enabled = other._enabled;
         }
     
         /// <summary>
-        /// Default retracted position (mm)
+        /// Default retracted offset summed to reference position (mm)
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("default_retracted_position")]
-        [System.ComponentModel.DescriptionAttribute("Default retracted position (mm)")]
-        public double DefaultRetractedPosition
+        [Newtonsoft.Json.JsonPropertyAttribute("default_retraction_offset")]
+        [System.ComponentModel.DescriptionAttribute("Default retracted offset summed to reference position (mm)")]
+        public double DefaultRetractionOffset
         {
             get
             {
-                return _defaultRetractedPosition;
+                return _defaultRetractionOffset;
             }
             set
             {
-                _defaultRetractedPosition = value;
-            }
-        }
-    
-        /// <summary>
-        /// Default extended position (mm)
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("default_extended_position")]
-        [System.ComponentModel.DescriptionAttribute("Default extended position (mm)")]
-        public double DefaultExtendedPosition
-        {
-            get
-            {
-                return _defaultExtendedPosition;
-            }
-            set
-            {
-                _defaultExtendedPosition = value;
+                _defaultRetractionOffset = value;
             }
         }
     
@@ -5961,8 +5941,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("DefaultRetractedPosition = " + _defaultRetractedPosition + ", ");
-            stringBuilder.Append("DefaultExtendedPosition = " + _defaultExtendedPosition + ", ");
+            stringBuilder.Append("DefaultRetractionOffset = " + _defaultRetractionOffset + ", ");
             stringBuilder.Append("Enabled = " + _enabled);
             return true;
         }

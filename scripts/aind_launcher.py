@@ -1,24 +1,22 @@
 import logging
 from pathlib import Path
+from typing import Any, cast
 
 import clabe.resource_monitor
+from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
 )
-from typing import Any, cast
-from contraqctor.contract.json import SoftwareEvents
 from clabe.data_transfer.robocopy import RobocopyService, RobocopySettings
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
-from clabe.pickers import DefaultBehaviorPicker, DefaultBehaviorPickerSettings
-from clabe.pickers import ByAnimalModifier
-
+from clabe.pickers import ByAnimalModifier, DefaultBehaviorPicker, DefaultBehaviorPickerSettings
+from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
 from aind_behavior_telekinesis import data_contract
 from aind_behavior_telekinesis.rig import AindBehaviorTelekinesisRig
 from aind_behavior_telekinesis.task_logic import AindBehaviorTelekinesisTaskLogic
-from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 
 logger = logging.getLogger(__name__)
 
@@ -142,9 +140,9 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindBehaviorTelekinesisRig]):
     def _process_before_dump(self) -> ManipulatorPosition:
         _dataset = data_contract.dataset(self._launcher.session_directory)
         manipulator_init_position: SoftwareEvents = cast(
-            SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["ManipulatorInit"].load()
+            SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["ReferenceManipulatorPosition"].load()
         )
-        data: dict[str, Any] = manipulator_init_position.data.iloc[0]["data"]["ResetPosition"]
+        data: dict[str, Any] = manipulator_init_position.data.iloc[-1]["data"]["ResetPosition"]
         position = ManipulatorPosition.model_validate(data)
         return position
 

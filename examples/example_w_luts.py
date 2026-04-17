@@ -77,9 +77,7 @@ def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
                         action1_min=0,
                     ),
                 },
-                spout=tl.SpoutOperationControl(
-                    default_retracted_position=0, default_extended_position=10, enabled=True
-                ),
+                spout=tl.SpoutOperationControl(default_retraction_offset=-7, enabled=True),
             ),
         )
     )
