@@ -668,7 +668,7 @@ it.Value[7] as Channel7
                     <gui:Name>SkipOphysInterfaceHandshake</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>Ophys Disabled</gui:Text>
+                    <gui:Text>Ophys Enabled</gui:Text>
                   </Expression>
                   <Expression xsi:type="rx:Sink">
                     <Name>Override</Name>
@@ -1184,7 +1184,9 @@ it.Value[7] as Channel7
               <Minimum>2</Minimum>
               <OverlayAlpha>0.5</OverlayAlpha>
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
@@ -1204,7 +1206,7 @@ it.Value[7] as Channel7
               <gui:Name>SaveCurrentPosition</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
-              <gui:Text />
+              <gui:Text>Save Reference Position</gui:Text>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
@@ -1242,17 +1244,17 @@ it.Value[7] as Channel7
               <gui:Font>Microsoft Sans Serif, 12pt</gui:Font>
               <gui:ColumnCount>1</gui:ColumnCount>
               <gui:RowCount>2</gui:RowCount>
-              <gui:ColumnStyles>
-                <gui:ColumnStyle>
+              <gui:ColumnStyles />
+              <gui:RowStyles>
+                <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Width>0.9</gui:Width>
-                </gui:ColumnStyle>
-                <gui:ColumnStyle>
+                  <gui:Height>0.9</gui:Height>
+                </gui:RowStyle>
+                <gui:RowStyle>
                   <gui:SizeType>Percent</gui:SizeType>
-                  <gui:Width>0.1</gui:Width>
-                </gui:ColumnStyle>
-              </gui:ColumnStyles>
-              <gui:RowStyles />
+                  <gui:Height>0.1</gui:Height>
+                </gui:RowStyle>
+              </gui:RowStyles>
               <gui:CellSpans />
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
@@ -1732,9 +1734,18 @@ it.Value[7] as Channel7
         <gui:Enabled>true</gui:Enabled>
         <gui:Visible>true</gui:Visible>
         <gui:ColumnCount>1</gui:ColumnCount>
-        <gui:RowCount>1</gui:RowCount>
+        <gui:RowCount>2</gui:RowCount>
         <gui:ColumnStyles />
-        <gui:RowStyles />
+        <gui:RowStyles>
+          <gui:RowStyle>
+            <gui:SizeType>Percent</gui:SizeType>
+            <gui:Height>0.5</gui:Height>
+          </gui:RowStyle>
+          <gui:RowStyle>
+            <gui:SizeType>Percent</gui:SizeType>
+            <gui:Height>0.5</gui:Height>
+          </gui:RowStyle>
+        </gui:RowStyles>
         <gui:CellSpans />
       </Expression>
       <Expression xsi:type="WorkflowOutput" />
