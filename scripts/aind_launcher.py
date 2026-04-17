@@ -142,7 +142,7 @@ class ByAnimalManipulatorModifier(ByAnimalModifier[AindBehaviorTelekinesisRig]):
         manipulator_init_position: SoftwareEvents = cast(
             SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["ReferenceManipulatorPosition"].load()
         )
-        data: dict[str, Any] = manipulator_init_position.data.iloc[-1]["data"]["ResetPosition"]
+        data: dict[str, Any] = manipulator_init_position.data.iloc[-1]["data"]
         position = ManipulatorPosition.model_validate(data)
         return position
 
