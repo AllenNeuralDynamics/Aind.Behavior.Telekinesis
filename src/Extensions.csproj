@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Bonsai.Core" Version="2.9.0" />
@@ -13,5 +15,8 @@
     <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices" Version="0.13.4" />
     <PackageReference Include="AllenNeuralDynamics.AindBehaviorServices.Distributions" Version="0.2.0" />
     <PackageReference Include="AllenNeuralDynamics.AindManipulator" Version="0.3.0" />
+    <PackageReference Include="Hexa.NET.ImGui" Version="2.2.9" />
+    <PackageReference Include="Hexa.NET.ImPlot" Version="2.2.9" />
+    <PackageReference Include="AllenNeuralDynamics.Core.Design" Version="0.3.0" />
   </ItemGroup>
 </Project>

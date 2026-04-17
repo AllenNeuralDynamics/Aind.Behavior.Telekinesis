@@ -349,8 +349,9 @@ class ActionLookUpTableFactory(BaseModel):
 class SpoutOperationControl(BaseModel):
     """Control settings for the reward spout"""
 
-    default_retracted_position: float = Field(default=0, description="Default retracted position (mm)")
-    default_extended_position: float = Field(default=0, description="Default extended position (mm)")
+    default_retraction_offset: float = Field(
+        default=-7, description="Default retracted offset summed to reference position (mm)"
+    )
     enabled: bool = Field(default=True, description="Whether the spout control is enabled")
 
 

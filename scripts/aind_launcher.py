@@ -1,14 +1,17 @@
 import logging
 from pathlib import Path
+from typing import Any, cast
 
 import clabe.resource_monitor
+from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
 from aind_behavior_services.session import Session
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
 )
 from clabe.data_transfer.robocopy import RobocopyService, RobocopySettings
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
-from clabe.pickers import DefaultBehaviorPicker, DefaultBehaviorPickerSettings
+from clabe.pickers import ByAnimalModifier, DefaultBehaviorPicker, DefaultBehaviorPickerSettings
+from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
 from aind_behavior_telekinesis import data_contract
@@ -42,6 +45,15 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
         ]
     ).run()
 
+    # Post-fetching modifications
+    manipulator_modifier = ByAnimalManipulatorModifier(
+        subject_db_path=picker.subject_dir / session.subject,
+        model_path="manipulator.calibration.initial_position",
+        model_name="manipulator_init.json",
+        launcher=launcher,
+    )
+    manipulator_modifier.inject(rig)
+
     bonsai_app = AindBehaviorServicesBonsaiApp(
         workflow=Path(r"./src/main.bonsai"),
         temp_directory=launcher.temp_dir,
@@ -50,6 +62,11 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
         task=task_logic,
     )
     await bonsai_app.run_async()
+    # Update manipulator initial position for next session
+    try:
+        manipulator_modifier.dump()
+    except Exception as e:
+        logger.error(f"Failed to update manipulator initial position: {e}")
 
     # Run data qc
     if picker.ui_helper.prompt_yes_no_question("Would you like to generate a qc report?"):
@@ -109,6 +126,25 @@ def ensure_rig_and_computer_name(rig: AindBehaviorTelekinesisRig) -> None:
         )
         rig.rig_name = rig_name
         rig.computer_name = computer_name
+
+
+class ByAnimalManipulatorModifier(ByAnimalModifier[AindBehaviorTelekinesisRig]):
+    """Modifier to set and update manipulator initial position based on animal-specific data."""
+
+    def __init__(
+        self, subject_db_path: Path, model_path: str, model_name: str, *, launcher: Launcher, **kwargs
+    ) -> None:
+        super().__init__(subject_db_path, model_path, model_name, **kwargs)
+        self._launcher = launcher
+
+    def _process_before_dump(self) -> ManipulatorPosition:
+        _dataset = data_contract.dataset(self._launcher.session_directory)
+        manipulator_init_position: SoftwareEvents = cast(
+            SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["ReferenceManipulatorPosition"].load()
+        )
+        data: dict[str, Any] = manipulator_init_position.data.iloc[-1]["data"]
+        position = ManipulatorPosition.model_validate(data)
+        return position
 
 
 class ClabeCli(LauncherCliArgs):

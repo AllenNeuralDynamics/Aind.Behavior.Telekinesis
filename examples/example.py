@@ -9,7 +9,7 @@ from aind_behavior_services.rig.aind_manipulator import (
     ManipulatorPosition,
     MotorOperationMode,
 )
-from aind_behavior_services.rig.water_valve import Measurement, calibrate_water_valves
+from aind_behavior_services.rig.water_valve import WaterValveCalibration
 from aind_behavior_services.session import Session
 
 import aind_behavior_telekinesis.task_logic as tl
@@ -41,22 +41,22 @@ def mock_rig() -> AindBehaviorTelekinesisRig:
     manipulator_calibration = AindManipulatorCalibration(
         full_step_to_mm=(ManipulatorPosition(x=0.010, y1=0.010, y2=0.010, z=0.010)),
         axis_configuration=[
-            AxisConfiguration(
-                axis=Axis.Y1, min_limit=-1, max_limit=18.5, motor_operation_mode=MotorOperationMode.QUIET
-            ),
-            AxisConfiguration(axis=Axis.X, min_limit=-1, max_limit=35),
-            AxisConfiguration(axis=Axis.Z, min_limit=-1, max_limit=35),
+            AxisConfiguration(axis=Axis.Y1, min_limit=-1, max_limit=30, motor_operation_mode=MotorOperationMode.QUIET),
+            AxisConfiguration(axis=Axis.X, min_limit=-1, max_limit=30),
+            AxisConfiguration(axis=Axis.Z, min_limit=-1, max_limit=30),
         ],
         homing_order=[Axis.Y1, Axis.X, Axis.Z],
         initial_position=ManipulatorPosition(y1=0, y2=0, x=0, z=0),
     )
 
-    measurements = [
-        Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
-        Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
-    ]
-    water_valve_calibration = calibrate_water_valves(measurements)
-
+    # measurements = [
+    #     Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
+    #     Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
+    # ]
+    # water_valve_calibration = calibrate_water_valves(measurements)
+    water_valve_calibration = WaterValveCalibration(
+        slope=1, offset=0
+    )  # for simplicity if you dont want to calibrate. Volume = Time...
     video_writer = cameras.VideoWriterFfmpeg()
 
     return AindBehaviorTelekinesisRig(
@@ -86,21 +86,22 @@ def mock_rig() -> AindBehaviorTelekinesisRig:
         networking=Networking(
             zmq_publisher=ZmqConnection(connection_string="@tcp://localhost:5556", topic="Telekinesis")
         ),
-        ophys_interface=None,
     )
 
 
 def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
     prototype_trial = tl.Action(
         reward_probability=tl.scalar_value(1),
-        reward_amount=tl.scalar_value(1),
+        reward_amount=tl.scalar_value(5),
         reward_delay=tl.scalar_value(0),
-        action_duration=tl.scalar_value(1),
-        is_operant=False,
-        time_to_collect=tl.scalar_value(5),
+        action_duration=tl.scalar_value(0),
+        is_operant=True,
+        time_to_collect=tl.scalar_value(2),
         lower_action_threshold=tl.scalar_value(0),
-        upper_action_threshold=tl.scalar_value(20000),
-        continuous_feedback=tl.ManipulatorFeedback(converter_lut_input=[0, 1], converter_lut_output=[10, 20]),
+        upper_action_threshold=tl.scalar_value(2),
+        continuous_feedback=tl.ManipulatorFeedback(
+            converter_lut_output=[0, -7]
+        ),  # This is in real manipulator units, with 0 being the reference position and -7 being the fully retracted position
     )
     return tl.AindBehaviorTelekinesisTaskLogic(
         task_parameters=tl.AindTelekinesisTaskParameters(
@@ -111,20 +112,20 @@ def mock_task_logic() -> tl.AindBehaviorTelekinesisTaskLogic:
                         block_size=tl.scalar_value(1000),
                         trial_statistics=tl.Trial(
                             inter_trial_interval=tl.scalar_value(10),
-                            quiescence_period=None,
+                            quiescence_period=tl.QuiescencePeriod(
+                                duration=0.2, action_threshold=0.02
+                            ),  # 2% of the full action range
                             response_period=tl.ResponsePeriod(
                                 duration=tl.scalar_value(10), has_cue=True, action=prototype_trial
                             ),
                             action_source_0=tl.BehaviorAnalogInputActionSource(channel=0),
-                            sampler=tl.Sampler1D(min_from=0, max_from=3.3, min_to=0, max_to=1000),
+                            sampler=tl.Sampler1D(min_from=0, max_from=3.3, min_to=0, max_to=1),
                         ),
                     )
                 ],
             ),
             operation_control=tl.OperationControl(
-                spout=tl.SpoutOperationControl(
-                    default_retracted_position=10, default_extended_position=20, enabled=False
-                ),
+                spout=tl.SpoutOperationControl(default_retraction_offset=-7, enabled=True),
             ),
         )
     )
