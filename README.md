@@ -89,7 +89,7 @@ or via a `./local/clabe.yml` file. Additional custom launcher scripts can be cre
 
 ## 🔍 Primary data quality-control
 
-Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launcher using:
+Once an experiment is collected, the primary data quality-control script can be run to check the data for issues:
 
 ```powershell
 uv run telekinesis data-qc <path-to-data-dir>
@@ -102,5 +102,5 @@ DSL schemas can be modified in `./src/aind_behavior_telekinesis/rig.py` (or `(..
 Once modified, changes to the DSL must be propagated to `json-schema` and `csharp` API. This can be done by running:
 
 ```powershell
-uv run dynamic-foraging regenerate
+uv run telekinesis regenerate
 ```
