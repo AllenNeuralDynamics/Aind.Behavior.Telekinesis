@@ -9,7 +9,7 @@ from aind_behavior_services.rig.aind_manipulator import (
     ManipulatorPosition,
     MotorOperationMode,
 )
-from aind_behavior_services.rig.water_valve import Measurement, calibrate_water_valves
+from aind_behavior_services.rig.water_valve import WaterValveCalibration
 from aind_behavior_services.session import Session
 
 import aind_behavior_telekinesis.task_logic as tl
@@ -49,14 +49,14 @@ def mock_rig() -> AindBehaviorTelekinesisRig:
         initial_position=ManipulatorPosition(y1=0, y2=0, x=0, z=0),
     )
 
-    measurements = [
-        Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
-        Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
-    ]
-    water_valve_calibration = calibrate_water_valves(measurements)
-    water_valve_calibration.slope = 1  # for simplicity if you dont want to calibrate. Volume = Time...
-    water_valve_calibration.offset = 0
-
+    # measurements = [
+    #     Measurement(valve_open_interval=1, valve_open_time=1, water_weight=[1, 1], repeat_count=200),
+    #     Measurement(valve_open_interval=2, valve_open_time=2, water_weight=[2, 2], repeat_count=200),
+    # ]
+    # water_valve_calibration = calibrate_water_valves(measurements)
+    water_valve_calibration = WaterValveCalibration(
+        slope=1, offset=0
+    )  # for simplicity if you dont want to calibrate. Volume = Time...
     video_writer = cameras.VideoWriterFfmpeg()
 
     return AindBehaviorTelekinesisRig(
