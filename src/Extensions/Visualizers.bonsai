@@ -345,7 +345,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
                   <p3:Alpha>0.3</p3:Alpha>
                 </p3:ShadedAreaPlotter>
                 <p3:ShadedAreaPlotter>
-                  <p3:EventName>ResponsePeriod </p3:EventName>
+                  <p3:EventName>ResponsePeriod</p3:EventName>
                   <p3:Color>#377EB8</p3:Color>
                   <p3:Alpha>0.3</p3:Alpha>
                 </p3:ShadedAreaPlotter>
