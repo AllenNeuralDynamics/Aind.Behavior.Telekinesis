@@ -1258,7 +1258,7 @@ it.Value[7] as Channel7
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="gui:ButtonBuilder">
-              <gui:Name>SaveCurrentPosition</gui:Name>
+              <gui:Name>PauseExperiment</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:Text>Pause Task</gui:Text>
@@ -1299,8 +1299,8 @@ it.Value[7] as Channel7
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:Font>Microsoft Sans Serif, 13.875pt</gui:Font>
-              <gui:ColumnCount>1</gui:ColumnCount>
-              <gui:RowCount>2</gui:RowCount>
+              <gui:ColumnCount>2</gui:ColumnCount>
+              <gui:RowCount>1</gui:RowCount>
               <gui:ColumnStyles />
               <gui:RowStyles>
                 <gui:RowStyle>

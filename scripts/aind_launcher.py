@@ -8,7 +8,6 @@ from aind_behavior_services.session import Session
 from clabe.apps import (
     AindBehaviorServicesBonsaiApp,
 )
-from clabe.data_transfer.robocopy import RobocopyService, RobocopySettings
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
 from clabe.pickers import ByAnimalModifier, DefaultBehaviorPicker, DefaultBehaviorPickerSettings
 from contraqctor.contract.json import SoftwareEvents
@@ -86,13 +85,13 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
             logger.error(f"Failed to run data QC: {e}")
 
     # Transfer data
-    #is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
-    #if not is_transfer:
+    # is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
+    # if not is_transfer:
     #    logger.info("Data transfer skipped by user.")
     #    return
 
     launcher.copy_logs()
-    #RobocopyService(source=launcher.session_directory, settings=RobocopySettings()).transfer()
+    # RobocopyService(source=launcher.session_directory, settings=RobocopySettings()).transfer()
     return
 
 
