@@ -27,9 +27,8 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
     picker = DefaultBehaviorPicker(
         launcher=launcher,
         settings=DefaultBehaviorPickerSettings(
-            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis",
+            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis"
         ),
-        experimenter_validator=None,
     )
 
     session = picker.pick_session(Session)
