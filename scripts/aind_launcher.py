@@ -27,9 +27,8 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
     picker = DefaultBehaviorPicker(
         launcher=launcher,
         settings=DefaultBehaviorPickerSettings(
-            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis",
+            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis"
         ),
-        experimenter_validator=None,
     )
 
     session = picker.pick_session(Session)
@@ -87,13 +86,13 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
             logger.error(f"Failed to run data QC: {e}")
 
     # Transfer data
-    is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
-    if not is_transfer:
-        logger.info("Data transfer skipped by user.")
-        return
+    #is_transfer = picker.ui_helper.prompt_yes_no_question("Would you like to transfer data?")
+    #if not is_transfer:
+    #    logger.info("Data transfer skipped by user.")
+    #    return
 
     launcher.copy_logs()
-    RobocopyService(source=launcher.session_directory, settings=RobocopySettings()).transfer()
+    #RobocopyService(source=launcher.session_directory, settings=RobocopySettings()).transfer()
     return
 
 
