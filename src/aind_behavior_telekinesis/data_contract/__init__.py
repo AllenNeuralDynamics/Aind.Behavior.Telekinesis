@@ -274,6 +274,13 @@ def dataset(
                                     root_path / "behavior/SoftwareEvents/EndExperiment.json"
                                 ),
                             ),
+                            SoftwareEvents(
+                                name="ReferenceManipulatorPosition",
+                                description="An event emitted with the latest reference manipulator position.",
+                                reader_params=SoftwareEvents.make_params(
+                                    root_path / "behavior/SoftwareEvents/ReferenceManipulatorPosition.json"
+                                ),
+                            ),
                         ],
                     ),
                     DataStreamCollection(
