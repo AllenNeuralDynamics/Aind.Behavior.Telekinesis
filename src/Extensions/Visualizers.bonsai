@@ -1198,7 +1198,7 @@ it.Value[7] as Channel7
               <gui:CellSpans />
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.AindManipulator:AindManipulatorGui.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\AindManipulatorGui.bonsai" />
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
             </Expression>
