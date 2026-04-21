@@ -21,7 +21,7 @@
               <gui:Name>Stop</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
-              <gui:Font>Microsoft Sans Serif, 48pt, style=Bold, Underline</gui:Font>
+              <gui:Font>Microsoft Sans Serif, 28.125pt, style=Bold, Underline</gui:Font>
               <gui:Text>STOP!</gui:Text>
             </Expression>
             <Expression xsi:type="rx:Sink">
@@ -155,7 +155,7 @@
                     <gui:Name>LockUnlock</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 36pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 28pt</gui:Font>
                     <gui:ColumnCount>2</gui:ColumnCount>
                     <gui:RowCount>1</gui:RowCount>
                     <gui:ColumnStyles />
@@ -1161,7 +1161,7 @@
                     <gui:Name>ManipulatorOffsetButton</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 36pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 28pt</gui:Font>
                     <gui:ColumnCount>1</gui:ColumnCount>
                     <gui:RowCount>4</gui:RowCount>
                     <gui:ColumnStyles />
@@ -1365,7 +1365,7 @@
                     <gui:Name>Home</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 36pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 28pt</gui:Font>
                     <gui:Text>Home</gui:Text>
                   </Expression>
                   <Expression xsi:type="rx:Sink">
@@ -1403,7 +1403,7 @@
                     <gui:Name>GoToRef</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 36pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 28pt</gui:Font>
                     <gui:Text>GoToRef</gui:Text>
                   </Expression>
                   <Expression xsi:type="rx:Sink">
@@ -1514,7 +1514,7 @@
                     <gui:Name>SetPosition</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 36pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 28pt</gui:Font>
                     <gui:Text>Set position</gui:Text>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -1539,7 +1539,7 @@
                     <gui:Name>IsMoving</gui:Name>
                     <gui:Enabled>false</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Font>Microsoft Sans Serif, 36pt</gui:Font>
+                    <gui:Font>Microsoft Sans Serif, 28pt</gui:Font>
                     <gui:Text>Idle</gui:Text>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping">
