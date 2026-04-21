@@ -256,12 +256,6 @@ Sampler = TypeAliasType(
     Annotated[Union[LutSampler2D, Sampler1D, Sampler2D], Field(discriminator="sampler_type")],
 )
 
-class SpoutRetractionPeriod(BaseModel):
-    """Defines a spout retraction period"""
-
-    minimum_duration: distributions.Distribution = Field(
-        default=scalar_value(0.2), description="Minimum duration we wait after retracting the spout and before moving to the response period.", validate_default=True
-    )
 
 class Trial(BaseModel):
     """Defines a trial
@@ -272,9 +266,6 @@ class Trial(BaseModel):
         default=scalar_value(0.5), description="Time between trials", validate_default=True
     )
     quiescence_period: Optional[QuiescencePeriod] = Field(default=None, description="Quiescence settings")
-    spout_retraction_period: SpoutRetractionPeriod = Field(
-        default=SpoutRetractionPeriod(), validate_default=True, description="Spout retraction settings"
-    )
     response_period: ResponsePeriod = Field(
         default=ResponsePeriod(), validate_default=True, description="Response settings"
     )
