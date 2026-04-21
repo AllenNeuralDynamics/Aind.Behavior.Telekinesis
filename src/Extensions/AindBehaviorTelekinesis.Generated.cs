@@ -5962,6 +5962,77 @@ namespace AindBehaviorTelekinesisDataSchema
 
 
     /// <summary>
+    /// Defines a spout retraction period
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Defines a spout retraction period")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class SpoutRetractionPeriod
+    {
+    
+        private AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution _duration;
+    
+        public SpoutRetractionPeriod()
+        {
+            _duration = new AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution();
+        }
+    
+        protected SpoutRetractionPeriod(SpoutRetractionPeriod other)
+        {
+            _duration = other._duration;
+        }
+    
+        /// <summary>
+        /// Duration of the spout retraction period
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("duration")]
+        [System.ComponentModel.DescriptionAttribute("Duration of the spout retraction period")]
+        public AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution Duration
+        {
+            get
+            {
+                return _duration;
+            }
+            set
+            {
+                _duration = value;
+            }
+        }
+    
+        public System.IObservable<SpoutRetractionPeriod> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SpoutRetractionPeriod(this)));
+        }
+    
+        public System.IObservable<SpoutRetractionPeriod> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SpoutRetractionPeriod(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Duration = " + _duration);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
     /// Defines a trial
     ///Action values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached
     /// </summary>
@@ -5977,6 +6048,8 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private QuiescencePeriod _quiescencePeriod;
     
+        private SpoutRetractionPeriod _spoutRetractionPeriod;
+    
         private ResponsePeriod _responsePeriod;
     
         private ActionSource _actionSource0;
@@ -5988,6 +6061,7 @@ namespace AindBehaviorTelekinesisDataSchema
         public Trial()
         {
             _interTrialInterval = new AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution();
+            _spoutRetractionPeriod = new SpoutRetractionPeriod();
             _responsePeriod = new ResponsePeriod();
         }
     
@@ -5995,6 +6069,7 @@ namespace AindBehaviorTelekinesisDataSchema
         {
             _interTrialInterval = other._interTrialInterval;
             _quiescencePeriod = other._quiescencePeriod;
+            _spoutRetractionPeriod = other._spoutRetractionPeriod;
             _responsePeriod = other._responsePeriod;
             _actionSource0 = other._actionSource0;
             _actionSource1 = other._actionSource1;
@@ -6034,6 +6109,24 @@ namespace AindBehaviorTelekinesisDataSchema
             set
             {
                 _quiescencePeriod = value;
+            }
+        }
+    
+        /// <summary>
+        /// Spout retraction settings
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("spout_retraction_period")]
+        [System.ComponentModel.DescriptionAttribute("Spout retraction settings")]
+        public SpoutRetractionPeriod SpoutRetractionPeriod
+        {
+            get
+            {
+                return _spoutRetractionPeriod;
+            }
+            set
+            {
+                _spoutRetractionPeriod = value;
             }
         }
     
@@ -6125,6 +6218,7 @@ namespace AindBehaviorTelekinesisDataSchema
         {
             stringBuilder.Append("InterTrialInterval = " + _interTrialInterval + ", ");
             stringBuilder.Append("QuiescencePeriod = " + _quiescencePeriod + ", ");
+            stringBuilder.Append("SpoutRetractionPeriod = " + _spoutRetractionPeriod + ", ");
             stringBuilder.Append("ResponsePeriod = " + _responsePeriod + ", ");
             stringBuilder.Append("ActionSource0 = " + _actionSource0 + ", ");
             stringBuilder.Append("ActionSource1 = " + _actionSource1 + ", ");
@@ -7432,6 +7526,11 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<SpoutOperationControl>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SpoutRetractionPeriod> source)
+        {
+            return Process<SpoutRetractionPeriod>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Trial> source)
         {
             return Process<Trial>(source);
@@ -7520,6 +7619,7 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Slap2pInterface>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpoutOperationControl>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpoutRetractionPeriod>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]

@@ -3222,6 +3222,26 @@
       "title": "SpoutOperationControl",
       "type": "object"
     },
+    "SpoutRetractionPeriod": {
+      "description": "Defines a spout retraction period",
+      "properties": {
+        "duration": {
+          "$ref": "#/$defs/Distribution",
+          "default": {
+            "family": "Scalar",
+            "distribution_parameters": {
+              "family": "Scalar",
+              "value": 0.25
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          },
+          "description": "Duration of the spout retraction period"
+        }
+      },
+      "title": "SpoutRetractionPeriod",
+      "type": "object"
+    },
     "Trial": {
       "description": "Defines a trial\nAction values are accumulated and normalized per second. E.g: Voltage/s -> LUT units/s -> Accumulate until threshold is reached",
       "properties": {
@@ -3249,6 +3269,21 @@
               "type": "null"
             }
           ]
+        },
+        "spout_retraction_period": {
+          "$ref": "#/$defs/SpoutRetractionPeriod",
+          "default": {
+            "duration": {
+              "distribution_parameters": {
+                "family": "Scalar",
+                "value": 0.25
+              },
+              "family": "Scalar",
+              "scaling_parameters": null,
+              "truncation_parameters": null
+            }
+          },
+          "description": "Spout retraction settings"
         },
         "response_period": {
           "$ref": "#/$defs/ResponsePeriod",
