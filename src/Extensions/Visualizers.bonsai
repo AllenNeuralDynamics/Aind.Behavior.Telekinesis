@@ -210,7 +210,7 @@
                   </Expression>
                   <Expression xsi:type="scr:ExpressionCondition">
                     <scr:Name>FilterTrialOutcome</scr:Name>
-                    <scr:Expression>it.name == "_TrialOutcome"</scr:Expression>
+                    <scr:Expression>it.name == "_ActionOutcome"</scr:Expression>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Data</Selector>
@@ -220,7 +220,6 @@
                   </Expression>
                   <Expression xsi:type="p2:TrialOutcomeVisualizerBuilder">
                     <p2:FontSize>16</p2:FontSize>
-                    <p2:YMax>10</p2:YMax>
                     <p2:WindowSize>50</p2:WindowSize>
                     <p2:RollingWindowSize>20</p2:RollingWindowSize>
                   </Expression>

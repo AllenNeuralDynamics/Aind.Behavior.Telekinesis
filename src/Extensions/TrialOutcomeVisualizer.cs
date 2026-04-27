@@ -20,7 +20,6 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
     private static readonly Vector4 NullColor    = new Vector4(0.4f,  0.4f,  0.4f,  BarAlpha);
 
     private float fontSize = 16.0f;
-    private float yMax = 10.0f;
     private int windowSize = 50;
     private int rollingWindowSize = 20;
 
@@ -126,13 +125,6 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
 
     unsafe private void DrawChart()
     {
-        ImGui.Text("Y Max:");
-        ImGui.SameLine();
-        ImGui.SetNextItemWidth(InputWidth);
-        ImGui.InputFloat("##ymax", ref yMax);
-        if (yMax <= 0f) yMax = 0.1f;
-
-        ImGui.SameLine();
         ImGui.Text("Window:");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(InputWidth);
@@ -148,12 +140,19 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
         double xMin = start - 0.5;
         double xMax = (count == 0) ? 1.0 : start + count - 0.5;
 
-        ImPlot.SetNextAxesLimits(xMin, xMax, 0.0, (double)yMax, ImPlotCond.Always);
+        double maxResponseTime = 1.0;
+        for (int i = 0; i < count; i++)
+        {
+            var r = trials[start + i];
+            if (!r.WasNull && r.ResponseTime > maxResponseTime)
+                maxResponseTime = r.ResponseTime;
+        }
+
         if (ImPlot.BeginPlot("Trial Outcomes", new Vector2(-1, plotHeight), ImPlotFlags.NoTitle))
         {
             ImPlot.SetupAxes("Trial #", "Response Time (s)");
             ImPlot.SetupAxisLimits(ImAxis.X1, xMin, xMax, ImPlotCond.Always);
-            ImPlot.SetupAxisLimits(ImAxis.Y1, 0.0, (double)yMax, ImPlotCond.Always);
+            ImPlot.SetupAxisLimits(ImAxis.Y1, 0.0, double.NaN, ImPlotCond.Always);
             ImPlot.SetupAxis(ImAxis.Y2, "P(success)", ImPlotAxisFlags.AuxDefault);
             ImPlot.SetupAxisLimits(ImAxis.Y2, -0.05, 1.05, ImPlotCond.Always);
             ImPlot.SetupLegend(ImPlotLocation.North, ImPlotLegendFlags.Outside | ImPlotLegendFlags.Horizontal);
@@ -163,7 +162,7 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
             {
                 var record = trials[start + i];
                 double x = start + i;
-                double y = record.WasNull ? (double)yMax : record.ResponseTime;
+                double y = record.WasNull ? maxResponseTime : record.ResponseTime;
 
                 Vector4 color = record.WasNull ? NullColor
                     : record.IsSuccessful ? SuccessColor : FailureColor;
@@ -250,7 +249,6 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
         if (builder != null)
         {
             fontSize = builder.FontSize;
-            yMax = (float)builder.YMax;
             windowSize = builder.WindowSize;
             rollingWindowSize = builder.RollingWindowSize;
         }

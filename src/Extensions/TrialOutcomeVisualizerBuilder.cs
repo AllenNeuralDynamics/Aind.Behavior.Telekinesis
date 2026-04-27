@@ -15,16 +15,12 @@ public class TrialOutcomeVisualizerBuilder : SingleArgumentExpressionBuilder
     public TrialOutcomeVisualizerBuilder()
     {
         FontSize = 16.0f;
-        YMax = 10.0;
         WindowSize = 50;
         RollingWindowSize = 20;
     }
 
     [Description("Font size for text rendering.")]
     public float FontSize { get; set; }
-
-    [Description("Maximum response time shown on the Y axis (seconds).")]
-    public double YMax { get; set; }
 
     [Description("Number of recent trials to display. 0 = show all.")]
     public int WindowSize { get; set; }
