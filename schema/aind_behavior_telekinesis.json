@@ -186,7 +186,7 @@
     "AindBehaviorTelekinesisRig": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.6",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -585,7 +585,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.6",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -2632,14 +2632,14 @@
     "Session": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.13.6",
+          "default": "0.13.7",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
         },
         "version": {
-          "const": "0.13.6",
-          "default": "0.13.6",
+          "const": "0.13.7",
+          "default": "0.13.7",
           "title": "Version",
           "type": "string"
         },
@@ -3351,6 +3351,39 @@
         "sampler"
       ],
       "title": "Trial",
+      "type": "object"
+    },
+    "TrialOutCome": {
+      "description": "A model that represents the outcome of a trial in the experiment.",
+      "properties": {
+        "response_time": {
+          "default": null,
+          "description": "The time from response cue to hitting the threshold.",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Response Time"
+        },
+        "is_successful": {
+          "default": false,
+          "description": "Whether the trial was successful or not.",
+          "title": "Is Successful",
+          "type": "boolean"
+        },
+        "action": {
+          "$ref": "#/$defs/Action",
+          "description": "The action produced by the subject during the trial."
+        }
+      },
+      "required": [
+        "action"
+      ],
+      "title": "TrialOutCome",
       "type": "object"
     },
     "TruncationParameters": {

@@ -7,6 +7,7 @@ from aind_behavior_services.session import Session
 
 import aind_behavior_telekinesis.rig
 import aind_behavior_telekinesis.task_logic
+from aind_behavior_telekinesis._helper_types import TrialOutCome
 
 SCHEMA_ROOT = Path("./schema/")
 EXTENSIONS_ROOT = Path("./src/Extensions/")
@@ -18,6 +19,7 @@ def main():
         aind_behavior_telekinesis.task_logic.AindBehaviorTelekinesisTaskLogic,
         aind_behavior_telekinesis.rig.AindBehaviorTelekinesisRig,
         Session,
+        TrialOutCome,
     ]
     model = pydantic.RootModel[Union[tuple(models)]]
 

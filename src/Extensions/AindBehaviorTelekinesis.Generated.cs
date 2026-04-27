@@ -553,7 +553,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public AindBehaviorTelekinesisRig()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.6";
+            _aindBehaviorServicesPkgVersion = "0.13.7";
             _version = "0.5.2";
             _triggeredCameraController = new CameraControllerSpinnakerCamera();
             _harpBehavior = new HarpBehavior();
@@ -1251,7 +1251,7 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public AindTelekinesisTaskParameters()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.6";
+            _aindBehaviorServicesPkgVersion = "0.13.7";
             _environment = new Environment();
             _operationControl = new OperationControl();
         }
@@ -4739,8 +4739,8 @@ namespace AindBehaviorTelekinesisDataSchema
     
         public Session()
         {
-            _aindBehaviorServicesPkgVersion = "0.13.6";
-            _version = "0.13.6";
+            _aindBehaviorServicesPkgVersion = "0.13.7";
+            _version = "0.13.7";
             _experimenter = new System.Collections.Generic.List<string>();
             _allowDirtyRepo = false;
             _skipHardwareValidation = false;
@@ -6148,6 +6148,120 @@ namespace AindBehaviorTelekinesisDataSchema
 
 
     /// <summary>
+    /// A model that represents the outcome of a trial in the experiment.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A model that represents the outcome of a trial in the experiment.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class TrialOutCome
+    {
+    
+        private double? _responseTime;
+    
+        private bool _isSuccessful;
+    
+        private Action _action;
+    
+        public TrialOutCome()
+        {
+            _isSuccessful = false;
+            _action = new Action();
+        }
+    
+        protected TrialOutCome(TrialOutCome other)
+        {
+            _responseTime = other._responseTime;
+            _isSuccessful = other._isSuccessful;
+            _action = other._action;
+        }
+    
+        /// <summary>
+        /// The time from response cue to hitting the threshold.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("response_time")]
+        [System.ComponentModel.DescriptionAttribute("The time from response cue to hitting the threshold.")]
+        public double? ResponseTime
+        {
+            get
+            {
+                return _responseTime;
+            }
+            set
+            {
+                _responseTime = value;
+            }
+        }
+    
+        /// <summary>
+        /// Whether the trial was successful or not.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("is_successful")]
+        [System.ComponentModel.DescriptionAttribute("Whether the trial was successful or not.")]
+        public bool IsSuccessful
+        {
+            get
+            {
+                return _isSuccessful;
+            }
+            set
+            {
+                _isSuccessful = value;
+            }
+        }
+    
+        /// <summary>
+        /// The action produced by the subject during the trial.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("action", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The action produced by the subject during the trial.")]
+        public Action Action
+        {
+            get
+            {
+                return _action;
+            }
+            set
+            {
+                _action = value;
+            }
+        }
+    
+        public System.IObservable<TrialOutCome> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TrialOutCome(this)));
+        }
+    
+        public System.IObservable<TrialOutCome> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TrialOutCome(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("ResponseTime = " + _responseTime + ", ");
+            stringBuilder.Append("IsSuccessful = " + _isSuccessful + ", ");
+            stringBuilder.Append("Action = " + _action);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
     /// FFMPEG video writer configuration.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
@@ -7437,6 +7551,11 @@ namespace AindBehaviorTelekinesisDataSchema
             return Process<Trial>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TrialOutCome> source)
+        {
+            return Process<TrialOutCome>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<VideoWriter> source)
         {
             return Process<VideoWriter>(source);
@@ -7521,6 +7640,7 @@ namespace AindBehaviorTelekinesisDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpoutOperationControl>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrialOutCome>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriter>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterFfmpeg>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<VideoWriterOpenCv>))]
