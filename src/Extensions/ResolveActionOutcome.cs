@@ -1,27 +1,27 @@
 ﻿using Bonsai;
 using System;
 using System.ComponentModel;
-using AindBehaviorTelekinesisDataSchema;
+using System.Linq;
 using System.Reactive.Linq;
 
 [Combinator]
 [Description("Calculates the outcome of the action based on the success of the action and its arrival time.")]
-[WorkflowElementCategory(ElementCategory.Combinator)]
+[WorkflowElementCategory(ElementCategory.Transform)]
 public class ResolveActionOutcome
 {
-    public IObservable<TrialOutCome> Process(IObservable<Tuple<bool, AindBehaviorTelekinesisDataSchema.Action>> source)
+    public IObservable<AindBehaviorTelekinesisDataSchema.TrialOutCome> Process(IObservable<Tuple<Tuple<Tuple<bool, AindBehaviorTelekinesisDataSchema.Action>, double>, double>> source)
     {
-        var initialTimestamp = DateTimeOffset.UtcNow;
-        return source.Select(value =>
-        {
-            var isSuccessful = value.Item1;
-            var action = value.Item2;
-            return new TrialOutCome()
+        return source.Select(value => {
+            var isSuccessful = value.Item1.Item1.Item1;
+            var action = value.Item1.Item1.Item2;
+            var initialTimestamp = value.Item1.Item2;
+            var responseTime = isSuccessful ? (value.Item2 - initialTimestamp) : (double?)null;
+            return new AindBehaviorTelekinesisDataSchema.TrialOutCome()
             {
                 IsSuccessful = isSuccessful,
-                ResponseTime = isSuccessful ? (DateTimeOffset.UtcNow - initialTimestamp).TotalSeconds : (double?)null,
+                ResponseTime = responseTime,
                 Action = action
             };
-        }).Take(1);
+        });
     }
 }

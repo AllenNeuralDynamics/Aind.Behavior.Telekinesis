@@ -7,8 +7,8 @@
                  xmlns:p1="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:zg="clr-namespace:Bonsai.Gui.ZedGraph;assembly=Bonsai.Gui.ZedGraph"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
-                 xmlns:p2="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
-                 xmlns:p3="clr-namespace:;assembly=Extensions"
+                 xmlns:p2="clr-namespace:;assembly=Extensions"
+                 xmlns:p3="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p4="clr-namespace:Harp.LoadCells;assembly=Harp.LoadCells"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
@@ -140,6 +140,7 @@
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
                   </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>ActionInputs</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:ColumnCount>1</gui:ColumnCount>
@@ -187,6 +188,7 @@
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
                   </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>ProjectedAction</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:ColumnCount>1</gui:ColumnCount>
@@ -198,6 +200,42 @@
                   <Expression xsi:type="VisualizerMapping">
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
+                  <Expression xsi:type="gui:TabControlBuilder">
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SoftwareEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionCondition">
+                    <scr:Name>FilterTrialOutcome</scr:Name>
+                    <scr:Expression>it.name == "_TrialOutcome"</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Data</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p2:CastAsTrialOutcome" />
+                  </Expression>
+                  <Expression xsi:type="p2:TrialOutcomeVisualizerBuilder">
+                    <p2:FontSize>16</p2:FontSize>
+                    <p2:YMax>10</p2:YMax>
+                    <p2:WindowSize>50</p2:WindowSize>
+                    <p2:RollingWindowSize>20</p2:RollingWindowSize>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>HitVisualizer</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>1</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="SubscribeSubject">
                     <Name>LiveHarvestOutcome</Name>
                   </Expression>
@@ -284,7 +322,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="42" Label="Source1" />
+                  <Edge From="14" To="52" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
                   <Edge From="15" To="17" Label="Source1" />
                   <Edge From="15" To="19" Label="Source1" />
@@ -298,23 +336,33 @@ Item2.Item3 as LowerThr)</scr:Expression>
                   <Edge From="23" To="24" Label="Source1" />
                   <Edge From="24" To="25" Label="Source2" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="42" Label="Source2" />
+                  <Edge From="26" To="34" Label="Source1" />
                   <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
                   <Edge From="29" To="32" Label="Source1" />
                   <Edge From="30" To="31" Label="Source1" />
                   <Edge From="31" To="32" Label="Source2" />
                   <Edge From="32" To="33" Label="Source1" />
-                  <Edge From="33" To="42" Label="Source3" />
+                  <Edge From="33" To="34" Label="Source2" />
                   <Edge From="34" To="35" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="35" To="52" Label="Source2" />
                   <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="37" To="40" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source1" />
                   <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source2" />
+                  <Edge From="39" To="40" Label="Source1" />
                   <Edge From="40" To="41" Label="Source1" />
-                  <Edge From="41" To="42" Label="Source4" />
+                  <Edge From="41" To="42" Label="Source1" />
                   <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="43" To="52" Label="Source3" />
+                  <Edge From="44" To="45" Label="Source1" />
+                  <Edge From="45" To="46" Label="Source1" />
+                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="47" To="50" Label="Source1" />
+                  <Edge From="48" To="49" Label="Source1" />
+                  <Edge From="49" To="50" Label="Source2" />
+                  <Edge From="50" To="51" Label="Source1" />
+                  <Edge From="51" To="52" Label="Source4" />
+                  <Edge From="52" To="53" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -328,64 +376,64 @@ Item2.Item3 as LowerThr)</scr:Expression>
               <Name>LickEvent</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p2:CreateSoftwareEvent">
-                <p2:EventName>__LickEvent</p2:EventName>
+              <Combinator xsi:type="p3:CreateSoftwareEvent">
+                <p3:EventName>__LickEvent</p3:EventName>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
             </Expression>
-            <Expression xsi:type="p3:SoftwareEventVisualizerBuilder">
-              <p3:FontSize>16</p3:FontSize>
-              <p3:TimeWindow>30</p3:TimeWindow>
-              <p3:ShadedAreaPlotters>
-                <p3:ShadedAreaPlotter>
-                  <p3:EventName>QuiescencePeriod</p3:EventName>
-                  <p3:Color>#E41A1C</p3:Color>
-                  <p3:Alpha>0.3</p3:Alpha>
-                </p3:ShadedAreaPlotter>
-                <p3:ShadedAreaPlotter>
-                  <p3:EventName>ResponsePeriod</p3:EventName>
-                  <p3:Color>#377EB8</p3:Color>
-                  <p3:Alpha>0.3</p3:Alpha>
-                </p3:ShadedAreaPlotter>
-                <p3:ShadedAreaPlotter>
-                  <p3:EventName>IsValidTrial</p3:EventName>
-                  <p3:Color>Green</p3:Color>
-                  <p3:Alpha>0.3</p3:Alpha>
-                </p3:ShadedAreaPlotter>
-              </p3:ShadedAreaPlotters>
-              <p3:PointPlotters>
-                <p3:PointPlotter>
-                  <p3:EventName>GiveReward </p3:EventName>
-                  <p3:Color>Blue</p3:Color>
-                  <p3:YPosition>0.5</p3:YPosition>
-                  <p3:MarkerSize>6</p3:MarkerSize>
-                  <p3:Marker>Circle</p3:Marker>
-                </p3:PointPlotter>
-                <p3:PointPlotter>
-                  <p3:EventName>ChoiceMiss </p3:EventName>
-                  <p3:Color>SpringGreen</p3:Color>
-                  <p3:YPosition>0.5</p3:YPosition>
-                  <p3:MarkerSize>6</p3:MarkerSize>
-                  <p3:Marker>Cross</p3:Marker>
-                </p3:PointPlotter>
-                <p3:PointPlotter>
-                  <p3:EventName>PerformedAction </p3:EventName>
-                  <p3:Color>Green</p3:Color>
-                  <p3:YPosition>0.5</p3:YPosition>
-                  <p3:MarkerSize>6</p3:MarkerSize>
-                  <p3:Marker>Diamond</p3:Marker>
-                </p3:PointPlotter>
-                <p3:PointPlotter>
-                  <p3:EventName>__LickEvent</p3:EventName>
-                  <p3:Color>Black</p3:Color>
-                  <p3:YPosition>0.8</p3:YPosition>
-                  <p3:MarkerSize>6</p3:MarkerSize>
-                  <p3:Marker>Up</p3:Marker>
-                </p3:PointPlotter>
-              </p3:PointPlotters>
-              <p3:MaxTrials>5</p3:MaxTrials>
+            <Expression xsi:type="p2:SoftwareEventVisualizerBuilder">
+              <p2:FontSize>16</p2:FontSize>
+              <p2:TimeWindow>30</p2:TimeWindow>
+              <p2:ShadedAreaPlotters>
+                <p2:ShadedAreaPlotter>
+                  <p2:EventName>QuiescencePeriod</p2:EventName>
+                  <p2:Color>#E41A1C</p2:Color>
+                  <p2:Alpha>0.3</p2:Alpha>
+                </p2:ShadedAreaPlotter>
+                <p2:ShadedAreaPlotter>
+                  <p2:EventName>ResponsePeriod</p2:EventName>
+                  <p2:Color>#377EB8</p2:Color>
+                  <p2:Alpha>0.3</p2:Alpha>
+                </p2:ShadedAreaPlotter>
+                <p2:ShadedAreaPlotter>
+                  <p2:EventName>IsValidTrial</p2:EventName>
+                  <p2:Color>Green</p2:Color>
+                  <p2:Alpha>0.3</p2:Alpha>
+                </p2:ShadedAreaPlotter>
+              </p2:ShadedAreaPlotters>
+              <p2:PointPlotters>
+                <p2:PointPlotter>
+                  <p2:EventName>GiveReward </p2:EventName>
+                  <p2:Color>Blue</p2:Color>
+                  <p2:YPosition>0.5</p2:YPosition>
+                  <p2:MarkerSize>6</p2:MarkerSize>
+                  <p2:Marker>Circle</p2:Marker>
+                </p2:PointPlotter>
+                <p2:PointPlotter>
+                  <p2:EventName>ChoiceMiss </p2:EventName>
+                  <p2:Color>SpringGreen</p2:Color>
+                  <p2:YPosition>0.5</p2:YPosition>
+                  <p2:MarkerSize>6</p2:MarkerSize>
+                  <p2:Marker>Cross</p2:Marker>
+                </p2:PointPlotter>
+                <p2:PointPlotter>
+                  <p2:EventName>PerformedAction </p2:EventName>
+                  <p2:Color>Green</p2:Color>
+                  <p2:YPosition>0.5</p2:YPosition>
+                  <p2:MarkerSize>6</p2:MarkerSize>
+                  <p2:Marker>Diamond</p2:Marker>
+                </p2:PointPlotter>
+                <p2:PointPlotter>
+                  <p2:EventName>__LickEvent</p2:EventName>
+                  <p2:Color>Black</p2:Color>
+                  <p2:YPosition>0.8</p2:YPosition>
+                  <p2:MarkerSize>6</p2:MarkerSize>
+                  <p2:Marker>Up</p2:Marker>
+                </p2:PointPlotter>
+              </p2:PointPlotters>
+              <p2:MaxTrials>5</p2:MaxTrials>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="rx:Defer">
@@ -395,7 +443,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="Value" DisplayName="OverrideThreshold" />
                   </Expression>
-                  <Expression xsi:type="PropertySource" TypeArguments="p3:OverrideUpperThreshold,sys:Nullable(sys:Double)">
+                  <Expression xsi:type="PropertySource" TypeArguments="p2:OverrideUpperThreshold,sys:Nullable(sys:Double)">
                     <MemberName>UpperThreshold</MemberName>
                     <Value xsi:nil="true" />
                   </Expression>

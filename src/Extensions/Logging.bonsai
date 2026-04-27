@@ -11,8 +11,8 @@
                  xmlns:p6="clr-namespace:AllenNeuralDynamics.EnvironmentSensor;assembly=AllenNeuralDynamics.EnvironmentSensor"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.HarpUtils;assembly=AllenNeuralDynamics.HarpUtils"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p8="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:p8="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
                  xmlns:p9="clr-namespace:;assembly=Extensions"
                  xmlns:p10="clr-namespace:AindBehaviorTelekinesisDataSchema;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -4813,6 +4813,10 @@ groupMasks:
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p1:TimestampSoftwareEvent" />
                         </Expression>
+                        <Expression xsi:type="scr:ExpressionCondition">
+                          <scr:Name>ExcludePrivate</scr:Name>
+                          <scr:Expression>!it.Name.StartsWith("_")</scr:Expression>
+                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>Modality</Name>
                         </Expression>
@@ -4954,11 +4958,12 @@ groupMasks:
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="7" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source2" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
