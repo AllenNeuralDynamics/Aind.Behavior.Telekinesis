@@ -15,7 +15,7 @@ public class ResolveActionOutcome
             var isSuccessful = value.Item1.Item1.Item1;
             var action = value.Item1.Item1.Item2;
             var initialTimestamp = value.Item1.Item2;
-            var responseTime = isSuccessful ? (value.Item2 - initialTimestamp) : (double?)null;
+            var responseTime = isSuccessful ? -(value.Item2 - initialTimestamp) : (double?)null;
             return new AindBehaviorTelekinesisDataSchema.TrialOutCome()
             {
                 IsSuccessful = isSuccessful,
