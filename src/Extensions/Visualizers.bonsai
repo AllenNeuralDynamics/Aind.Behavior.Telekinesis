@@ -220,8 +220,8 @@
                   </Expression>
                   <Expression xsi:type="p2:TrialOutcomeVisualizerBuilder">
                     <p2:FontSize>16</p2:FontSize>
-                    <p2:WindowSize>50</p2:WindowSize>
-                    <p2:RollingWindowSize>20</p2:RollingWindowSize>
+                    <p2:WindowSize>40</p2:WindowSize>
+                    <p2:RollingWindowSize>10</p2:RollingWindowSize>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
