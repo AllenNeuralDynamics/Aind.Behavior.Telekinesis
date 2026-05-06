@@ -3907,11 +3907,14 @@ namespace AindBehaviorTelekinesisDataSchema
     
         private bool _hasCue;
     
+        private bool _skipIfPreviousNotSuccessful;
+    
         public QuiescencePeriod()
         {
             _duration = new AllenNeuralDynamics.AindBehaviorServices.Distributions.Distribution();
             _actionThreshold = 0D;
             _hasCue = false;
+            _skipIfPreviousNotSuccessful = true;
         }
     
         protected QuiescencePeriod(QuiescencePeriod other)
@@ -3919,6 +3922,7 @@ namespace AindBehaviorTelekinesisDataSchema
             _duration = other._duration;
             _actionThreshold = other._actionThreshold;
             _hasCue = other._hasCue;
+            _skipIfPreviousNotSuccessful = other._skipIfPreviousNotSuccessful;
         }
     
         /// <summary>
@@ -3973,6 +3977,24 @@ namespace AindBehaviorTelekinesisDataSchema
             }
         }
     
+        /// <summary>
+        /// Whether to skip the quiescence period if the previous trial was not successful. I.e. if the animal did not meet the action threshold during the response period.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("skip_if_previous_not_successful")]
+        [System.ComponentModel.DescriptionAttribute("Whether to skip the quiescence period if the previous trial was not successful. I" +
+            ".e. if the animal did not meet the action threshold during the response period.")]
+        public bool SkipIfPreviousNotSuccessful
+        {
+            get
+            {
+                return _skipIfPreviousNotSuccessful;
+            }
+            set
+            {
+                _skipIfPreviousNotSuccessful = value;
+            }
+        }
+    
         public System.IObservable<QuiescencePeriod> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new QuiescencePeriod(this)));
@@ -3987,7 +4009,8 @@ namespace AindBehaviorTelekinesisDataSchema
         {
             stringBuilder.Append("Duration = " + _duration + ", ");
             stringBuilder.Append("ActionThreshold = " + _actionThreshold + ", ");
-            stringBuilder.Append("HasCue = " + _hasCue);
+            stringBuilder.Append("HasCue = " + _hasCue + ", ");
+            stringBuilder.Append("SkipIfPreviousNotSuccessful = " + _skipIfPreviousNotSuccessful);
             return true;
         }
     

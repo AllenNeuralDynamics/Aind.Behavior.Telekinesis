@@ -149,6 +149,10 @@ class QuiescencePeriod(BaseModel):
     )
     action_threshold: float = Field(default=0, description="Time out for the quiescence period")
     has_cue: bool = Field(default=False, description="Whether to use a cue to signal the start of the period.")
+    skip_if_previous_not_successful: bool = Field(
+        default=True,
+        description="Whether to skip the quiescence period if the previous trial was not successful. I.e. if the animal did not meet the action threshold during the response period.",
+    )
 
 
 class ResponsePeriod(BaseModel):
