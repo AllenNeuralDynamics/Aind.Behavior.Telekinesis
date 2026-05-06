@@ -2280,6 +2280,12 @@
           "description": "Whether to use a cue to signal the start of the period.",
           "title": "Has Cue",
           "type": "boolean"
+        },
+        "skip_if_previous_not_successful": {
+          "default": true,
+          "description": "Whether to skip the quiescence period if the previous trial was not successful. I.e. if the animal did not meet the action threshold during the response period.",
+          "title": "Skip If Previous Not Successful",
+          "type": "boolean"
         }
       },
       "title": "QuiescencePeriod",
