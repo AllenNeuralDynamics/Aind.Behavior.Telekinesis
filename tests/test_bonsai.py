@@ -1,10 +1,10 @@
 import os
 import sys
-import unittest
 import warnings
 from pathlib import Path
 from typing import Generic, List, Optional, TypeVar, Union
 
+import pytest
 from aind_behavior_services.session import Session
 from aind_behavior_services.utils import run_bonsai_process
 from pydantic import ValidationError
@@ -19,41 +19,37 @@ from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-positio
 TModel = TypeVar("TModel", bound=Union[AindBehaviorTelekinesisRig, AindBehaviorTelekinesisTaskLogic, Session])
 
 
-class BonsaiTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        warnings.simplefilter("ignore", category=Warning)
+def test_deserialization():
+    warnings.simplefilter("ignore", category=Warning)
+    example.main("./local/{schema}.json")
 
-    def test_deserialization(self):
-        example.main("./local/{schema}.json")
+    models_to_test = [
+        TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=Session),
+        TestModel(bonsai_property="RigPath", json_root=JSON_ROOT, model=AindBehaviorTelekinesisRig),
+        TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindBehaviorTelekinesisTaskLogic),
+    ]
 
-        models_to_test = [
-            TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=Session),
-            TestModel(bonsai_property="RigPath", json_root=JSON_ROOT, model=AindBehaviorTelekinesisRig),
-            TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindBehaviorTelekinesisTaskLogic),
-        ]
-
-        workflow_props = {
-            bonsai_prop: path
-            for bonsai_prop, path in zip(
-                [model.bonsai_property for model in models_to_test], [model.json_path for model in models_to_test]
-            )
-        }
-
-        completed_proc = run_bonsai_process(
-            workflow_file=Path("./src/test_deserialization.bonsai").resolve(),
-            is_editor_mode=False,
-            layout=None,
-            additional_properties=workflow_props,
+    workflow_props = {
+        bonsai_prop: path
+        for bonsai_prop, path in zip(
+            [model.bonsai_property for model in models_to_test], [model.json_path for model in models_to_test]
         )
-        stdout = completed_proc.stdout.decode().split("\n")
-        stdout = [line for line in stdout if (line or line != "")]
+    }
 
-        for model in models_to_test:
-            try:
-                model.try_deserialization(stdout)
-            except ValueError:
-                self.fail(f"Could not find a match for {model.input_model.__class__.__name__}.")
+    completed_proc = run_bonsai_process(
+        workflow_file=Path("./src/test_deserialization.bonsai").resolve(),
+        is_editor_mode=False,
+        layout=None,
+        additional_properties=workflow_props,
+    )
+    stdout = completed_proc.stdout.decode().split("\n")
+    stdout = [line for line in stdout if (line or line != "")]
+
+    for model in models_to_test:
+        try:
+            model.try_deserialization(stdout)
+        except ValueError:
+            pytest.fail(f"Could not find a match for {model.input_model.__class__.__name__}.")
 
 
 class TestModel(Generic[TModel]):
@@ -110,7 +106,3 @@ class TestModel(Generic[TModel]):
 
     def __repr__(self) -> str:
         return self.__str__()
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -36,6 +36,7 @@ dev = [
     "aind-behavior-telekinesis[data]",
     "ruff",
     "codespell",
+    "pytest",
 ]
 
 docs = [
