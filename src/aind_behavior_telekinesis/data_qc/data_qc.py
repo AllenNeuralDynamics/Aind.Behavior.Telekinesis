@@ -13,18 +13,18 @@ class TelekinesisQcSuite(qc.Suite):
 
     def test_end_session_exists(self):
         """Check that the session has an end event."""
-        end_session = self.dataset["Behavior"]["SoftwareEvents"]["EndSession"]
+        end_session = self.dataset["Behavior"]["SoftwareEvents"]["EndExperiment"]
 
         if not end_session.has_data:
             return self.fail_test(
-                None, "EndSession event does not exist. Session may be corrupted or not ended properly."
+                None, "EndExperiment event does not exist. Session may be corrupted or not ended properly."
             )
 
         assert isinstance(end_session.data, pd.DataFrame)
         if end_session.data.empty:
-            return self.fail_test(None, "No data in EndSession. Session may be corrupted or not ended properly.")
+            return self.fail_test(None, "No data in EndExperiment. Session may be corrupted or not ended properly.")
         else:
-            return self.pass_test(None, "EndSession event exists with data.")
+            return self.pass_test(None, "EndExperiment event exists with data.")
 
     def test_has_annotations(self):
         """Check that the session has annotations and surfaces them in the context if they exist."""
