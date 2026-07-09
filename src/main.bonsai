@@ -361,7 +361,7 @@ Item2.Item3 as LowerThr)]]></Text>
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
+      <Expression xsi:type="rx:Defer">
         <Name>HardwareChecks</Name>
         <Workflow>
           <Nodes>
