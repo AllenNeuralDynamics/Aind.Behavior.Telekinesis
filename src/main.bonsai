@@ -1160,7 +1160,7 @@ Item2.Item3 as LowerThr)]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Delay">
-          <rx:DueTime>PT1S</rx:DueTime>
+          <rx:DueTime>PT1.5S</rx:DueTime>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
