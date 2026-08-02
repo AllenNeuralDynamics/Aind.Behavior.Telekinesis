@@ -1,27 +1,39 @@
-﻿using Bonsai.Design;
-using Bonsai.Expressions;
+using Bonsai;
 using AindBehaviorTelekinesisDataSchema;
-using AllenNeuralDynamics.Core.Design;
 using Hexa.NET.ImGui;
 using Hexa.NET.ImPlot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Numerics;
-using System.Windows.Forms;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 
-public class TrialOutcomeVisualizer : BufferedVisualizer
+[Combinator]
+[WorkflowElementCategory(ElementCategory.Combinator)]
+[Description("Renders a bar chart of trial outcomes (bar height = response time, color = success/failure) inside an ImPlot window on each frame.")]
+public class TrialOutcomeVisualizer
 {
     private const float MinPlotHeight = 100.0f;
     private const float InputWidth = 80.0f;
     private const float MarkerAlpha = 0.85f;
-    private const float MarkerSize  = 8f;
+    private const float MarkerSize = 8f;
 
     private static readonly Vector4 SuccessColor = new Vector4(0.1f, 0.55f, 0.15f, MarkerAlpha);
     private static readonly Vector4 FailureColor = new Vector4(0.65f, 0.08f, 0.08f, 0.25f);
 
+    private bool visible = true;
+    public bool Visible { get { return visible; } set { visible = value; } }
+
     private float fontSize = 16.0f;
+    public float FontSize { get { return fontSize; } set { fontSize = value; } }
+
     private int windowSize = 50;
+    public int WindowSize { get { return windowSize; } set { windowSize = value; } }
+
     private int rollingWindowSize = 20;
+    public int RollingWindowSize { get { return rollingWindowSize; } set { rollingWindowSize = value; } }
 
     private struct TrialRecord
     {
@@ -29,38 +41,67 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
         public bool IsSuccessful;
     }
 
+    private readonly object bufferLock = new object();
     private readonly List<TrialRecord> trials = new List<TrialRecord>();
-    private ImGuiControl imGuiCanvas;
 
-    /// <inheritdoc/>
-    public override void Show(object value) { }
-
-    /// <inheritdoc/>
-    protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
+    public IObservable<Unit> Process<TTick>(IObservable<TTick> frames, IObservable<TrialOutCome> data)
     {
-        foreach (var v in values)
+        return Observable.Create<Unit>(observer =>
         {
-            if (!(v.Value is TrialOutCome)) continue;
-            var outcome = (TrialOutCome)v.Value;
+            var dataSub = data.Subscribe(
+                value =>
+                {
+                    lock (bufferLock)
+                    {
+                        bool wasNull = !value.ResponseTime.HasValue;
+                        trials.Add(new TrialRecord
+                        {
+                            ResponseTime = wasNull ? 0.0 : value.ResponseTime.Value,
+                            IsSuccessful = value.IsSuccessful
+                        });
+                    }
+                },
+                observer.OnError);
 
-            bool wasNull = !outcome.ResponseTime.HasValue;
-            trials.Add(new TrialRecord
-            {
-                ResponseTime = wasNull ? 0.0 : outcome.ResponseTime.Value,
-                IsSuccessful = outcome.IsSuccessful
-            });
-        }
+            var frameSub = frames.SubscribeSafe(Observer.Create<TTick>(
+                _ =>
+                {
+                    unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
 
-        base.ShowBuffer(values);
-        if (imGuiCanvas != null) imGuiCanvas.Invalidate();
+                    if (Visible)
+                    {
+                        lock (bufferLock)
+                        {
+                            ImGui.StyleColorsLight();
+                            ImPlot.StyleColorsLight(ImPlot.GetStyle());
+                            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
+                            var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                            if (ImGui.BeginChild("##TrialOutcomeVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
+                            {
+                                ImGui.PushFont(ImGui.GetFont(), FontSize);
+                                DrawChart();
+                                ImGui.PopFont();
+                            }
+                            ImGui.EndChild();
+                            ImGui.PopStyleVar();
+                        }
+                    }
+
+                    observer.OnNext(Unit.Default);
+                },
+                observer.OnError,
+                observer.OnCompleted));
+
+            return new CompositeDisposable(dataSub, frameSub);
+        });
     }
 
     private void GetVisibleRange(out int start, out int count)
     {
-        if (windowSize > 0 && trials.Count > windowSize)
+        if (WindowSize > 0 && trials.Count > WindowSize)
         {
-            start = trials.Count - windowSize;
-            count = windowSize;
+            start = trials.Count - WindowSize;
+            count = WindowSize;
         }
         else
         {
@@ -78,7 +119,7 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
         var result = new double[count];
         for (int i = 0; i < count; i++)
         {
-            int windowStart = Math.Max(0, i - rollingWindowSize + 1);
+            int windowStart = Math.Max(0, i - RollingWindowSize + 1);
             double sum = 0.0;
             int n = 0;
             for (int j = windowStart; j <= i; j++)
@@ -103,7 +144,7 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
         var result = new double[count];
         for (int i = 0; i < count; i++)
         {
-            int windowStart = Math.Max(0, i - rollingWindowSize + 1);
+            int windowStart = Math.Max(0, i - RollingWindowSize + 1);
             int successes = 0;
             int total = i - windowStart + 1;
             for (int j = windowStart; j <= i; j++)
@@ -115,19 +156,14 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
         return result;
     }
 
-    void StyleColors()
-    {
-        ImGui.StyleColorsLight();
-        ImPlot.StyleColorsLight(ImPlot.GetStyle());
-    }
-
     unsafe private void DrawChart()
     {
         ImGui.Text("Window:");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(InputWidth);
-        ImGui.InputInt("##window", ref windowSize);
-        if (windowSize < 0) windowSize = 0;
+        int windowSizeValue = WindowSize;
+        ImGui.InputInt("##window", ref windowSizeValue);
+        WindowSize = Math.Max(0, windowSizeValue);
 
         var availableSize = ImGui.GetContentRegionAvail();
         float plotHeight = Math.Max(availableSize.Y, MinPlotHeight);
@@ -269,67 +305,6 @@ public class TrialOutcomeVisualizer : BufferedVisualizer
             }
 
             ImPlot.EndPlot();
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Load(IServiceProvider provider)
-    {
-        var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
-        var builder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as TrialOutcomeVisualizerBuilder;
-        if (builder != null)
-        {
-            fontSize = builder.FontSize;
-            windowSize = builder.WindowSize;
-            rollingWindowSize = builder.RollingWindowSize;
-        }
-
-        imGuiCanvas = new ImGuiControl();
-        imGuiCanvas.Dock = DockStyle.Fill;
-        imGuiCanvas.Render += (sender, e) =>
-        {
-            var dockspaceId = ImGui.DockSpaceOverViewport(
-                0,
-                ImGui.GetMainViewport(),
-                ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
-
-            StyleColors();
-            ImGui.PushFont(ImGui.GetFont(), fontSize);
-
-            if (ImGui.Begin("TrialOutcomeVisualizer"))
-            {
-                DrawChart();
-            }
-
-            ImGui.End();
-            ImGui.PopFont();
-
-            var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
-            if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
-            {
-                unsafe
-                {
-                    var handle = centralNode.Handle;
-                    uint dockId = handle->ID;
-                    ImGuiP.DockBuilderDockWindow("TrialOutcomeVisualizer", dockId);
-                }
-            }
-        };
-
-        var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
-        if (visualizerService != null)
-        {
-            visualizerService.AddControl(imGuiCanvas);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Unload()
-    {
-        if (imGuiCanvas != null)
-        {
-            imGuiCanvas.Dispose();
-            imGuiCanvas = null;
         }
     }
 }
