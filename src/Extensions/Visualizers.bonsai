@@ -182,9 +182,7 @@
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:LabelBuilder">
                     <gui:Name />
                     <gui:Enabled>true</gui:Enabled>
@@ -192,9 +190,7 @@
                     <gui:Font>Microsoft Sans Serif, 14.25pt</gui:Font>
                     <gui:Text>ActionVector</gui:Text>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Name>ActionInputs</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -278,9 +274,7 @@
                     <gui:Font>Microsoft Sans Serif, 14.25pt</gui:Font>
                     <gui:Text>ProjectedAction</gui:Text>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Name>ProjectedAction</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -291,9 +285,7 @@
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TabControlBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -440,9 +432,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
                     <gui:Font>Microsoft Sans Serif, 14.25pt</gui:Font>
                     <gui:Text>LiveHarvestOutcome</gui:Text>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:LabelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
@@ -452,9 +442,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
                     <gui:RowStyles />
                     <gui:CellSpans />
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
                     <gui:Name>ActionVisualization</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -663,9 +651,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
               <gui:RowStyles />
               <gui:CellSpans />
             </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Name>TaskVisualization</gui:Name>
               <gui:Enabled>true</gui:Enabled>
@@ -685,9 +671,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
               </gui:RowStyles>
               <gui:CellSpans />
             </Expression>
-            <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
                 <Value>0</Value>
@@ -770,9 +754,7 @@ Item2.Item3 as LowerThr)</scr:Expression>
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="rx:Defer">
                     <Name>LoadCells</Name>
                     <Workflow>
@@ -1016,9 +998,7 @@ it.Value[7] as Channel7
                           </gui:RowStyles>
                           <gui:CellSpans />
                         </Expression>
-                        <Expression xsi:type="Disable">
-                          <Builder xsi:type="WorkflowOutput" />
-                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
@@ -1037,9 +1017,7 @@ it.Value[7] as Channel7
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="VisualizerMapping">
-                    <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:TabControlBuilder">
                     <gui:Name>ActionInputs</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
@@ -1599,7 +1577,7 @@ it.Value[7] as Channel7
               <gui:Name>PauseExperiment</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
-              <gui:Text>Pause Task</gui:Text>
+              <gui:Text>Pause ⏸️</gui:Text>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
