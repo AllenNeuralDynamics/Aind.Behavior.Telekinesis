@@ -1,39 +1,169 @@
-﻿using Bonsai.Design;
-using Bonsai.Expressions;
+using Bonsai;
 using AllenNeuralDynamics.AindBehaviorServices.DataTypes;
-using AllenNeuralDynamics.Core.Design;
 using Hexa.NET.ImGui;
 using Hexa.NET.ImPlot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Numerics;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
+using System.Xml.Serialization;
 
-public class SoftwareEventVisualizer : BufferedVisualizer
+public interface IPlotter
+{
+    string EventName { get; set; }
+}
+
+public class ShadedAreaPlotter : IPlotter
+{
+    private string _eventName;
+    private Color _color;
+    private float _alpha;
+
+    public ShadedAreaPlotter()
+    {
+        _eventName = "";
+        _color = Color.CornflowerBlue;
+        _alpha = 0.3f;
+    }
+
+    [Description("The software event name to filter on.")]
+    public string EventName
+    {
+        get { return _eventName; }
+        set { _eventName = value; }
+    }
+
+    [XmlIgnore]
+    [Description("The color of the shaded area.")]
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    [Browsable(false)]
+    [XmlElement("Color")]
+    public string ColorHtml
+    {
+        get { return ColorTranslator.ToHtml(Color); }
+        set { try { Color = ColorTranslator.FromHtml(value); } catch { } }
+    }
+
+    [Description("The transparency of the shaded area (0.0 to 1.0).")]
+    public float Alpha
+    {
+        get { return _alpha; }
+        set { _alpha = value; }
+    }
+}
+
+public class PointPlotter : IPlotter
+{
+    private string _eventName;
+    private Color _color;
+    private float _yPosition;
+    private float _markerSize;
+    private ImPlotMarker _marker;
+
+    public PointPlotter()
+    {
+        _eventName = "";
+        _color = Color.Red;
+        _yPosition = 0.5f;
+        _markerSize = 6.0f;
+        _marker = ImPlotMarker.Circle;
+    }
+
+    [Description("The software event name to filter on.")]
+    public string EventName
+    {
+        get { return _eventName; }
+        set { _eventName = value; }
+    }
+
+    [XmlIgnore]
+    [Description("The color of the marker.")]
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    [Browsable(false)]
+    [XmlElement("Color")]
+    public string ColorHtml
+    {
+        get { return ColorTranslator.ToHtml(Color); }
+        set { try { Color = ColorTranslator.FromHtml(value); } catch { } }
+    }
+
+    [Description("The fixed Y position of the marker (0.0 to 1.0).")]
+    public float YPosition
+    {
+        get { return _yPosition; }
+        set { _yPosition = value; }
+    }
+
+    [Description("The size of the marker in pixels.")]
+    public float MarkerSize
+    {
+        get { return _markerSize; }
+        set { _markerSize = value; }
+    }
+
+    [Description("The marker style.")]
+    public ImPlotMarker Marker
+    {
+        get { return _marker; }
+        set { _marker = value; }
+    }
+}
+
+[Combinator]
+[WorkflowElementCategory(ElementCategory.Combinator)]
+[Description("Renders software events as shaded areas and/or point markers inside an ImPlot window on each frame.")]
+public class SoftwareEventVisualizer
 {
     private const float MinPlotHeight = 100.0f;
     private const double YAxisMin = 0.0;
     private const double YAxisMax = 1.0;
     private const float InputWidth = 80.0f;
 
+    private bool visible = true;
+    public bool Visible { get { return visible; } set { visible = value; } }
+
     private float fontSize = 16.0f;
+    public float FontSize { get { return fontSize; } set { fontSize = value; } }
+
     private float timeWindow = 30.0f;
+    public float TimeWindow { get { return timeWindow; } set { timeWindow = value; } }
 
     private List<ShadedAreaPlotter> shadedAreaPlotters = new List<ShadedAreaPlotter>();
+    public List<ShadedAreaPlotter> ShadedAreaPlotters { get { return shadedAreaPlotters; } set { shadedAreaPlotters = value; } }
+
     private List<PointPlotter> pointPlotters = new List<PointPlotter>();
+    public List<PointPlotter> PointPlotters { get { return pointPlotters; } set { pointPlotters = value; } }
 
-    private ImGuiControl imGuiCanvas;
-    private DateTimeOffset startTime;
+    private string trialBreakEventName = "";
+    [Description("Software event name that triggers a new trial row. Leave empty to disable trial breaks.")]
+    public string TrialBreakEventName { get { return trialBreakEventName; } set { trialBreakEventName = value; } }
 
+    private int maxTrials;
+    [Description("Maximum number of trial rows to display. When exceeded, only the last N trials are shown. 0 = show all.")]
+    public int MaxTrials { get { return maxTrials; } set { maxTrials = value; } }
+
+    private readonly object bufferLock = new object();
     private readonly Dictionary<string, List<EventRecord>> eventHistory = new Dictionary<string, List<EventRecord>>();
     private double latestTimestamp = 0;
-    private string trialBreakEventName = "";
-    private int maxTrials = 0;
     private readonly List<double> trialBreaks = new List<double>();
+    private DateTimeOffset startTime;
 
-    private bool HasTrialBreaks { get { return !string.IsNullOrEmpty(trialBreakEventName); } }
+    private bool HasTrialBreaks { get { return !string.IsNullOrEmpty(TrialBreakEventName); } }
     private int TrialCount { get { return HasTrialBreaks ? trialBreaks.Count + 1 : 1; } }
 
     private struct EventRecord
@@ -47,69 +177,100 @@ public class SoftwareEventVisualizer : BufferedVisualizer
         public ShadedAreaPlotter Config;
     }
 
-    /// <inheritdoc/>
-    public override void Show(object value)
+    public IObservable<Unit> Process<TTick>(IObservable<TTick> frames, IObservable<SoftwareEvent> data)
     {
-    }
-
-    /// <inheritdoc/>
-    protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
-    {
-        foreach (var v in values)
+        return Observable.Create<Unit>(observer =>
         {
-            if (!(v.Value is SoftwareEvent)) continue;
-            var softwareEvent = (SoftwareEvent)v.Value;
+            startTime = DateTimeOffset.Now;
 
-            double timestamp = (v.Timestamp - startTime).TotalSeconds;
+            var dataSub = data.Subscribe(
+                softwareEvent =>
+                {
+                    if (softwareEvent == null) return;
+                    string name = softwareEvent.Name;
+                    if (string.IsNullOrEmpty(name)) return;
 
-            string name = softwareEvent.Name;
-            if (string.IsNullOrEmpty(name)) continue;
+                    double timestamp = (DateTimeOffset.Now - startTime).TotalSeconds;
 
-            if (HasTrialBreaks && name == trialBreakEventName)
-            {
-                trialBreaks.Add(timestamp);
-            }
+                    lock (bufferLock)
+                    {
+                        if (HasTrialBreaks && name == TrialBreakEventName)
+                        {
+                            trialBreaks.Add(timestamp);
+                        }
 
-            List<EventRecord> records;
-            if (!eventHistory.TryGetValue(name, out records))
-            {
-                records = new List<EventRecord>();
-                eventHistory[name] = records;
-            }
-            records.Add(new EventRecord { Timestamp = timestamp });
-        }
-        
-        CleanupOldEvents();
-        
-        base.ShowBuffer(values);
-        if (imGuiCanvas != null) imGuiCanvas.Invalidate();
+                        List<EventRecord> records;
+                        if (!eventHistory.TryGetValue(name, out records))
+                        {
+                            records = new List<EventRecord>();
+                            eventHistory[name] = records;
+                        }
+                        records.Add(new EventRecord { Timestamp = timestamp });
+
+                        CleanupOldEvents();
+                    }
+                },
+                observer.OnError);
+
+            var frameSub = frames.SubscribeSafe(Observer.Create<TTick>(
+                _ =>
+                {
+                    unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
+
+                    if (Visible)
+                    {
+                        lock (bufferLock)
+                        {
+                            ImGui.StyleColorsLight();
+                            ImPlot.StyleColorsLight(ImPlot.GetStyle());
+                            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
+                            var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                            if (ImGui.BeginChild("##SoftwareEventVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
+                            {
+                                ImGui.PushFont(ImGui.GetFont(), FontSize);
+                                DrawEvents();
+                                ImGui.PopFont();
+                            }
+                            ImGui.EndChild();
+                            ImGui.PopStyleVar();
+                        }
+                    }
+
+                    observer.OnNext(Unit.Default);
+                },
+                observer.OnError,
+                observer.OnCompleted));
+
+            return new CompositeDisposable(dataSub, frameSub);
+        });
     }
 
     /// <summary>
     /// Removes old event records outside the visible window.
     /// Keeps the last event before the window for shaded area continuity.
+    /// Must be called with <see cref="bufferLock"/> held.
     /// </summary>
     private void CleanupOldEvents()
     {
         latestTimestamp = (DateTimeOffset.Now - startTime).TotalSeconds;
-        
-        double cutoffTime = latestTimestamp - timeWindow;
-        
-        if (HasTrialBreaks && maxTrials > 0 && trialBreaks.Count > 0)
+
+        double cutoffTime = latestTimestamp - TimeWindow;
+
+        if (HasTrialBreaks && MaxTrials > 0 && trialBreaks.Count > 0)
         {
-            int firstVisible = Math.Max(0, TrialCount - maxTrials);
+            int firstVisible = Math.Max(0, TrialCount - MaxTrials);
             if (firstVisible > 0 && firstVisible <= trialBreaks.Count)
             {
                 double trialCutoff = trialBreaks[firstVisible - 1];
                 cutoffTime = Math.Min(cutoffTime, trialCutoff);
             }
         }
-        
+
         foreach (var kvp in eventHistory)
         {
             var records = kvp.Value;
             if (records.Count <= 1) continue;
-            
+
             int keepFromIndex = -1;
             for (int i = records.Count - 1; i >= 0; i--)
             {
@@ -119,13 +280,13 @@ public class SoftwareEventVisualizer : BufferedVisualizer
                     break;
                 }
             }
-            
+
             if (keepFromIndex > 0)
             {
                 records.RemoveRange(0, keepFromIndex);
             }
         }
-        
+
         if (HasTrialBreaks && trialBreaks.Count > 1)
         {
             int keepFromIndex = -1;
@@ -147,12 +308,6 @@ public class SoftwareEventVisualizer : BufferedVisualizer
     private static Vector4 ToVec4(Color color)
     {
         return new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f);
-    }
-
-    void StyleColors()
-    {
-        ImGui.StyleColorsLight();
-        ImPlot.StyleColorsLight(ImPlot.GetStyle());
     }
 
     /// <summary>
@@ -188,10 +343,10 @@ public class SoftwareEventVisualizer : BufferedVisualizer
             firstVisible = 0;
             numVisible = 1;
         }
-        else if (maxTrials > 0 && total > maxTrials)
+        else if (MaxTrials > 0 && total > MaxTrials)
         {
-            firstVisible = total - maxTrials;
-            numVisible = maxTrials;
+            firstVisible = total - MaxTrials;
+            numVisible = MaxTrials;
         }
         else
         {
@@ -207,7 +362,7 @@ public class SoftwareEventVisualizer : BufferedVisualizer
     {
         var merged = new List<ShadedSegment>();
 
-        foreach (var config in shadedAreaPlotters)
+        foreach (var config in ShadedAreaPlotters)
         {
             List<EventRecord> records;
             if (!eventHistory.TryGetValue(config.EventName, out records))
@@ -223,7 +378,7 @@ public class SoftwareEventVisualizer : BufferedVisualizer
             }
         }
 
-        merged.Sort(delegate(ShadedSegment a, ShadedSegment b)
+        merged.Sort(delegate (ShadedSegment a, ShadedSegment b)
         {
             return a.Timestamp.CompareTo(b.Timestamp);
         });
@@ -258,7 +413,7 @@ public class SoftwareEventVisualizer : BufferedVisualizer
     /// </summary>
     unsafe private void DrawAllShadedAreas(double plotTMin, double plotTMax)
     {
-        if (shadedAreaPlotters.Count == 0) return;
+        if (ShadedAreaPlotters.Count == 0) return;
 
         var timeline = BuildMergedTimeline();
         if (timeline.Count == 0) return;
@@ -420,6 +575,9 @@ public class SoftwareEventVisualizer : BufferedVisualizer
         }
     }
 
+    /// <summary>
+    /// Must be called with <see cref="bufferLock"/> held.
+    /// </summary>
     private void DrawEvents()
     {
         latestTimestamp = (DateTimeOffset.Now - startTime).TotalSeconds;
@@ -427,13 +585,14 @@ public class SoftwareEventVisualizer : BufferedVisualizer
         ImGui.Text("Time Window (s):");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(InputWidth);
-        ImGui.InputFloat("##timewindow", ref timeWindow);
-        if (timeWindow < 1.0f) timeWindow = 1.0f;
+        float timeWindowValue = TimeWindow;
+        ImGui.InputFloat("##timewindow", ref timeWindowValue);
+        TimeWindow = Math.Max(1.0f, timeWindowValue);
 
         var availableSize = ImGui.GetContentRegionAvail();
         float plotHeight = Math.Max(availableSize.Y, MinPlotHeight);
 
-        double plotTMin = -(double)timeWindow;
+        double plotTMin = -(double)TimeWindow;
         double plotTMax = 0.0;
 
         int firstVisible, numVisible;
@@ -456,80 +615,12 @@ public class SoftwareEventVisualizer : BufferedVisualizer
 
             DrawAllShadedAreas(plotTMin, plotTMax);
 
-            foreach (var config in pointPlotters)
+            foreach (var config in PointPlotters)
             {
                 DrawPointMarkers(config, plotTMin, plotTMax);
             }
 
             ImPlot.EndPlot();
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Load(IServiceProvider provider)
-    {
-        var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
-        var builder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as SoftwareEventVisualizerBuilder;
-        if (builder != null)
-        {
-            fontSize = builder.FontSize;
-            timeWindow = builder.TimeWindow;
-            shadedAreaPlotters = builder.ShadedAreaPlotters ?? new List<ShadedAreaPlotter>();
-            pointPlotters = builder.PointPlotters ?? new List<PointPlotter>();
-            trialBreakEventName = builder.TrialBreakEventName ?? "";
-            maxTrials = builder.MaxTrials;
-        }
-
-        if (startTime == default(DateTimeOffset))
-        {
-            startTime = DateTimeOffset.Now;
-        }
-
-        imGuiCanvas = new ImGuiControl();
-        imGuiCanvas.Dock = DockStyle.Fill;
-        imGuiCanvas.Render += (sender, e) =>
-        {
-            var dockspaceId = ImGui.DockSpaceOverViewport(
-                0,
-                ImGui.GetMainViewport(),
-                ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
-
-            StyleColors();
-            ImGui.PushFont(ImGui.GetFont(), fontSize);
-
-            if (ImGui.Begin("SoftwareEventVisualizer"))
-            {
-                DrawEvents();
-            }
-
-            ImGui.End();
-            ImGui.PopFont();
-            var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
-            if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
-            {
-                unsafe
-                {
-                    var handle = centralNode.Handle;
-                    uint dockId = handle->ID;
-                    ImGuiP.DockBuilderDockWindow("SoftwareEventVisualizer", dockId);
-                }
-            }
-        };
-
-        var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
-        if (visualizerService != null)
-        {
-            visualizerService.AddControl(imGuiCanvas);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Unload()
-    {
-        if (imGuiCanvas != null)
-        {
-            imGuiCanvas.Dispose();
-            imGuiCanvas = null;
         }
     }
 }

@@ -1,49 +1,66 @@
-﻿using Bonsai.Design;
-using Bonsai.Expressions;
+using Bonsai;
 using Hexa.NET.ImGui;
-using Hexa.NET.ImPlot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Numerics;
-using System.Windows.Forms;
-using AllenNeuralDynamics.Core.Design;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reflection;
 using AindBehaviorTelekinesisDataSchema;
 
-public class TrialTableVisualizer : BufferedVisualizer
+[Combinator]
+[WorkflowElementCategory(ElementCategory.Combinator)]
+[Description("Renders a table of recent Trial properties inside an ImGui window on each new Trial.")]
+public class TrialTableVisualizer
 {
-    ImGuiControl imGuiCanvas;
+    private bool visible = true;
+    public bool Visible { get { return visible; } set { visible = value; } }
+
     private uint history = 3;
+    public uint History { get { return history; } set { history = value; } }
+
     private float fontSize = 16.0f;
+    public float FontSize { get { return fontSize; } set { fontSize = value; } }
 
     private readonly Queue<Trial> trials = new Queue<Trial>();
 
-    /// <inheritdoc/>
-    public override void Show(object value)
+    public IObservable<Trial> Process(IObservable<Trial> source)
     {
-    }
-
-    /// <inheritdoc/>
-    protected override void ShowBuffer(IList<System.Reactive.Timestamped<object>> values)
-    {
-        imGuiCanvas.Invalidate();
-        var casted = values.Select(v => (Trial)v.Value);
-        foreach (var trial in casted)
+        return Observable.Create<Trial>(observer =>
         {
-            trials.Enqueue(trial);
-            while (trials.Count > history)
-            {
-                trials.Dequeue();
-            }
-        }
-        base.ShowBuffer(values);
-    }
+            var sourceObserver = Observer.Create<Trial>(
+                value =>
+                {
+                    unsafe { ImGui.GetIO().Handle->ConfigErrorRecoveryEnableAssert = 0; }
 
-    void StyleColors()
-    {
-        ImGui.StyleColorsLight();
-        ImPlot.StyleColorsLight(ImPlot.GetStyle());
+                    trials.Enqueue(value);
+                    while (trials.Count > History)
+                    {
+                        trials.Dequeue();
+                    }
+
+                    if (Visible)
+                    {
+                        ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
+                        var childFlags = ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse;
+                        if (ImGui.BeginChild("##TrialTableVisualizer", new Vector2(0, 0), ImGuiChildFlags.None, childFlags))
+                        {
+                            ImGui.PushFont(ImGui.GetFont(), FontSize);
+                            DrawTrialPropertiesTable(trials, History);
+                            ImGui.PopFont();
+                        }
+                        ImGui.EndChild();
+                        ImGui.PopStyleVar();
+                    }
+
+                    observer.OnNext(value);
+                },
+                observer.OnError,
+                observer.OnCompleted);
+            return source.SubscribeSafe(sourceObserver);
+        });
     }
 
     static void DrawCenteredText(string text, float rowHeight)
@@ -67,7 +84,7 @@ public class TrialTableVisualizer : BufferedVisualizer
         drawList.AddText(new Vector2(pos.X + 1, pos.Y), ImGui.GetColorU32(ImGuiCol.Text), text);
     }
 
-    static void DrawTrialPropertiesTable<T>(Queue<T> items, uint historyCount, float fontSize) where T : class
+    static void DrawTrialPropertiesTable<T>(Queue<T> items, uint historyCount) where T : class
     {
         var properties = typeof(T).GetProperties(
             BindingFlags.Public | BindingFlags.Instance);
@@ -76,8 +93,6 @@ public class TrialTableVisualizer : BufferedVisualizer
         int rowCount = properties.Length + 1;
 
         var headerColor = new Vector4(0.7f, 0.8f, 0.9f, 1.0f);
-
-        ImGui.PushFont(ImGui.GetFont(), fontSize);
 
         var tableFlags = ImGuiTableFlags.Borders | ImGuiTableFlags.RowBg | ImGuiTableFlags.SizingStretchSame;
         var availableSize = ImGui.GetContentRegionAvail();
@@ -129,64 +144,5 @@ public class TrialTableVisualizer : BufferedVisualizer
 
             ImGui.EndTable();
         }
-
-        ImGui.PopFont();
-    }
-
-    /// <inheritdoc/>
-    public override void Load(IServiceProvider provider)
-    {
-        var context = (ITypeVisualizerContext)provider.GetService(typeof(ITypeVisualizerContext));
-        var visualizerBuilder = ExpressionBuilder.GetVisualizerElement(context.Source).Builder as TrialTableVisualizerBuilder;
-        if (visualizerBuilder != null)
-        {
-            history = visualizerBuilder.History;
-            fontSize = visualizerBuilder.FontSize;
-        }
-        imGuiCanvas = new ImGuiControl();
-        imGuiCanvas.Dock = DockStyle.Fill;
-        imGuiCanvas.Render += (sender, e) =>
-        {
-            var dockspaceId = ImGui.DockSpaceOverViewport(
-                0,
-                ImGui.GetMainViewport(),
-                ImGuiDockNodeFlags.AutoHideTabBar | ImGuiDockNodeFlags.NoUndocking);
-
-            StyleColors();
-
-
-            if (ImGui.Begin("TrialTableVisualizer"))
-            {
-                DrawTrialPropertiesTable(trials, history, fontSize);
-            }
-
-            ImGui.End();
-            var centralNode = ImGuiP.DockBuilderGetCentralNode(dockspaceId);
-            if (!ImGui.IsWindowDocked() && !centralNode.IsNull)
-            {
-                unsafe
-                {
-                    var handle = centralNode.Handle;
-                    uint dockId = handle->ID;
-                    ImGuiP.DockBuilderDockWindow("TrialTableVisualizer", dockId);
-                }
-            }
-        };
-
-        var visualizerService = (IDialogTypeVisualizerService)provider.GetService(typeof(IDialogTypeVisualizerService));
-        if (visualizerService != null)
-        {
-            visualizerService.AddControl(imGuiCanvas);
-        }
-    }
-
-    /// <inheritdoc/>
-    public override void Unload()
-    {
-        if (imGuiCanvas != null)
-        {
-            imGuiCanvas.Dispose();
-        }
     }
 }
-
