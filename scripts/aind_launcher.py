@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Any, cast
 
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
-from aind_behavior_services.utils import format_datetime
 from clabe import resource_monitor, ui
 from clabe.apps import AindBehaviorServicesBonsaiApp
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
