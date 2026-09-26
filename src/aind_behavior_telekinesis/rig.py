@@ -1,4 +1,4 @@
-from typing import Annotated, Literal, Optional, Union
+from typing import Annotated, Literal
 
 import aind_behavior_services.rig.load_cells as lcc
 import aind_behavior_services.rig.water_valve as wvc
@@ -55,7 +55,7 @@ class Slap2pInterface(_OphysInterfaceBase):
 
 OphysInterface = TypeAliasType(
     "OphysInterface",
-    Annotated[Union[BergamoInterface, Slap2pInterface], Field(discriminator="interface")],
+    Annotated[BergamoInterface | Slap2pInterface, Field(discriminator="interface")],
 )
 
 
@@ -66,15 +66,15 @@ class AindBehaviorTelekinesisRig(Rig):
     )
     harp_behavior: harp.HarpBehavior = Field(description="Harp behavior")
     harp_lickometer: harp.HarpLicketySplit = Field(description="Harp lickometer")
-    harp_load_cells: Optional[lcc.LoadCells] = Field(default=None, description="Harp load cells")
+    harp_load_cells: lcc.LoadCells | None = Field(default=None, description="Harp load cells")
     harp_clock_generator: harp.HarpWhiteRabbit = Field(description="Harp clock generator")
-    harp_analog_input: Optional[harp.HarpAnalogInput] = Field(default=None, description="Harp analog input")
-    harp_environment_sensor: Optional[harp.HarpEnvironmentSensor] = Field(
+    harp_analog_input: harp.HarpAnalogInput | None = Field(default=None, description="Harp analog input")
+    harp_environment_sensor: harp.HarpEnvironmentSensor | None = Field(
         default=None, description="Harp environment sensor"
     )
     manipulator: AindManipulatorDevice = Field(description="Manipulator")
     calibration: RigCalibration = Field(description="General rig calibration")
     networking: Networking = Field(default=Networking(), description="Networking settings", validate_default=True)
-    ophys_interface: Optional[OphysInterface] = Field(
+    ophys_interface: OphysInterface | None = Field(
         default=BergamoInterface(), description="Ophys interface", validate_default=True
     )

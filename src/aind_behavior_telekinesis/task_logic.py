@@ -1,9 +1,8 @@
 from enum import Enum
-from typing import Annotated, Dict, List, Literal, Optional, Self, Union
+from typing import Annotated, Literal, Self
 
-import aind_behavior_services.task.distributions as distributions
 from aind_behavior_services.rig.load_cells import LoadCellChannel
-from aind_behavior_services.task import Task, TaskParameters
+from aind_behavior_services.task import Task, TaskParameters, distributions
 from pydantic import BaseModel, Field, model_validator
 from typing_extensions import TypeAliasType
 
@@ -69,10 +68,10 @@ class _ContinuousFeedbackBase(BaseModel):
     continuous_feedback_mode: ContinuousFeedbackMode = Field(
         default=ContinuousFeedbackMode.NONE, description="Continuous feedback mode"
     )
-    converter_lut_input: List[Annotated[float, Field(ge=0, le=1)]] = Field(
+    converter_lut_input: list[Annotated[float, Field(ge=0, le=1)]] = Field(
         default=[0, 1], min_length=2, description="Normalized input domain. All values should be between 0 and 1"
     )
-    converter_lut_output: List[float] = Field(
+    converter_lut_output: list[float] = Field(
         default=[0, 1],
         min_length=2,
         description="Output domain used to linearly interpolate the input values to the output values",
@@ -99,7 +98,7 @@ class AudioFeedback(_ContinuousFeedbackBase):
 
 ContinuousFeedback = TypeAliasType(
     "ContinuousFeedback",
-    Annotated[Union[ManipulatorFeedback, AudioFeedback], Field(discriminator="continuous_feedback_mode")],
+    Annotated[ManipulatorFeedback | AudioFeedback, Field(discriminator="continuous_feedback_mode")],
 )
 
 
@@ -133,12 +132,12 @@ class Action(BaseModel):
         validate_default=True,
     )
     is_operant: bool = Field(default=True, description="Whether the reward delivery is contingent on licking.")
-    time_to_collect: Optional[distributions.Distribution] = Field(
+    time_to_collect: distributions.Distribution | None = Field(
         default=None,
         description="Time to collect the reward after it is available. If null, the reward will be available indefinitely.",
         validate_default=True,
     )
-    continuous_feedback: Optional[ContinuousFeedback] = Field(default=None, description="Continuous feedback settings")
+    continuous_feedback: ContinuousFeedback | None = Field(default=None, description="Continuous feedback settings")
     action_type: Literal["integrated", "instantaneous"] = Field(
         default="integrated", description="Type of action to be performed"
     )
@@ -203,7 +202,7 @@ class BehaviorAnalogInputActionSource(_ActionSource):
 
 ActionSource = TypeAliasType(
     "ActionSource",
-    Annotated[Union[LoadCellActionSource, BehaviorAnalogInputActionSource], Field(discriminator="action_source")],
+    Annotated[LoadCellActionSource | BehaviorAnalogInputActionSource, Field(discriminator="action_source")],
 )
 
 
@@ -260,7 +259,7 @@ class Sampler2D(BaseModel):
 
 Sampler = TypeAliasType(
     "Sampler",
-    Annotated[Union[LutSampler2D, Sampler1D, Sampler2D], Field(discriminator="sampler_type")],
+    Annotated[LutSampler2D | Sampler1D | Sampler2D, Field(discriminator="sampler_type")],
 )
 
 
@@ -272,12 +271,12 @@ class Trial(BaseModel):
     inter_trial_interval: distributions.Distribution = Field(
         default=scalar_value(0.5), description="Time between trials", validate_default=True
     )
-    quiescence_period: Optional[QuiescencePeriod] = Field(default=None, description="Quiescence settings")
+    quiescence_period: QuiescencePeriod | None = Field(default=None, description="Quiescence settings")
     response_period: ResponsePeriod = Field(
         default=ResponsePeriod(), validate_default=True, description="Response settings"
     )
     action_source_0: ActionSource = Field(description="Action source for the first axis to be sample from the LUT")
-    action_source_1: Optional[ActionSource] = Field(
+    action_source_1: ActionSource | None = Field(
         default=None,
         description="Action source for the second axis to be sample from the LUT. If None, LUT will be sampled from [action_source_0, 0]",
     )
@@ -297,9 +296,9 @@ class Block(BaseModel):
     """A fixed list of trials to run in sequence"""
 
     mode: Literal[BlockStatisticsMode.BLOCK] = BlockStatisticsMode.BLOCK
-    trials: List[Trial] = Field(default=[], description="List of trials in the block")
+    trials: list[Trial] = Field(default=[], description="List of trials in the block")
     shuffle: bool = Field(default=False, description="Whether to shuffle the trials in the block")
-    repeat_count: Optional[int] = Field(
+    repeat_count: int | None = Field(
         default=0, description="Number of times to repeat the block. If null, the block will be repeated indefinitely"
     )
 
@@ -314,15 +313,15 @@ class BlockGenerator(BaseModel):
     trial_statistics: Trial = Field(description="Statistics of the trials in the block")
 
 
-BlockStatistics = TypeAliasType("BlockStatistics", Annotated[Union[Block, BlockGenerator], Field(discriminator="mode")])
+BlockStatistics = TypeAliasType("BlockStatistics", Annotated[Block | BlockGenerator, Field(discriminator="mode")])
 
 
 class Environment(BaseModel):
     """Defines the structure of the behavioral environment as a sequence of blocks"""
 
-    block_statistics: List[BlockStatistics] = Field(description="Statistics of the environment")
+    block_statistics: list[BlockStatistics] = Field(description="Statistics of the environment")
     shuffle: bool = Field(default=False, description="Whether to shuffle the blocks")
-    repeat_count: Optional[int] = Field(
+    repeat_count: int | None = Field(
         default=0,
         description="Number of times to repeat the environment. If null, the environment will be repeated indefinitely",
     )
@@ -365,7 +364,7 @@ class SpoutOperationControl(BaseModel):
 class OperationControl(BaseModel):
     """Top-level operational settings including LUT registry and spout control"""
 
-    action_luts: Dict[str, ActionLookUpTableFactory] = Field(
+    action_luts: dict[str, ActionLookUpTableFactory] = Field(
         default_factory=dict, description="Look up tables to derive action output from."
     )
     spout: SpoutOperationControl = Field(
@@ -398,7 +397,8 @@ class AindTelekinesisTaskParameters(TaskParameters):
                             f"Look up table reference '{trial.sampler.lut_reference}' not found in action_luts"
                         )
             else:  # guard clause
-                raise ValueError(f"Block statistics mode '{block.mode}' not recognized")
+                # pydantic only converts ValueError into a ValidationError
+                raise ValueError(f"Block statistics mode '{block.mode}' not recognized")  # noqa: TRY004
         return self
 
 

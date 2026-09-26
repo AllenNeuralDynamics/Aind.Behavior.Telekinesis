@@ -3,13 +3,13 @@ from pathlib import Path
 from typing import Any, cast
 
 from aind_behavior_services.rig.aind_manipulator import ManipulatorPosition
-from aind_behavior_services.session import Session
+from aind_behavior_services.utils import format_datetime
 from clabe import resource_monitor, ui
-from clabe.apps import (
-    AindBehaviorServicesBonsaiApp,
-)
+from clabe.apps import AindBehaviorServicesBonsaiApp
 from clabe.launcher import Launcher, LauncherCliArgs, experiment
-from clabe.pickers import ByAnimalModifier, DefaultBehaviorPicker, DefaultBehaviorPickerSettings
+from clabe.modifiers import ByAnimalModifier
+from clabe.session import SessionBuilder
+from clabe.stores import Kind, LocalFileStore, Store
 from contraqctor.contract.json import SoftwareEvents
 from pydantic_settings import CliApp
 
@@ -19,20 +19,24 @@ from aind_behavior_telekinesis.task_logic import AindBehaviorTelekinesisTaskLogi
 
 logger = logging.getLogger(__name__)
 
+_CONFIG_LIBRARY = Path(r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis")
+_RIG = Kind.from_rig(AindBehaviorTelekinesisRig)
+_TASK = Kind.from_task(AindBehaviorTelekinesisTaskLogic)
+_MANIPULATOR_POSITION = Kind(ManipulatorPosition, name="manipulator_init")
 
-@experiment()
+
+@experiment(name="telekinesis")
 async def telekinesis_experiment(launcher: Launcher) -> None:
     # Start experiment setup
-    picker = DefaultBehaviorPicker(
-        launcher=launcher,
-        settings=DefaultBehaviorPickerSettings(
-            config_library_dir=r"\\allen\aind\scratch\AindBehavior.db\AindTelekinesis"
-        ),
+    session = SessionBuilder(launcher).build()
+    # The team wants local time in the session name
+    session = session.model_copy(
+        update={"session_name": f"{session.subject}_{format_datetime(session.date.astimezone())}"}
     )
+    store = LocalFileStore(_CONFIG_LIBRARY).scoped(subject=session.subject)
 
-    session = picker.pick_session(Session)
-    task_logic = picker.pick_task(AindBehaviorTelekinesisTaskLogic)
-    rig = picker.pick_rig(AindBehaviorTelekinesisRig)
+    task_logic = store.resolve(_TASK)
+    rig = store.resolve(_RIG)
     ensure_rig_and_computer_name(rig)
 
     launcher.register_session(session, rig.data_directory)
@@ -45,9 +49,8 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
 
     # Post-fetching modifications
     manipulator_modifier = ByAnimalManipulatorModifier(
-        subject_db_path=picker.subject_dir / session.subject,
-        model_path="manipulator.calibration.initial_position",
-        model_name="manipulator_init.json",
+        subject=session.subject,
+        store=store,
         launcher=launcher,
     )
     manipulator_modifier.inject(rig)
@@ -62,15 +65,13 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
     await bonsai_app.run_async()
     # Update manipulator initial position for next session
     try:
-        manipulator_modifier.dump()
-    except Exception as e:
-        logger.error(f"Failed to update manipulator initial position: {e}")
-        launcher.frontend.notify(f"Failed to update manipulator position: {e}", ui.MessageLevel.WARNING)
+        manipulator_modifier.update()
+    except Exception as e:  # noqa: BLE001 -- position persistence must not discard completed session data
+        logger.error("Failed to update manipulator initial position: %s", e)
+        ui.notify(f"Failed to update manipulator position: {e}", ui.MessageLevel.WARNING)
 
     # Run data qc
-    if picker.frontend.prompt_confirm(
-        ui.ConfirmRequest(label="Would you like to generate a qc report?", default=False)
-    ):
+    if ui.prompt_confirm(ui.ConfirmRequest(label="Would you like to generate a qc report?", default=False)):
         try:
             import webbrowser
 
@@ -84,21 +85,18 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
             reporter = HtmlReporter(output_path=qc_path)
             runner.run_all_with_progress(reporter=reporter)
             webbrowser.open(qc_path.as_uri(), new=2)
-        except Exception as e:
-            logger.error(f"Failed to run data QC: {e}")
-            picker.frontend.notify(f"Failed to run data QC: {e}", ui.MessageLevel.ERROR)
+        except Exception as e:  # noqa: BLE001 -- QC failures should be reported without aborting the session
+            logger.error("Failed to run data QC: %s", e)
+            ui.notify(f"Failed to run data QC: {e}", ui.MessageLevel.ERROR)
 
     # Transfer data
-    # is_transfer = picker.frontend.prompt_confirm(
-    #     ui.ConfirmRequest(label="Would you like to transfer data?", default=True)
-    # )
+    # is_transfer = ui.prompt_confirm(ui.ConfirmRequest(label="Would you like to transfer data?", default=True))
     # if not is_transfer:
     #    logger.info("Data transfer skipped by user.")
     #    return
 
     launcher.copy_logs()
     # RobocopyService(source=launcher.session_directory, settings=RobocopySettings()).transfer()
-    return
 
 
 def ensure_rig_and_computer_name(rig: AindBehaviorTelekinesisRig) -> None:
@@ -135,13 +133,11 @@ def ensure_rig_and_computer_name(rig: AindBehaviorTelekinesisRig) -> None:
 class ByAnimalManipulatorModifier(ByAnimalModifier[AindBehaviorTelekinesisRig]):
     """Modifier to set and update manipulator initial position based on animal-specific data."""
 
-    def __init__(
-        self, subject_db_path: Path, model_path: str, model_name: str, *, launcher: Launcher, **kwargs
-    ) -> None:
-        super().__init__(subject_db_path, model_path, model_name, **kwargs)
+    def __init__(self, subject: str, store: Store, *, launcher: Launcher) -> None:
+        super().__init__(subject, store, _MANIPULATOR_POSITION, "manipulator.calibration.initial_position")
         self._launcher = launcher
 
-    def _process_before_dump(self) -> ManipulatorPosition:
+    def _process_before_update(self) -> ManipulatorPosition:
         _dataset = data_contract.dataset(self._launcher.session_directory)
         manipulator_init_position: SoftwareEvents = cast(
             SoftwareEvents, _dataset["Behavior"]["SoftwareEvents"]["ReferenceManipulatorPosition"].load()
@@ -155,7 +151,6 @@ class ClabeCli(LauncherCliArgs):
     def cli_cmd(self):
         launcher = Launcher(settings=self)
         launcher.run_experiment(telekinesis_experiment)
-        return None
 
 
 def main() -> None:
