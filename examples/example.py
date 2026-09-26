@@ -25,7 +25,7 @@ from aind_behavior_telekinesis.rig import (
 def mock_session() -> Session:
     """Generates a mock Session model"""
     return Session(
-        date=datetime.datetime.now(tz=datetime.timezone.utc),
+        date=datetime.datetime.now(tz=datetime.UTC),
         experiment="Telekinesis",
         subject="test",
         notes="test session",

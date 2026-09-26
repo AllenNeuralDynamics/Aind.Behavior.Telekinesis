@@ -21,7 +21,7 @@ def main():
         Session,
         TrialOutCome,
     ]
-    model = pydantic.RootModel[Union[tuple(models)]]
+    model = pydantic.RootModel[Union[tuple(models)]]  # noqa: UP007 -- union is built dynamically
 
     convert_pydantic_to_bonsai(
         model,

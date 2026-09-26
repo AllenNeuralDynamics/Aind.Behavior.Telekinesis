@@ -71,17 +71,17 @@ You may need to install optional dependencies depending on the sub-commands you 
 
 ## 🎮 Experiment launcher (CLABE)
 
-To manage experiments and input files, this repository contains a launcher script that can be used to run the Telekinesis task. A default script is located at `./scripts/aind-launcher.py`. It can be run from the command line as follows:
+To manage experiments and input files, this repository contains a launcher script that can be used to run the Telekinesis task. A default script is located at `./scripts/aind_launcher.py`. It can be run from the command line as follows:
 
 ```powershell
-uv run clabe run ./scripts/aind-launcher.py
-# or uv run ./scripts/aind-launcher.py.py
+uv run clabe run ./scripts/aind_launcher.py
+# or uv run ./scripts/aind_launcher.py.py
 ```
 
 Additional arguments can be passed to the script as needed. For instance to allow the script to run with uncommitted changes in the repository, the `--allow-dirty` flag can be used:
 
 ```powershell
-uv run clabe run ./scripts/aind-launcher.py --allow-dirty
+uv run clabe run ./scripts/aind_launcher.py --allow-dirty
 ```
 
 or via a `./local/clabe.yml` file. Additional custom launcher scripts can be created and used as needed. See documentation in the [`clabe` repository](https://allenneuraldynamics.github.io/clabe/) for more details.
