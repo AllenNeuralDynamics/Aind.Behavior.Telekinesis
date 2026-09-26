@@ -30,9 +30,6 @@ async def telekinesis_experiment(launcher: Launcher) -> None:
     # Start experiment setup
     session = SessionBuilder(launcher).build()
     # The team wants local time in the session name
-    session = session.model_copy(
-        update={"session_name": f"{session.subject}_{format_datetime(session.date.astimezone())}"}
-    )
     store = LocalFileStore(_CONFIG_LIBRARY).scoped(subject=session.subject)
 
     task_logic = store.resolve(_TASK)
